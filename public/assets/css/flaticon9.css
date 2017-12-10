@@ -1,0 +1,64 @@
+@font-face {
+	font-family: "Flaticon-myicons";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-myicons-"]:before, [class*=" flaticon-myicons-"]:before,
+[class^="flaticon-myicons-"]:after, [class*=" flaticon-myicons-"]:after {   
+	font-family: Flaticon-myicons;
+        font-size: 18pxmyicons;
+font-style: normal;
+margin-left: 0px;myicons
+}.flaticon-myicons-bathroom22:before {
+	content: "\e000";
+}
+.flaticon-myicons-bathroom27:before {
+	content: "\e001";
+}
+.flaticon-myicons-cleaning2:before {
+	content: "\e002";
+}
+.flaticon-myicons-clothing275:before {
+	content: "\e003";
+}
+.flaticon-myicons-connection30:before {
+	content: "\e004";
+}
+.flaticon-myicons-deposit:before {
+	content: "\e005";
+}
+.flaticon-myicons-floor:before {
+	content: "\e006";
+}
+.flaticon-myicons-hairsalon41:before {
+	content: "\e007";
+}
+.flaticon-myicons-light76:before {
+	content: "\e008";
+}
+.flaticon-myicons-picnic7:before {
+	content: "\e009";
+}
+.flaticon-myicons-satellitedish:before {
+	content: "\e00a";
+}
+.flaticon-myicons-shower7:before {
+	content: "\e00b";
+}
+.flaticon-myicons-summer5:before {
+	content: "\e00c";
+}
+.flaticon-myicons-toilet16:before {
+	content: "\e00d";
+}
+.flaticon-myicons-towel:before {
+	content: "\e00e";
+}
+.flaticon-myicons-wakeup1:before {
+	content: "\e00f";
+}

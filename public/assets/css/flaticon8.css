@@ -1,0 +1,19 @@
+@font-face {
+	font-family: "Flaticon-flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-flaticon-"]:before, [class*=" flaticon-flaticon-"]:before,
+[class^="flaticon-flaticon-"]:after, [class*=" flaticon-flaticon-"]:after {   
+	font-family: Flaticon-flaticon;
+        font-size: 18pxflaticon;
+font-style: normal;
+margin-left: 0px;flaticon
+}.flaticon-flaticon-lingerie:before {
+	content: "\e000";
+}

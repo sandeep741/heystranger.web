@@ -1,0 +1,19 @@
+@font-face {
+	font-family: "Flaticon-buffet1";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-buffet1-"]:before, [class*=" flaticon-buffet1-"]:before,
+[class^="flaticon-buffet1-"]:after, [class*=" flaticon-buffet1-"]:after {   
+	font-family: Flaticon-buffet1;
+        font-size: 18pxbuffet1;
+font-style: normal;
+margin-left: 0px;buffet1
+}.flaticon-buffet1-burger18:before {
+	content: "\e000";
+}
