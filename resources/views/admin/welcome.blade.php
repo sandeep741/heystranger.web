@@ -409,7 +409,7 @@
 @endsection
 
 @section('pageTitle')
-Dashboard
+Admin Dashboard
 @endsection
 
 @section('addtional_css')

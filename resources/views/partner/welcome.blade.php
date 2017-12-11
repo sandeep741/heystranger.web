@@ -121,7 +121,7 @@
 @endsection
 
 @section('pageTitle')
-Dashboard
+Partner Dashboard
 @endsection
 
 @section('addtional_css')

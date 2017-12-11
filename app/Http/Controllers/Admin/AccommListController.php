@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AccomListRequest;
+use App\Http\Requests\Admin\AccomListUpdateRequest;
+use App\Model\Accommodation\AccommodationList;
 use Auth;
+use Illuminate\Support\Facades\Input;
 
 class AccommListController extends Controller {
 
@@ -25,8 +29,9 @@ class AccommListController extends Controller {
      */
     public function index() {
         $user = Auth::guard('admin')->user();
-
-        return view('admin.index')->with(compact('user'));
+        $all_records = new AccommodationList;
+        $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
+        return view('admin.index')->with(compact('user', 'datas'));
     }
 
     /**
@@ -35,7 +40,9 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        $user = Auth::guard('admin')->user();
+
+        return view('admin.create')->with(compact('user'));
     }
 
     /**
@@ -44,8 +51,13 @@ class AccommListController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        //
+    public function store(AccomListRequest $request) {
+
+        $accommodation_list = new AccommodationList;
+        $accommodation_list->name = $request->name;
+        $accommodation_list->save();
+
+        return redirect(route('accommlist.index'));
     }
 
     /**
@@ -65,7 +77,10 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        $user = Auth::guard('admin')->user();
+        $edit_data = AccommodationList::find($id);
+
+        return view('admin.edit')->with(compact('user', 'edit_data'));
     }
 
     /**
@@ -75,8 +90,12 @@ class AccommListController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        //
+    public function update(AccomListRequest $request, $id) {
+
+        $edit_data = AccommodationList::find($id);
+        $edit_data->name = $request->name;
+        $edit_data->save();
+        return redirect(route('accommlist.index'));
     }
 
     /**

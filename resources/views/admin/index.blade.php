@@ -1,7 +1,16 @@
 @extends('admin.app')
 @section('content')
 
-<div class="content">
+<div class="raw">
+    <div class="heading-btn-group">
+        <a href="{{ route('accommlist.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add New</a>
+    </div>    
+</div>
+
+<br>
+
+<div class="raw">
+
     <!-- Media library -->
     <div class="panel panel-white">
         <div class="panel-heading">
@@ -17,32 +26,24 @@
         <table class="table table-striped media-library table-lg">
             <thead>
                 <tr>
-                    <th><input type="checkbox" class="styled"></th>
-                    <th>Preview</th>
+                    <th>S.no</th>
                     <th>Accommodation Name</th>
-                    <th>Type</th>
+                    <th>Status</th>
                     <th>Date</th>
-                    <th>Info</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
+
+                @if(isset($datas) && !empty($datas) && count($datas) > 0)
+                @foreach($datas as $key => $data)
+
                 <tr>
-                    <td><input type="checkbox" class="styled"></td>
-                    <td>
-                        <a href="images/1.png" data-popup="lightbox">
-                            <img src="images/1.png" alt="" class="img-rounded img-preview">
-                        </a>
-                    </td>
-                    <td><a href="#">Ignorant saw her drawings</a></td>
-                    <td><a href="#">Eugene Kopyov</a></td>
-                    <td>Jun 10, 2015</td>
-                    <td>
-                        <ul class="list-condensed list-unstyled no-margin">
-                            <li><span class="text-semibold">Size:</span> 215 Kb</li>
-                            <li><span class="text-semibold">Format:</span> .jpg</li>
-                        </ul>
-                    </td>
+                    <td>{{ ($datas->currentpage()-1) * $datas->perpage() + $key + 1 }}</td>
+                    <td>{{ $data ? $data->name : '' }}</td>
+                    <td>{{ (isset($data) && !empty($data) && ($data->status == '1')) ? 'Active' : 'Inactive' }}</td>
+                    <td>{{ $data ? $data->created_at->diffForHumans() : '' }}</td>
+
                     <td class="text-center">
                         <ul class="icons-list">
                             <li class="dropdown">
@@ -50,7 +51,7 @@
                                     <i class="icon-menu9"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#"><i class="icon-pencil7"></i> Edit file</a></li>
+                                    <li><a href="{{ route('accommlist.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
                                     <li><a href="#"><i class="icon-copy"></i> Copy file</a></li>
                                     <li><a href="#"><i class="icon-eye-blocked"></i> Unpublish</a></li>
                                     <li class="divider"></li>
@@ -60,42 +61,19 @@
                         </ul>
                     </td>
                 </tr>
+                @endforeach
+
+                @else
                 <tr>
-                    <td><input type="checkbox" class="styled"></td>
-                    <td>
-                        <a href="images/1.png" data-popup="lightbox">
-                            <img src="images/1.png" alt="" class="img-rounded img-preview">
-                        </a>
-                    </td>
-                    <td><a href="#">Case oh an that or away sigh</a></td>
-                    <td><a href="#">James Alexander</a></td>
-                    <td>Jun 9, 2015</td>
-                    <td>
-                        <ul class="list-condensed list-unstyled no-margin">
-                            <li><span class="text-semibold">Size:</span> 636 Kb</li>
-                            <li><span class="text-semibold">Format:</span> .png</li>
-                        </ul>
-                    </td>
-                    <td class="text-center">
-                        <ul class="icons-list">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-menu9"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#"><i class="icon-pencil7"></i> Edit file</a></li>
-                                    <li><a href="#"><i class="icon-copy"></i> Copy file</a></li>
-                                    <li><a href="#"><i class="icon-eye-blocked"></i> Unpublish</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#"><i class="icon-bin"></i> Move to trash</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </td>
+                    <td colspan="5" align="center"><span class="label label-danger">No Record Found</span></td>
                 </tr>
+                @endif
 
-
+                <tr>
+                    <td colspan="5" align="center"> {{ $datas->render() }} </td>
+                </tr>
             </tbody>
+
         </table>
     </div>
 
