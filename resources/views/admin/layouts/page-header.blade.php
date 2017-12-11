@@ -35,3 +35,15 @@
         </ul>-->
     </div>
 </div>
+
+<div class="col-md-9 col-md-offset-2">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+    @if(Session::has($msg))
+
+    <div class="alert bg-{{ $msg }} alert-styled-right" >
+        <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+        <span class="text-semibold">{{ Session::get($msg) }}</span>
+    </div>
+    @endif
+    @endforeach
+</div>

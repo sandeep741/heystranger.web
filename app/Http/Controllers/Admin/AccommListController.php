@@ -55,8 +55,15 @@ class AccommListController extends Controller {
 
         $accommodation_list = new AccommodationList;
         $accommodation_list->name = $request->name;
-        $accommodation_list->save();
+        if ($accommodation_list->save()) {
+            $flag = 'success';
+            $msg = "Record Added Successfully";
+        } else {
+            $flag = 'danger';
+            $msg = "Record Not Added Successfully";
+        }
 
+        $request->session()->flash($flag, $msg);
         return redirect(route('accommlist.index'));
     }
 
@@ -93,8 +100,22 @@ class AccommListController extends Controller {
     public function update(AccomListRequest $request, $id) {
 
         $edit_data = AccommodationList::find($id);
-        $edit_data->name = $request->name;
-        $edit_data->save();
+        
+        if($request->name){
+            $edit_data->name = $request->name;
+        }else{
+            $edit_data->status = $request->status;
+        }
+
+        if ($edit_data->save()) {
+            $flag = 'success';
+            $msg = 'Record Updated Successfully';
+        } else {
+            $flag = 'danger';
+            $msg = 'Record Not Updated Successfully';
+        }
+
+        $request->session()->flash($flag, $msg);
         return redirect(route('accommlist.index'));
     }
 
@@ -104,8 +125,16 @@ class AccommListController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        //
+    public function destroy(Request $request, $id) {
+        if (AccommodationList::where('id', $id)->delete()) {
+            $flag = 'success';
+            $msg = 'Record Deleted Successfully';
+        } else {
+            $flag = 'danger';
+            $msg = 'Record Not Deleted Successfully';
+        }
+        $request->session()->flash($flag, $msg);
+        return redirect()->back();
     }
 
 }

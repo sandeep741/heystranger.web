@@ -40,9 +40,12 @@ class AccomListRequest extends Request {
         case 'PUT':
         case 'PATCH':
         {
+            if(Input::get('id')){
             return [
                 'name' => 'required|unique:accommodation_lists,name,'.Input::get('id').',id'
             ];
+            }
+            return [];
         }
         default:break;
         
