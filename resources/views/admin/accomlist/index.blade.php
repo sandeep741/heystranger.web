@@ -38,7 +38,7 @@
                 <td>{{ ($datas->currentpage()-1) * $datas->perpage() + $key + 1 }}</td>
                 <td>{{ $data ? $data->name : '' }}</td>
                 <td>{{ (isset($data) && !empty($data) && ($data->status == '1')) ? 'Active' : 'Inactive' }}</td>
-                <td>{{ $data ? $data->created_at->diffForHumans() : '' }}</td>
+                <td>{{ $data ? $data->updated_at->diffForHumans() : '' }}</td>
 
                 <td class="text-center">
                     <ul class="icons-list">

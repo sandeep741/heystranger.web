@@ -31,7 +31,7 @@ class AccommListController extends Controller {
         $user = Auth::guard('admin')->user();
         $all_records = new AccommodationList;
         $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
-        return view('admin.index')->with(compact('user', 'datas'));
+        return view('admin.accomlist.index')->with(compact('user', 'datas'));
     }
 
     /**
@@ -42,7 +42,7 @@ class AccommListController extends Controller {
     public function create() {
         $user = Auth::guard('admin')->user();
 
-        return view('admin.create')->with(compact('user'));
+        return view('admin.accomlist.create')->with(compact('user'));
     }
 
     /**
@@ -87,7 +87,7 @@ class AccommListController extends Controller {
         $user = Auth::guard('admin')->user();
         $edit_data = AccommodationList::find($id);
 
-        return view('admin.edit')->with(compact('user', 'edit_data'));
+        return view('admin.accomlist.edit')->with(compact('user', 'edit_data'));
     }
 
     /**
@@ -100,10 +100,10 @@ class AccommListController extends Controller {
     public function update(AccomListRequest $request, $id) {
 
         $edit_data = AccommodationList::find($id);
-        
-        if($request->name){
+
+        if ($request->name) {
             $edit_data->name = $request->name;
-        }else{
+        } else {
             $edit_data->status = $request->status;
         }
 
