@@ -8,31 +8,36 @@ use App\Http\Requests\Admin\RoomListRequest;
 use App\Model\RoomList\RoomList;
 use Auth;
 
-class RoomListController extends Controller
-{
-    
+class RoomListController extends Controller {
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:admin');
-        $this->middleware('admin');
+        try {
+            $this->middleware('auth:admin');
+            $this->middleware('admin');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
-    
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $user = Auth::guard('admin')->user();
-        $all_records = new RoomList;
-        $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
-        return view('admin.roomlist.index')->with(compact('user', 'datas'));
+    public function index() {
+        try {
+            $user = Auth::guard('admin')->user();
+            $all_records = new RoomList;
+            $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
+            return view('admin.roomlist.index')->with(compact('user', 'datas'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -40,11 +45,14 @@ class RoomListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $user = Auth::guard('admin')->user();
+    public function create() {
+        try {
+            $user = Auth::guard('admin')->user();
 
-        return view('admin.roomlist.create')->with(compact('user'));
+            return view('admin.roomlist.create')->with(compact('user'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -53,20 +61,23 @@ class RoomListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoomListRequest $request)
-    {
-        $amenity_list = new RoomList;
-        $amenity_list->name = $request->name;
-        if ($amenity_list->save()) {
-            $flag = 'success';
-            $msg = "Record Added Successfully";
-        } else {
-            $flag = 'danger';
-            $msg = "Record Not Added Successfully";
-        }
+    public function store(RoomListRequest $request) {
+        try {
+            $amenity_list = new RoomList;
+            $amenity_list->name = $request->name;
+            if ($amenity_list->save()) {
+                $flag = 'success';
+                $msg = "Record Added Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
+            }
 
-        $request->session()->flash($flag, $msg);
-        return redirect(route('roomlist.index'));
+            $request->session()->flash($flag, $msg);
+            return redirect(route('roomlist.index'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -75,9 +86,12 @@ class RoomListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        try {
+            
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -86,12 +100,15 @@ class RoomListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $user = Auth::guard('admin')->user();
-        $edit_data = RoomList::find($id);
+    public function edit($id) {
+        try {
+            $user = Auth::guard('admin')->user();
+            $edit_data = RoomList::find($id);
 
-        return view('admin.roomlist.edit')->with(compact('user', 'edit_data'));
+            return view('admin.roomlist.edit')->with(compact('user', 'edit_data'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -101,26 +118,29 @@ class RoomListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RoomListRequest $request, $id)
-    {
-        $edit_data = RoomList::find($id);
+    public function update(RoomListRequest $request, $id) {
+        try {
+            $edit_data = RoomList::find($id);
 
-        if ($request->name) {
-            $edit_data->name = $request->name;
-        } else {
-            $edit_data->status = $request->status;
+            if ($request->name) {
+                $edit_data->name = $request->name;
+            } else {
+                $edit_data->status = $request->status;
+            }
+
+            if ($edit_data->save()) {
+                $flag = 'success';
+                $msg = 'Record Updated Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Updated Successfully';
+            }
+
+            $request->session()->flash($flag, $msg);
+            return redirect(route('roomlist.index'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-
-        if ($edit_data->save()) {
-            $flag = 'success';
-            $msg = 'Record Updated Successfully';
-        } else {
-            $flag = 'danger';
-            $msg = 'Record Not Updated Successfully';
-        }
-
-        $request->session()->flash($flag, $msg);
-        return redirect(route('roomlist.index'));
     }
 
     /**
@@ -129,16 +149,20 @@ class RoomListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
-    {
-        if (RoomList::where('id', $id)->delete()) {
-            $flag = 'success';
-            $msg = 'Record Deleted Successfully';
-        } else {
-            $flag = 'danger';
-            $msg = 'Record Not Deleted Successfully';
+    public function destroy(Request $request, $id) {
+        try {
+            if (RoomList::where('id', $id)->delete()) {
+                $flag = 'success';
+                $msg = 'Record Deleted Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Deleted Successfully';
+            }
+            $request->session()->flash($flag, $msg);
+            return redirect()->back();
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-        $request->session()->flash($flag, $msg);
-        return redirect()->back();
     }
+
 }

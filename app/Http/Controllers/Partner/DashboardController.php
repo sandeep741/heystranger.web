@@ -14,14 +14,21 @@ class DashboardController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:admin');
-        $this->middleware('partner');
+        try {
+            $this->middleware('auth:admin');
+            $this->middleware('partner');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     public function index() {
-        $user = Auth::guard('admin')->user();
-
-        return view('partner.welcome')->with(compact('user'));
+        try {
+            $user = Auth::guard('admin')->user();
+            return view('partner.welcome')->with(compact('user'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
 }

@@ -52,39 +52,22 @@
                     </li>
 
                     <?php
-                    switch (\Request::route()->getName()) {
-                        case 'accommlist.index':
-                            $active = 'active';
-                            break;
-                        case 'amenitylist.index':
-                            $active = 'active';
-                            break;
-                        case 'activitylist.index':
-                            $active = 'active';
-                            break;
-                        case 'roomlist.index':
-                            $active = 'active';
-                            break;
-                        case 'paymentmodelist.index':
-                            $active = 'active';
-                            break;
-                        case 'surroundinglist.index':
-                            $active = 'active';
-                            break;
-                        default:
-                            $active = '';
+                    $active = App\Helpers\Helper::getParentRouteName();
+                    if (isset($active) && !empty($active)) {
+                        $current = $active['active'];
+                        $parent_route = $active['parent'];
                     }
                     ?>
 
-                    <li class="{{ $active }}">
+                    <li class="{{ $current }}">
                         <a href="javascript:void;"><i class="icon-copy"></i> <span>Data Management</span></a>
                         <ul style="{{ ((\Request::route()->getName() == 'amenitylist.index') ? 'display:block' : '') }}">
-                            <li><a href="{{ action("Admin\AccommListController@index") }}" style="{{ (\Request::route()->getName() == 'accommlist.index') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Accommodation List</a></li>
-                            <li><a href="{{ action("Admin\AmenityListController@index") }}" style="{{ (\Request::route()->getName() == 'amenitylist.index') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Amenity List</a></li>
-                            <li><a href="{{ action("Admin\ActivityListController@index") }}" style="{{ (\Request::route()->getName() == 'activitylist.index') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activity List</a></li>
-                            <li><a href="{{ action("Admin\RoomListController@index") }}" style="{{ (\Request::route()->getName() == 'roomlist.index') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Room Type List</a></li>
-                            <li><a href="{{ action("Admin\PaymentModeListController@index") }}" style="{{ (\Request::route()->getName() == 'paymentmodelist.index') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Payment Mode List</a></li>
-                            <li><a href="{{ action("Admin\SurroundingListController@index") }}" style="{{ (\Request::route()->getName() == 'surroundinglist.index') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Surrounding List</a></li>
+                            <li><a href="{{ action("Admin\AccommListController@index") }}" style="{{ ($parent_route == 'accommlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Accommodation List</a></li>
+                            <li><a href="{{ action("Admin\AmenityListController@index") }}" style="{{ ($parent_route == 'amenitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Amenity List</a></li>
+                            <li><a href="{{ action("Admin\ActivityListController@index") }}" style="{{ ($parent_route == 'activitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activity List</a></li>
+                            <li><a href="{{ action("Admin\RoomListController@index") }}" style="{{ ($parent_route == 'roomlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Room Type List</a></li>
+                            <li><a href="{{ action("Admin\PaymentModeListController@index") }}" style="{{ ($parent_route == 'paymentmodelist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Payment Mode List</a></li>
+                            <li><a href="{{ action("Admin\SurroundingListController@index") }}" style="{{ ($parent_route == 'surroundinglist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Surrounding List</a></li>
                         </ul>
                     </li>
                     @endif

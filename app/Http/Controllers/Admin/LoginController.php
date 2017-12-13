@@ -34,7 +34,11 @@ use AuthenticatesUsers;
      * @return void
      */
     public function __construct() {
-        $this->middleware('guest:admin')->except('logout');
+        try {
+            $this->middleware('guest:admin')->except('logout');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -44,16 +48,21 @@ use AuthenticatesUsers;
      * @return \Illuminate\Http\Response
      */
     protected function sendLoginResponse(Request $request) {
-        $request->session()->regenerate();
+        try {
 
-        $this->clearLoginAttempts($request);
+            $request->session()->regenerate();
 
-        foreach ($this->guard()->user()->role as $role) {
-            if ($role->name == 'admin') {
-                return redirect('dashboard');
-            } else if ($role->name == 'partner') {
-                return redirect('partner');
+            $this->clearLoginAttempts($request);
+
+            foreach ($this->guard()->user()->role as $role) {
+                if ($role->name == 'admin') {
+                    return redirect('dashboard');
+                } else if ($role->name == 'partner') {
+                    return redirect('partner');
+                }
             }
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
     }
 
@@ -63,7 +72,11 @@ use AuthenticatesUsers;
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm() {
-        return view('admin.login');
+        try {
+            return view('admin.login');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -72,7 +85,11 @@ use AuthenticatesUsers;
      * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
     protected function guard() {
-        return Auth::guard('admin');
+        try {
+            return Auth::guard('admin');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -82,10 +99,14 @@ use AuthenticatesUsers;
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request) {
-        $this->guard()->logout();
+        try {
+            $this->guard()->logout();
 
-        $request->session()->invalidate();
-        return redirect('/admin');
+            $request->session()->invalidate();
+            return redirect('/admin');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
 }

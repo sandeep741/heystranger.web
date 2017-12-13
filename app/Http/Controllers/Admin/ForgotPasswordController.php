@@ -5,28 +5,31 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class ForgotPasswordController extends Controller
-{
+class ForgotPasswordController extends Controller {
     /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset emails and
-    | includes a trait which assists in sending these notifications from
-    | your application to your users. Feel free to explore this trait.
-    |
-    */
+      |--------------------------------------------------------------------------
+      | Password Reset Controller
+      |--------------------------------------------------------------------------
+      |
+      | This controller is responsible for handling password reset emails and
+      | includes a trait which assists in sending these notifications from
+      | your application to your users. Feel free to explore this trait.
+      |
+     */
 
-    use SendsPasswordResetEmails;
+use SendsPasswordResetEmails;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest:admin');
+    public function __construct() {
+        try {
+            $this->middleware('guest:admin');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
+
 }

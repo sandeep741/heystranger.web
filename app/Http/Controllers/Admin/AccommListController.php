@@ -16,8 +16,12 @@ class AccommListController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:admin');
-        $this->middleware('admin');
+        try {
+            $this->middleware('auth:admin');
+            $this->middleware('admin');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -26,10 +30,15 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $user = Auth::guard('admin')->user();
-        $all_records = new AccommodationList;
-        $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
-        return view('admin.accomlist.index')->with(compact('user', 'datas'));
+        try {
+
+            $user = Auth::guard('admin')->user();
+            $all_records = new AccommodationList;
+            $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
+            return view('admin.accomlist.index')->with(compact('user', 'datas'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -38,9 +47,13 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $user = Auth::guard('admin')->user();
+        try {
+            $user = Auth::guard('admin')->user();
 
-        return view('admin.accomlist.create')->with(compact('user'));
+            return view('admin.accomlist.create')->with(compact('user'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -50,19 +63,23 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(AccomListRequest $request) {
+        try {
 
-        $accommodation_list = new AccommodationList;
-        $accommodation_list->name = $request->name;
-        if ($accommodation_list->save()) {
-            $flag = 'success';
-            $msg = "Record Added Successfully";
-        } else {
-            $flag = 'danger';
-            $msg = "Record Not Added Successfully";
+            $accommodation_list = new AccommodationList;
+            $accommodation_list->name = $request->name;
+            if ($accommodation_list->save()) {
+                $flag = 'success';
+                $msg = "Record Added Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
+            }
+
+            $request->session()->flash($flag, $msg);
+            return redirect(route('accommlist.index'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-
-        $request->session()->flash($flag, $msg);
-        return redirect(route('accommlist.index'));
     }
 
     /**
@@ -72,7 +89,12 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+
+        try {
+            
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -82,10 +104,16 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $user = Auth::guard('admin')->user();
-        $edit_data = AccommodationList::find($id);
+        try {
 
-        return view('admin.accomlist.edit')->with(compact('user', 'edit_data'));
+            $user = Auth::guard('admin')->user();
+            $edit_data = AccommodationList::find($id);
+
+            return view('admin.accomlist.edit')->with(compact('user', 'edit_data'));
+        } catch (Exception $ex) {
+
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -96,25 +124,29 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(AccomListRequest $request, $id) {
+        try {
 
-        $edit_data = AccommodationList::find($id);
+            $edit_data = AccommodationList::find($id);
 
-        if ($request->name) {
-            $edit_data->name = $request->name;
-        } else {
-            $edit_data->status = $request->status;
+            if ($request->name) {
+                $edit_data->name = $request->name;
+            } else {
+                $edit_data->status = $request->status;
+            }
+
+            if ($edit_data->save()) {
+                $flag = 'success';
+                $msg = 'Record Updated Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Updated Successfully';
+            }
+
+            $request->session()->flash($flag, $msg);
+            return redirect(route('accommlist.index'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-
-        if ($edit_data->save()) {
-            $flag = 'success';
-            $msg = 'Record Updated Successfully';
-        } else {
-            $flag = 'danger';
-            $msg = 'Record Not Updated Successfully';
-        }
-
-        $request->session()->flash($flag, $msg);
-        return redirect(route('accommlist.index'));
     }
 
     /**
@@ -124,15 +156,20 @@ class AccommListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id) {
-        if (AccommodationList::where('id', $id)->delete()) {
-            $flag = 'success';
-            $msg = 'Record Deleted Successfully';
-        } else {
-            $flag = 'danger';
-            $msg = 'Record Not Deleted Successfully';
+        try {
+
+            if (AccommodationList::where('id', $id)->delete()) {
+                $flag = 'success';
+                $msg = 'Record Deleted Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Deleted Successfully';
+            }
+            $request->session()->flash($flag, $msg);
+            return redirect()->back();
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-        $request->session()->flash($flag, $msg);
-        return redirect()->back();
     }
 
 }

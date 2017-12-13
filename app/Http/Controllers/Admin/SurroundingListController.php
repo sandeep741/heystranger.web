@@ -8,31 +8,36 @@ use App\Http\Requests\Admin\SurroundingListRequest;
 use App\Model\SurroundingList\SurroundingList;
 use Auth;
 
-class SurroundingListController extends Controller
-{
-    
+class SurroundingListController extends Controller {
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:admin');
-        $this->middleware('admin');
+        try {
+            $this->middleware('auth:admin');
+            $this->middleware('admin');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
-    
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $user = Auth::guard('admin')->user();
-        $all_records = new SurroundingList;
-        $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
-        return view('admin.surroundinglist.index')->with(compact('user', 'datas'));
+    public function index() {
+        try {
+            $user = Auth::guard('admin')->user();
+            $all_records = new SurroundingList;
+            $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
+            return view('admin.surroundinglist.index')->with(compact('user', 'datas'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -40,11 +45,14 @@ class SurroundingListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $user = Auth::guard('admin')->user();
+    public function create() {
+        try {
+            $user = Auth::guard('admin')->user();
 
-        return view('admin.surroundinglist.create')->with(compact('user'));
+            return view('admin.surroundinglist.create')->with(compact('user'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -53,20 +61,23 @@ class SurroundingListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SurroundingListRequest $request)
-    {
-        $amenity_list = new SurroundingList;
-        $amenity_list->name = $request->name;
-        if ($amenity_list->save()) {
-            $flag = 'success';
-            $msg = "Record Added Successfully";
-        } else {
-            $flag = 'danger';
-            $msg = "Record Not Added Successfully";
-        }
+    public function store(SurroundingListRequest $request) {
+        try {
+            $amenity_list = new SurroundingList;
+            $amenity_list->name = $request->name;
+            if ($amenity_list->save()) {
+                $flag = 'success';
+                $msg = "Record Added Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
+            }
 
-        $request->session()->flash($flag, $msg);
-        return redirect(route('surroundinglist.index'));
+            $request->session()->flash($flag, $msg);
+            return redirect(route('surroundinglist.index'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -75,9 +86,12 @@ class SurroundingListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        try {
+            
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -86,12 +100,15 @@ class SurroundingListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $user = Auth::guard('admin')->user();
-        $edit_data = SurroundingList::find($id);
+    public function edit($id) {
+        try {
+            $user = Auth::guard('admin')->user();
+            $edit_data = SurroundingList::find($id);
 
-        return view('admin.surroundinglist.edit')->with(compact('user', 'edit_data'));
+            return view('admin.surroundinglist.edit')->with(compact('user', 'edit_data'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -101,26 +118,29 @@ class SurroundingListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SurroundingListRequest $request, $id)
-    {
-        $edit_data = SurroundingList::find($id);
+    public function update(SurroundingListRequest $request, $id) {
+        try {
+            $edit_data = SurroundingList::find($id);
 
-        if ($request->name) {
-            $edit_data->name = $request->name;
-        } else {
-            $edit_data->status = $request->status;
+            if ($request->name) {
+                $edit_data->name = $request->name;
+            } else {
+                $edit_data->status = $request->status;
+            }
+
+            if ($edit_data->save()) {
+                $flag = 'success';
+                $msg = 'Record Updated Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Updated Successfully';
+            }
+
+            $request->session()->flash($flag, $msg);
+            return redirect(route('surroundinglist.index'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-
-        if ($edit_data->save()) {
-            $flag = 'success';
-            $msg = 'Record Updated Successfully';
-        } else {
-            $flag = 'danger';
-            $msg = 'Record Not Updated Successfully';
-        }
-
-        $request->session()->flash($flag, $msg);
-        return redirect(route('surroundinglist.index'));
     }
 
     /**
@@ -129,16 +149,20 @@ class SurroundingListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
-    {
-        if (SurroundingList::where('id', $id)->delete()) {
-            $flag = 'success';
-            $msg = 'Record Deleted Successfully';
-        } else {
-            $flag = 'danger';
-            $msg = 'Record Not Deleted Successfully';
+    public function destroy(Request $request, $id) {
+        try {
+            if (SurroundingList::where('id', $id)->delete()) {
+                $flag = 'success';
+                $msg = 'Record Deleted Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Deleted Successfully';
+            }
+            $request->session()->flash($flag, $msg);
+            return redirect()->back();
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-        $request->session()->flash($flag, $msg);
-        return redirect()->back();
     }
+
 }
