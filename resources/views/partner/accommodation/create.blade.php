@@ -57,11 +57,11 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('type_accomm',[''=>'Choose type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
+                                    {{Form::select('accom_type',[''=>'Choose type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('accom_type'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('accom_type') }}</strong>
                                     </span>
                                     @endif
 
@@ -71,19 +71,23 @@
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     {{Form::select('rating',[''=>'Start Ratings']+@config('constants.star_rating'), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
-
+                                    @if ($errors->has('rating'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('rating') }}</strong>
+                                    </span>
+                                    @endif   
 
 <!--<input type="file" class="file-styled">
 <span class="help-block">Accommodation Image Accepted formats: gif, png, jpg. Max file size 2Mb</span>-->
                                 </div>
-                                
-                                
-                                
+
+
+
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('name', (isset($edit_data) && !empty($edit_data) ? $edit_data->name : ''), ['class' => 'form-control', 'placeholder' => 'Enter Reserving Email']) !!}
-                                    @if ($errors->has('name'))
+                                    {!! Form::text('reserving_email', (isset($edit_data) && !empty($edit_data) ? $edit_data->reserving_email : ''), ['class' => 'form-control', 'placeholder' => 'Enter Reserving Email *']) !!}
+                                    @if ($errors->has('email'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('reserving_email') }}</strong>
                                     </span>
                                     @endif
 
@@ -92,34 +96,44 @@
 
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('country',[''=>'Select Country *']+@$arr_country->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['id'=> 'state_id', 'class'=>'form-control country_id'])}}
+                                    {{Form::select('country',[''=>'Select Country *']+@$arr_country->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->country_id : ''),['id'=> 'state_id', 'class'=>'form-control country_id'])}}
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('country'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('country') }}</strong>
                                     </span>
                                     @endif
 
                                 </div>
-                                
+
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('state',[''=>'Select State *'], (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
+                                    {{Form::select('state',[''=>'Select State *'], (isset($edit_data) && !empty($edit_data) ? @$edit_data->state_id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('state'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('state') }}</strong>
                                     </span>
                                     @endif
 
                                 </div>
                             </div>
                             <div class="form-group">
-                               <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('city',[''=>'Select city *'], (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {{Form::select('city',[''=>'Select city *'], (isset($edit_data) && !empty($edit_data) ? @$edit_data->city_id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('city'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {!! Form::text('stree_address', (isset($edit_data) && !empty($edit_data) ? $edit_data->stree_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address *']) !!}
+                                    @if ($errors->has('stree_address'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('stree_address') }}</strong>
                                     </span>
                                     @endif
 
@@ -127,16 +141,27 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Accommodation Detail:</label>
-                                <div class="col-lg-9">
-                                    <textarea rows="5" cols="5" class="form-control" placeholder="Enter Accommodation Description"></textarea>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {!! Form::text('area', (isset($edit_data) && !empty($edit_data) ? $edit_data->area : ''), ['class' => 'form-control', 'placeholder' => 'Enter suburb Area *']) !!}
+                                    @if ($errors->has('area'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('area') }}</strong>
+                                    </span>
+                                    @endif
+
                                 </div>
-                            </div>
 
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {!! Form::text('contact_no', (isset($edit_data) && !empty($edit_data) ? $edit_data->contact_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Contact Number']) !!}
+                                    @if ($errors->has('contact_no'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('contact_no') }}</strong>
+                                    </span>
+                                    @endif
 
+                                </div>
 
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit form </button>
                             </div>
                         </div>
                     </div>
