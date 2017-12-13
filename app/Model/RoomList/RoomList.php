@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Model\Accommodation;
+namespace App\Model\RoomList;
 
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\SoftDeletes;
 
-class AccommodationList extends Model {
-    
+class RoomList extends Model
+{
     /*use SoftDeletes;
-    protected $table = 'accommodation_lists';
+    protected $table = 'amenity_lists';
     protected $fillable = ['name', 'status'];
     protected $dates = ['deleted_at'];*/
     
     public function getNameAttribute($value) {
         return ucfirst($value);
     }
-
 }

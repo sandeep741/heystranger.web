@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\AccomListRequest;
-use App\Model\Accommodation\AccommodationList;
+use App\Http\Requests\Admin\RoomListRequest;
+use App\Model\RoomList\RoomList;
 use Auth;
 
-class AccommListController extends Controller {
-
+class RoomListController extends Controller
+{
+    
     /**
      * Create a new controller instance.
      *
@@ -19,17 +20,19 @@ class AccommListController extends Controller {
         $this->middleware('auth:admin');
         $this->middleware('admin');
     }
-
+    
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $user = Auth::guard('admin')->user();
-        $all_records = new AccommodationList;
+        $all_records = new RoomList;
         $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
-        return view('admin.accomlist.index')->with(compact('user', 'datas'));
+        return view('admin.roomlist.index')->with(compact('user', 'datas'));
     }
 
     /**
@@ -37,10 +40,11 @@ class AccommListController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $user = Auth::guard('admin')->user();
 
-        return view('admin.accomlist.create')->with(compact('user'));
+        return view('admin.roomlist.create')->with(compact('user'));
     }
 
     /**
@@ -49,11 +53,11 @@ class AccommListController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AccomListRequest $request) {
-
-        $accommodation_list = new AccommodationList;
-        $accommodation_list->name = $request->name;
-        if ($accommodation_list->save()) {
+    public function store(RoomListRequest $request)
+    {
+        $amenity_list = new RoomList;
+        $amenity_list->name = $request->name;
+        if ($amenity_list->save()) {
             $flag = 'success';
             $msg = "Record Added Successfully";
         } else {
@@ -62,7 +66,7 @@ class AccommListController extends Controller {
         }
 
         $request->session()->flash($flag, $msg);
-        return redirect(route('accommlist.index'));
+        return redirect(route('roomlist.index'));
     }
 
     /**
@@ -71,7 +75,8 @@ class AccommListController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -81,11 +86,12 @@ class AccommListController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $user = Auth::guard('admin')->user();
-        $edit_data = AccommodationList::find($id);
+        $edit_data = RoomList::find($id);
 
-        return view('admin.accomlist.edit')->with(compact('user', 'edit_data'));
+        return view('admin.roomlist.edit')->with(compact('user', 'edit_data'));
     }
 
     /**
@@ -95,9 +101,9 @@ class AccommListController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AccomListRequest $request, $id) {
-
-        $edit_data = AccommodationList::find($id);
+    public function update(RoomListRequest $request, $id)
+    {
+        $edit_data = RoomList::find($id);
 
         if ($request->name) {
             $edit_data->name = $request->name;
@@ -114,7 +120,7 @@ class AccommListController extends Controller {
         }
 
         $request->session()->flash($flag, $msg);
-        return redirect(route('accommlist.index'));
+        return redirect(route('roomlist.index'));
     }
 
     /**
@@ -123,8 +129,9 @@ class AccommListController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id) {
-        if (AccommodationList::where('id', $id)->delete()) {
+    public function destroy(Request $request, $id)
+    {
+        if (RoomList::where('id', $id)->delete()) {
             $flag = 'success';
             $msg = 'Record Deleted Successfully';
         } else {
@@ -134,5 +141,4 @@ class AccommListController extends Controller {
         $request->session()->flash($flag, $msg);
         return redirect()->back();
     }
-
 }

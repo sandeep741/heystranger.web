@@ -55,6 +55,11 @@ Route::POST('admin-password/reset', 'Admin\ResetPasswordController@reset');
 Route::GET('admin-password/reset{token}', 'Admin\ResetPasswordController@showRequestForm')->name('admin.password.reset');
 Route::post('logouts', 'Admin\LoginController@logout')->name('admin.logout');
 Route::resource('accommlist', 'Admin\AccommListController');
+Route::resource('amenitylist', 'Admin\AmenityListController');
+Route::resource('activitylist', 'Admin\ActivityListController');
+Route::resource('roomlist', 'Admin\RoomListController');
+Route::resource('paymentmodelist', 'Admin\PaymentModeListController');
+Route::resource('surroundinglist', 'Admin\SurroundingListController');
 
 /////////////routes for user////////////
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');

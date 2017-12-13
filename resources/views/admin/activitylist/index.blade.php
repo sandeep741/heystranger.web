@@ -3,14 +3,14 @@
 
 
 <div class="heading-btn-group">
-    <a href="{{ route('accommlist.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add New</a>
+    <a href="{{ route('activitylist.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add New</a>
 </div>  
 <br>
 
 <!-- Media library -->
 <div class="panel panel-white">
     <div class="panel-heading">
-        <h6 class="panel-title text-semibold">My Accommodation</h6>
+        <h6 class="panel-title text-semibold">My Activity</h6>
         <div class="heading-elements">
             <ul class="icons-list">
                 <li><a data-action="collapse"></a></li>
@@ -23,7 +23,7 @@
         <thead>
             <tr>
                 <th>S.no</th>
-                <th>Accommodation Name</th>
+                <th>Activity Name</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th class="text-center">Actions</th>
@@ -47,7 +47,7 @@
                                 <i class="icon-menu9"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="{{ route('accommlist.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
+                                <li><a href="{{ route('activitylist.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
                                 <li><a href="" onclick="event.preventDefault();
                                                 document.getElementById('update-form-{{ $data->id }}').submit();"><i class="icon-eye{{ (($data->status == 1) ? "-blocked" : '') }}"></i> {{ (($data->status == 1) ? "Unpublish" : "publish") }}</a></li>
                                 <li class="divider"></li>
@@ -70,7 +70,7 @@
                     array(
                     'name' => 'delete-form',
                     'id' => 'delete-form-'.$data->id,
-                    'url' => 'accommlist/'.(isset($data) && !empty($data) ? $data->id : ''),
+                    'url' => 'activitylist/'.(isset($data) && !empty($data) ? $data->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'style' => 'display:none',
@@ -87,7 +87,7 @@
                     array(
                     'name' => 'update-form',
                     'id' => 'update-form-'.$data->id,
-                    'url' => 'accommlist/'.(isset($data) && !empty($data) ? $data->id : ''),
+                    'url' => 'activitylist/'.(isset($data) && !empty($data) ? $data->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'style' => 'display:none',
@@ -123,7 +123,7 @@
 @endsection
 
 @section('pageTitle')
-Accommodation
+Activity
 @endsection
 
 @section('addtional_css')
