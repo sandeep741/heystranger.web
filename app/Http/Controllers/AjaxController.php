@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
+use Response;
 use App\Model\City\City;
 use App\Model\Country\Country;
 use App\Model\State\State;
@@ -17,8 +18,8 @@ class AjaxController extends Controller {
      */
     public function __construct() {
         try {
-            $this->middleware('auth:admin');
-            $this->middleware('admin');
+            //$this->middleware('auth:admin');
+            //$this->middleware('admin');
             $this->state = new State();
             $this->city = new City();
         } catch (Exception $ex) {
@@ -63,7 +64,7 @@ class AjaxController extends Controller {
      * @param 
      * @return mixed Json | 0 (in case of failure)
      * @since 0.1
-     * @Author Meghendra S Yadav
+     * @Author Sandeep Kumar
      */
     public function getCityByID() {
         try {

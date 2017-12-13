@@ -46,13 +46,13 @@ Route::get('/home', 'HomeController@index');
   Route::resource('accomodation', 'AccommodationController'); */
 
 /////////////routes for admin user////////////
-Route::GET('dashboard', 'AdminController@index')->name('dashboard');
-Route::GET('admin', 'Admin\LoginController@showLoginForm')->name('admin.login');
-Route::POST('admin', 'Admin\LoginController@login');
-Route::POST('admin-password/email', 'Admin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.login');
-Route::GET('admin-password/reset', 'Admin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-Route::POST('admin-password/reset', 'Admin\ResetPasswordController@reset');
-Route::GET('admin-password/reset{token}', 'Admin\ResetPasswordController@showRequestForm')->name('admin.password.reset');
+Route::get('dashboard', 'AdminController@index')->name('dashboard');
+Route::get('admin', 'Admin\LoginController@showLoginForm')->name('admin.login');
+Route::post('admin', 'Admin\LoginController@login');
+Route::post('admin-password/email', 'Admin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.login');
+Route::get('admin-password/reset', 'Admin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+Route::post('admin-password/reset', 'Admin\ResetPasswordController@reset');
+Route::get('admin-password/reset{token}', 'Admin\ResetPasswordController@showRequestForm')->name('admin.password.reset');
 Route::post('logouts', 'Admin\LoginController@logout')->name('admin.logout');
 Route::resource('accommlist', 'Admin\AccommListController');
 Route::resource('amenitylist', 'Admin\AmenityListController');
@@ -65,6 +65,30 @@ Route::resource('surroundinglist', 'Admin\SurroundingListController');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 /////////////routes for Partner////////////
-Route::GET('partner', 'PartnerController@index')->name('partner');
-Route::GET('accommodations', 'PartnerController@index');
+Route::get('partner', 'PartnerController@index')->name('partner');
+Route::get('accommodations', 'PartnerController@index');
 Route::resource('accomodation', 'Partner\AccommodationController');
+
+
+/////////////Routes for Ajax////////////
+
+Route::prefix('ajax')->group(function () {
+    
+    //Route::get('getState', 'AjaxController@getState');
+        
+});
+
+
+Route::group(['prefix' => 'ajax', 'middleware' => 'web'], function() {
+    Route::get('getState', [
+        'as' => 'get_state',
+        'uses' => 'AjaxController@getState'
+            ]
+    );
+    
+    Route::get('getCity', [
+        'as' => 'get_city',
+        'uses' => 'AjaxController@getCity'
+            ]
+    );
+});
