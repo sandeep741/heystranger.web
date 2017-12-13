@@ -2,6 +2,8 @@ jQuery(document).ready(function () {
 
     $(".country_id").change(function () {
         varCountryID = $(this).val();
+        $('.address_city_id option').remove();
+        $('.address_city_id').append(new Option("Please Select City *", ''));
 
         $('.state_id option').remove();
         $.ajax({
