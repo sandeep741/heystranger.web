@@ -16,6 +16,7 @@ class CreateCitiesTable extends Migration {
             $table->increments('id')->index();
             $table->string('name');
             $table->integer('state_id');
+            $table->enum('status', ['1', '0']);
             $table->timestamps();
         });
     }

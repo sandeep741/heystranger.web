@@ -17,6 +17,7 @@ class CreateCountriesTable extends Migration {
             $table->string('code');
             $table->string('name');
             $table->integer('phonecode');
+            $table->enum('status', ['1', '0']);
             $table->timestamps();
         });
     }
