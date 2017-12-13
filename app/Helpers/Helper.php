@@ -157,6 +157,9 @@ class Helper {
                 case 'surroundinglist':
                     $data['active'] = 'active';
                     break;
+                case 'accomodation':
+                    $data['active'] = 'active';
+                    break;
                 default:
                     $data['active'] = '';
             }

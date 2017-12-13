@@ -1,3 +1,10 @@
+<?php
+$active = App\Helpers\Helper::getParentRouteName();
+if (isset($active) && !empty($active)) {
+    $current = $active['active'];
+    $parent_route = $active['parent'];
+}
+?>
 <div class="sidebar sidebar-main">
     <div class="sidebar-content">
         <!-- User menu -->
@@ -28,16 +35,14 @@
                 <ul class="navigation navigation-main navigation-accordion">
                     <!-- Main -->
                     <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                    <li><a href="{{ route('admin.login') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                    <li class="{{ $current }}"><a href="{{ route('admin.login') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 
                     @if(isset($user) && $user->role[0]->name == 'partner')
-                    <li>
+                    <li >
                         <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Accommodation</span></a>
-                        <ul>
-                            <li><a href="{{ route("accomodation.index") }}">My Accommodation</a></li>
-                            <li><a href="{{ route("accomodation.create") }}">Add Accommodation</a></li>
-                            <li><a href="javascript:void;">Add Room</a></li>
-
+                        <ul style="{{ (($parent_route == 'accomodation') ? 'display:block' : '') }}">
+                            <li><a href="{{ route("accomodation.index") }}" style="{{ ($parent_route == 'accomodation') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}">My Accommodation</a></li>
+                            <li><a href="{{ route("accommlist.index") }}" style="{{ ($parent_route == 'accommlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}">My Venue Details</a></li>
                         </ul>
                     </li>
                     @endif
@@ -51,17 +56,9 @@
                         </ul>
                     </li>
 
-                    <?php
-                    $active = App\Helpers\Helper::getParentRouteName();
-                    if (isset($active) && !empty($active)) {
-                        $current = $active['active'];
-                        $parent_route = $active['parent'];
-                    }
-                    ?>
-
                     <li class="{{ $current }}">
                         <a href="javascript:void;"><i class="icon-copy"></i> <span>Data Management</span></a>
-                        <ul style="{{ ((\Request::route()->getName() == 'amenitylist.index') ? 'display:block' : '') }}">
+                        <ul style="{{ (($parent_route == 'amenitylist') ? 'display:block' : '') }}">
                             <li><a href="{{ route("accommlist.index") }}" style="{{ ($parent_route == 'accommlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Accommodation List</a></li>
                             <li><a href="{{ route("amenitylist.index") }}" style="{{ ($parent_route == 'amenitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Amenity List</a></li>
                             <li><a href="{{ route("activitylist.index") }}" style="{{ ($parent_route == 'activitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activity List</a></li>

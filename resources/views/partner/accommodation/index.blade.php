@@ -1,8 +1,11 @@
 @extends('admin.app')
 @section('content')
 
-<div class="content">
-    <!-- Media library -->
+<div class="heading-btn-group">
+    <a href="{{ route('accomodation.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add New</a>
+</div>  
+<br>
+
     <div class="panel panel-white">
         <div class="panel-heading">
             <h6 class="panel-title text-semibold">My Accommodation</h6>
@@ -98,8 +101,6 @@
             </tbody>
         </table>
     </div>
-
-</div>
 
 @endsection
 

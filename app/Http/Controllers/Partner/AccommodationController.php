@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Partner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Accommodation\AccommodationList;
+use App\Model\State\State;
+use App\Model\Country\Country;
+use App\Model\City\City;
 use Auth;
 
 class AccommodationController extends Controller {
@@ -31,7 +35,7 @@ class AccommodationController extends Controller {
         try {
             $user = Auth::guard('admin')->user();
 
-            return view('partner.index')->with(compact('user'));
+            return view('partner.accommodation.index')->with(compact('user'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -45,7 +49,12 @@ class AccommodationController extends Controller {
     public function create() {
         try {
             $user = Auth::guard('admin')->user();
-            return view('partner.create')->with(compact('user'));
+            $accomm_data = new AccommodationList;
+            $country = new Country;
+            
+            $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'DESC')->where('status',1)->get();
+            $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
+            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
