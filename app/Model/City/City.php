@@ -14,8 +14,9 @@ class City extends Model {
      * @author Ashish Vishwakarma
      */
     public static function getAllCityByStateID($varStateID) {
+        $where_condition = array('state_id' => $varStateID, 'status' => '1');
         $arrCity = SELF::select('id', 'name')
-                ->where('state_id', '=', $varStateID)
+                ->where($where_condition)
                 ->get();
 
         return ($arrCity ?: false);
