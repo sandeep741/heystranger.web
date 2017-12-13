@@ -34,8 +34,8 @@
                     <li>
                         <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Accommodation</span></a>
                         <ul>
-                            <li><a href="{{ action("Partner\AccommodationController@index") }}">My Accommodation</a></li>
-                            <li><a href="{{ action("Partner\AccommodationController@create") }}">Add Accommodation</a></li>
+                            <li><a href="{{ route("accomodation.index") }}">My Accommodation</a></li>
+                            <li><a href="{{ route("accomodation.create") }}">Add Accommodation</a></li>
                             <li><a href="javascript:void;">Add Room</a></li>
 
                         </ul>
@@ -62,12 +62,12 @@
                     <li class="{{ $current }}">
                         <a href="javascript:void;"><i class="icon-copy"></i> <span>Data Management</span></a>
                         <ul style="{{ ((\Request::route()->getName() == 'amenitylist.index') ? 'display:block' : '') }}">
-                            <li><a href="{{ action("Admin\AccommListController@index") }}" style="{{ ($parent_route == 'accommlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Accommodation List</a></li>
-                            <li><a href="{{ action("Admin\AmenityListController@index") }}" style="{{ ($parent_route == 'amenitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Amenity List</a></li>
-                            <li><a href="{{ action("Admin\ActivityListController@index") }}" style="{{ ($parent_route == 'activitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activity List</a></li>
-                            <li><a href="{{ action("Admin\RoomListController@index") }}" style="{{ ($parent_route == 'roomlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Room Type List</a></li>
-                            <li><a href="{{ action("Admin\PaymentModeListController@index") }}" style="{{ ($parent_route == 'paymentmodelist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Payment Mode List</a></li>
-                            <li><a href="{{ action("Admin\SurroundingListController@index") }}" style="{{ ($parent_route == 'surroundinglist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Surrounding List</a></li>
+                            <li><a href="{{ route("accommlist.index") }}" style="{{ ($parent_route == 'accommlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Accommodation List</a></li>
+                            <li><a href="{{ route("amenitylist.index") }}" style="{{ ($parent_route == 'amenitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout1">Amenity List</a></li>
+                            <li><a href="{{ route("activitylist.index") }}" style="{{ ($parent_route == 'activitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activity List</a></li>
+                            <li><a href="{{ route("roomlist.index") }}" style="{{ ($parent_route == 'roomlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Room Type List</a></li>
+                            <li><a href="{{ route("paymentmodelist.index") }}" style="{{ ($parent_route == 'paymentmodelist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Payment Mode List</a></li>
+                            <li><a href="{{ route("surroundinglist.index") }}" style="{{ ($parent_route == 'surroundinglist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Surrounding List</a></li>
                         </ul>
                     </li>
                     @endif
