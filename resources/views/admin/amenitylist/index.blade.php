@@ -23,7 +23,7 @@
         <thead>
             <tr>
                 <th>S.no</th>
-                <th>Accommodation Name</th>
+                <th>Amenity Name</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th class="text-center">Actions</th>

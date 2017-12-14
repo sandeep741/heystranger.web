@@ -83,7 +83,7 @@
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     {!! Form::text('reserving_email', (isset($edit_data) && !empty($edit_data) ? $edit_data->reserving_email : ''), ['class' => 'form-control', 'placeholder' => 'Enter Reserving Email']) !!}
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('reserving_email'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('reserving_email') }}</strong>
                                     </span>
@@ -128,10 +128,10 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('stree_address', (isset($edit_data) && !empty($edit_data) ? $edit_data->stree_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address']) !!}
-                                    @if ($errors->has('stree_address'))
+                                    {!! Form::text('street_address', (isset($edit_data) && !empty($edit_data) ? $edit_data->stree_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address']) !!}
+                                    @if ($errors->has('street_address'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('stree_address') }}</strong>
+                                        <strong>{{ $errors->first('street_address') }}</strong>
                                     </span>
                                     @endif
 
@@ -175,10 +175,10 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{ Form::file('establish_details', ['class' => 'file-styled']) }}
-                                    @if ($errors->has('establish_details'))
+                                    {{ Form::file('accomm_images[]', ['class' => 'file-styled', 'multiple' => true]) }}
+                                    @if ($errors->has('accomm_images'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('establish_details') }}</strong>
+                                        <strong>{{ $errors->first('accomm_images') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -291,5 +291,5 @@ Add Accommodation
 <script type="text/javascript" src="{{ asset('/assets/admin/js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/assets/admin/js/form_layouts.js') }}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/city.js')}}"></script>
-<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
+<!--<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>-->
 @endsection
