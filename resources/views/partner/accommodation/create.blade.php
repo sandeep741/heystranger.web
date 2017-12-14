@@ -29,8 +29,8 @@
                     {!!
                     Form::open(
                     array(
-                    'name' => 'frm_accomm',
-                    'id' => 'frm_accomm',
+                    'name' => 'frm_accommodation',
+                    'id' => 'frm_accommodation',
                     'url' => 'accomodation/'.(isset($edit_data) && !empty($edit_data) ? $edit_data->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
@@ -57,7 +57,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('accom_type',[''=>'Choose type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
+                                    {{Form::select('accom_type',[''=>'Select type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
 
                                     @if ($errors->has('accom_type'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -77,14 +77,12 @@
                                     </span>
                                     @endif   
 
-<!--<input type="file" class="file-styled">
-<span class="help-block">Accommodation Image Accepted formats: gif, png, jpg. Max file size 2Mb</span>-->
                                 </div>
 
 
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('reserving_email', (isset($edit_data) && !empty($edit_data) ? $edit_data->reserving_email : ''), ['class' => 'form-control', 'placeholder' => 'Enter Reserving Email *']) !!}
+                                    {!! Form::text('reserving_email', (isset($edit_data) && !empty($edit_data) ? $edit_data->reserving_email : ''), ['class' => 'form-control', 'placeholder' => 'Enter Reserving Email']) !!}
                                     @if ($errors->has('email'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('reserving_email') }}</strong>
@@ -130,7 +128,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('stree_address', (isset($edit_data) && !empty($edit_data) ? $edit_data->stree_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address *']) !!}
+                                    {!! Form::text('stree_address', (isset($edit_data) && !empty($edit_data) ? $edit_data->stree_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address']) !!}
                                     @if ($errors->has('stree_address'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('stree_address') }}</strong>
@@ -143,7 +141,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('area', (isset($edit_data) && !empty($edit_data) ? $edit_data->area : ''), ['class' => 'form-control', 'placeholder' => 'Enter suburb Area *']) !!}
+                                    {!! Form::text('area', (isset($edit_data) && !empty($edit_data) ? $edit_data->area : ''), ['class' => 'form-control', 'placeholder' => 'Enter suburb Area']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('area') }}</strong>
@@ -162,6 +160,46 @@
 
                                 </div>
 
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {!! Form::text('alternate_no', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Alternate no']) !!}
+                                    @if ($errors->has('area'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('alternate_no') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {{ Form::file('establish_details', ['class' => 'file-styled']) }}
+                                    @if ($errors->has('establish_details'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('establish_details') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Establishment Detail:</label>
+
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    {!! Form::textarea('establish_details', (isset($edit_data) && !empty($edit_data) ? $edit_data->establish_details : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
+                                    @if ($errors->has('establish_details'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('establish_details') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Submit form </button>
                             </div>
                         </div>
                     </div>
@@ -253,4 +291,5 @@ Add Accommodation
 <script type="text/javascript" src="{{ asset('/assets/admin/js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/assets/admin/js/form_layouts.js') }}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/city.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
 @endsection

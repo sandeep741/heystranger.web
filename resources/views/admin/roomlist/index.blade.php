@@ -49,18 +49,9 @@
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="{{ route('roomlist.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
                                 <li><a href="" onclick="event.preventDefault();
-                                                document.getElementById('update-form-{{ $data->id }}').submit();"><i class="icon-eye{{ (($data->status == 1) ? "-blocked" : '') }}"></i> {{ (($data->status == 1) ? "Unpublish" : "publish") }}</a></li>
+                                            document.getElementById('update-form-{{ $data->id }}').submit();"><i class="icon-eye{{ (($data->status == 1) ? "-blocked" : '') }}"></i> {{ (($data->status == 1) ? "Unpublish" : "publish") }}</a></li>
                                 <li class="divider"></li>
-                                <li><a href="" onclick="
-                                                if (confirm('Are you sure, You Want to delete this?'))
-                                        {
-                                        event.preventDefault();
-                                        document.getElementById('delete-form-{{ $data->id }}').submit();
-                                            }
-                                            else
-                                            {
-                                            event.preventDefault()
-                                            }"><i class="icon-bin"></i> Delete</a></li>
+                                <li><a href="" id="{{ $data->id }}" class="delete-record"><i class="icon-bin"></i> Delete</a></li>
                             </ul>
                         </li>
                     </ul>
