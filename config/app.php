@@ -178,6 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -230,6 +231,7 @@ return [
         'Form'      => 'Collective\Html\FormFacade',
         'Html'      => 'Collective\Html\HtmlFacade',
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Image' => 'Intervention\Image\Facades\Image',
 
     ],
 

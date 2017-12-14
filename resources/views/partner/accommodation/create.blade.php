@@ -34,7 +34,7 @@
                     'url' => 'accomodation/'.(isset($edit_data) && !empty($edit_data) ? $edit_data->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
-                    'files' => false
+                    'files' => true
                     )
                     )
                     !!}

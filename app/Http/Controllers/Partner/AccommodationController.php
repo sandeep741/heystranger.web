@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Accommodation\AccomVenuPromo;
 use App\Model\Accommodation\AccommodationList;
+use App\Model\Accommodation\AccomVenuPromosImage;
 use App\Http\Requests\Partner\AccommodationRequest;
+use Illuminate\Support\Facades\Validator;
 use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
 use Auth;
+use Image;
 
 class AccommodationController extends Controller {
 
@@ -90,6 +93,64 @@ class AccommodationController extends Controller {
             $accommodation->type = 1;
 
             if ($accommodation->save()) {
+
+                if (!empty($accommodation->id)) {
+
+                    /* product multiple image upload */
+                    if ($request->file('accomm_images')) {
+                        $files = $request->file('accomm_images');
+
+                        $uploadcount = 0;
+                        foreach ($files as $k => $file) {
+                            $rules = array('accomm_images' => 'required|mimes:png,gif,jpeg'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                            $validator = Validator::make(array('accomm_images' => $file), $rules);
+                            if ($validator->passes()) {
+
+                                $filename = $accommodation->id . '_' . $file->getClientOriginalName();
+
+                                // make thumb nail of image
+                                $destinationThumb = 'accom_venu_promo_images/thumbnail';
+                                if (!file_exists($destinationThumb)) {
+                                    mkdir($destinationThumb, 0777, true);
+                                }
+
+                                // image reszie
+                                $destinationResize = 'accom_venu_promo_images/resize';
+                                if (!file_exists($destinationResize)) {
+                                    mkdir($destinationResize, 0777, true);
+                                }
+
+                                $img = Image::make($file->getRealPath());
+
+                                $img->resize(80, 80, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->save($destinationThumb . '/' . $filename);
+
+                                $img = Image::make($file->getRealPath());
+                                $img->resize(300, 300, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->save($destinationResize . '/' . $filename);
+
+                                $destinationPath = 'accom_venu_promo_images';
+                                $file->move($destinationPath, $filename);
+
+                                /* add image name in database */
+                                $image = new AccomVenuPromosImage;
+                                $image->accom_venu_pro_id = $accommodation->id;
+                                $image->image_name = $filename;
+
+                                if ($accommodation->id == '' && $k == 0) {
+                                    $image->status = 1;
+                                }
+
+                                $image->save();
+
+                                $uploadcount ++;
+                            }
+                        }
+                    }
+                }
+
                 $flag = 'success';
                 $msg = "Record Added Successfully";
             } else {
@@ -97,7 +158,8 @@ class AccommodationController extends Controller {
                 $msg = "Record Not Added Successfully";
             }
             $request->session()->flash($flag, $msg);
-            return redirect(route('accomodation.create'));
+            $tab_type = $accommodation->tab_type;
+            return redirect(route('accomodation.create'))->with(compact('tab_type'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
