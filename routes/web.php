@@ -68,6 +68,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('partner', 'PartnerController@index')->name('partner');
 Route::get('accommodations', 'PartnerController@index');
 Route::resource('accomodation', 'Partner\AccommodationController');
+Route::post('storeroom', 'Partner\AccommodationController@insertRoom')->name('room');
 
 
 /////////////Routes for Ajax////////////

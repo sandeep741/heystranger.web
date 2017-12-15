@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/opt/lampp/htdocs/heystranger.web/public/assets/js/heystranger-js/client-validation.js</file>
             <file>file:/opt/lampp/htdocs/heystranger.web/resources/views/partner/accommodation/create.blade.php</file>
             <file>file:/opt/lampp/htdocs/heystranger.web/routes/web.php</file>
             <file>file:/opt/lampp/htdocs/heystranger.web/app/Http/Controllers/Partner/AccommodationController.php</file>
-            <file>file:/opt/lampp/htdocs/heystranger.web/config/app.php</file>
         </group>
     </open-files>
 </project-private>

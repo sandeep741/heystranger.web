@@ -185,10 +185,6 @@ $.getFileLimit = function () {
    }
 }
 
-
-
-
-
 /*$.validator.addMethod('filesize', function (value, element) {
             return $.getExtension(element);
         },'');

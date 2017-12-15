@@ -179,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        App\Providers\FormMacroServiceProvider::class,
 
     ],
 

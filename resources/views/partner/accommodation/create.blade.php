@@ -208,7 +208,7 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit form </button>
+                                <button type="submit" name="acco" value="accom" class="btn btn-primary">Submit form </button>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                     array(
                     'name' => 'frm_accommodation',
                     'id' => 'frm_accommodation',
-                    'url' => 'accomodation/'.(isset($edit_data) && !empty($edit_data) ? $edit_data->id : ''),
+                    'url' => route('room'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
@@ -242,45 +242,74 @@
                             <div class="form-group">
                                 <label class="col-lg-1 control-label">Description:</label>
                                 <div class="col-lg-9">
-                                    <textarea rows="3" cols="3" name='roomfull_descr'  class="form-control" placeholder="Give a description about your Accommodation"></textarea>
+                                    {!! Form::textarea('room_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Accommodation']) !!}
+                                    @if ($errors->has('establish_details'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('establish_details') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="form-group" id='R1'>
-
-
-
+                                    
                                 <div class="col-md-2">
 
+                                    {{-- Form::select('room_type',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons']) --}}
 
-                                    {{Form::select('room_type',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons'])}}
-
-                                    @if ($errors->has('room_type'))
+                                    <?php 
+                                    
+                                    $room_type = []; 
+                                    $room_type[] = array(
+                                            'value' => '',
+                                            'display' => 'Select Type of Room',
+                                            'data-icon' => 'stumbleupon'
+                                        );
+                                            foreach($arr_room as $value){
+                                            $room_type[] = array(
+                                            'value' => $value->id,
+                                            'display' => $value->name,
+                                            'data-icon' => 'stumbleupon'
+                                        );
+                                            }
+                                            
+                                    
+                                    ?>
+                                    {!! Form::multiselect('capacity', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+                                    
+                                    @if ($errors->has('capacity'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_type') }}</strong>
+                                        <strong>{{ $errors->first('capacity') }}</strong>
                                     </span>
                                     @endif
-
-
-
+                                    
                                 </div>
 
 
 
                                 <div class="col-md-2">
-                                    <select  data-placeholder="Max Guest" class="select-icons" name='cap[]' >
-                                        <option value="">Max Guest</option>	
-                                        <?php
-                                        for ($cap = 1; $cap <= 50; $cap++) {
-                                            ?>  
-                                            <option data-icon="stumbleupon" value="<?php echo $cap; ?>"><?php echo $cap; ?></option>
-                                            <?php
-                                        }
-                                        ?>
+                                    <?php 
+                                    
+                                    $room_cap = [];
 
+                                    for ($i = 1; $i <= 50; $i++) {
 
-                                    </select>
-
+                                        $room_cap[] = array(
+                                            'value' => $i,
+                                            'display' => $i,
+                                            'data-icon' => 'stumbleupon'
+                                        );
+                                    }
+                                    ?>
+                                    
+                                    {!! Form::multiselect('capacity', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+                                    
+                                    @if ($errors->has('capacity'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('capacity') }}</strong>
+                                    </span>
+                                    @endif
+                                    
                                 </div>
 
                                 <div class="col-md-2">
@@ -406,9 +435,11 @@
                                 <div id='confer_res'>
 
                                 </div>
-                                <a href="javascript:void(0)" id="add_confer" class='btn btn-Success' >Add</a>
-
-
+                                
+                            </div>
+                            
+                                <div class="text-right">
+                                <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
                             </div>
 
 

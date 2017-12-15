@@ -65,7 +65,7 @@ class AccommodationController extends Controller {
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
-            
+
             return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -81,6 +81,7 @@ class AccommodationController extends Controller {
     public function store(AccommodationRequest $request) {
 
         try {
+
             $accommodation = new AccomVenuPromo;
             $accommodation->title = $request->name;
             $accommodation->slug = str_slug($request->name, '-');
@@ -165,12 +166,16 @@ class AccommodationController extends Controller {
                 $msg = "Record Not Added Successfully";
             }
             $request->session()->flash($flag, $msg);
+            $request->session()->put('accom_id', $accommodation->id);
             $request->session()->put('tab_type', $accommodation->tab_type);
-            
             return redirect(route('accomodation.create'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
+    }
+
+    public function insertRoom(Request $request) {
+        
     }
 
     /**
