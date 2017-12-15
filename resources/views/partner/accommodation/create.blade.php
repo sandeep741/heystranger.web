@@ -218,7 +218,6 @@
                 <!---Room form--->
                 <div class="tab-pane {{ (session()->get('tab_type') == 1) ? 'in active' : '' }} fade has-padding" id="rooms">
 
-
                     {!!
                     Form::open(
                     array(
@@ -243,54 +242,42 @@
                                 <label class="col-lg-1 control-label">Description:</label>
                                 <div class="col-lg-9">
                                     {!! Form::textarea('room_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Accommodation']) !!}
-                                    @if ($errors->has('establish_details'))
+                                    @if ($errors->has('room_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('establish_details') }}</strong>
+                                        <strong>{{ $errors->first('room_desc') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="form-group" id='R1'>
-                                    
+                            <div class="form-group parentss">
+
                                 <div class="col-md-2">
 
                                     {{-- Form::select('room_type',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons']) --}}
 
-                                    <?php 
-                                    
-                                    $room_type = []; 
+                                    <?php
+                                    $room_type = [];
                                     $room_type[] = array(
-                                            'value' => '',
-                                            'display' => 'Select Type of Room',
-                                            'data-icon' => 'stumbleupon'
-                                        );
-                                            foreach($arr_room as $value){
-                                            $room_type[] = array(
+                                        'value' => '',
+                                        'display' => 'Select Type of Room',
+                                        'data-icon' => 'stumbleupon'
+                                    );
+                                    foreach ($arr_room as $value) {
+                                        $room_type[] = array(
                                             'value' => $value->id,
                                             'display' => $value->name,
                                             'data-icon' => 'stumbleupon'
                                         );
-                                            }
-                                            
-                                    
-                                    ?>
-                                    {!! Form::multiselect('capacity', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
-                                    
-                                    @if ($errors->has('capacity'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('capacity') }}</strong>
-                                    </span>
-                                    @endif
-                                    
-                                </div>
-
-
-
-                                <div class="col-md-2">
-                                    <?php 
+                                    }
                                     
                                     $room_cap = [];
+
+                                    $room_cap[] = array(
+                                        'value' => '',
+                                        'display' => 'Max Guest',
+                                        'data-icon' => 'stumbleupon'
+                                    );
 
                                     for ($i = 1; $i <= 50; $i++) {
 
@@ -301,40 +288,70 @@
                                         );
                                     }
                                     ?>
-                                    
-                                    {!! Form::multiselect('capacity', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
-                                    
+                                    {!! Form::multiselect('capacity', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+
                                     @if ($errors->has('capacity'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('capacity') }}</strong>
                                     </span>
                                     @endif
+
+                                </div>
+
+                                    <div class="col-md-2">
                                     
+                                    {!! Form::multiselect('capacity', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+
+                                    @if ($errors->has('capacity'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('capacity') }}</strong>
+                                    </span>
+                                    @endif
+
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input type="text" name='avail[]' class="form-control" placeholder="Room Available">
+
+                                    {!! Form::text('room_avail', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Available']) !!}
+                                    @if ($errors->has('room_avail'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_avail') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
 
 
                                 <div class="col-md-2">
-                                    <input type="text" name='room_price[]' class="form-control" placeholder="Enter Rates">
+                                    {!! Form::text('room_price', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Price']) !!}
+                                    @if ($errors->has('room_price'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_price') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input type="text" name='descr[]' class="form-control" placeholder="Description">
+                                    {!! Form::text('room_short_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Short Description']) !!}
+                                    @if ($errors->has('room_short_desc'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_short_desc') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input type="file"  class="file-styled" name='room_img[]'>
+                                    {{ Form::file('room_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
+                                    @if ($errors->has('room_img'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_img') }}</strong>
+                                    </span>
+                                    @endif
+
                                 </div>
                             </div>
 
-                            <div id='room_res'>
-
-                            </div>
-                            <a href="javascript:void(0)" id="add_room" class='btn btn-Success' >Add</a>
+                            <a href="javascript:void(0)" id="add_room" class='btn btn-Success btn-add-more' >Add</a>
 
 
                             <h5>Do you have Venue & Conference facilities at this property</h5>			
@@ -353,47 +370,83 @@
 
                             </div>
                             <div id='cv'>
+
                                 <h6>Venue</h6>
 
 
                                 <div class="form-group">
                                     <label class="col-lg-1 control-label">Description:</label>
                                     <div class="col-lg-9">
-                                        <textarea rows="3" cols="3" name='venmain_descr'  class="form-control" placeholder="Give a description about your Venue facility"></textarea>
+
+
+                                        {!! Form::textarea('venu_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venu_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Venue facility']) !!}
+                                        @if ($errors->has('venu_desc'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('venu_desc') }}</strong>
+                                        </span>
+                                        @endif
+
                                     </div>
                                 </div>	
 
-                                <div class="form-group">
+                                <div class="form-group venu-parents">
 
                                     <div class="col-md-2">
-                                        <input type="text" name='venue_name[]' class="form-control" placeholder="Enter Venue Name">	
+
+                                        {!! Form::text('venue_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Venue Name']) !!}
+                                        @if ($errors->has('venue_name'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('venue_name') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
 
                                     <div class="col-md-2">
 
-                                        <input type="text" name='venue_avail[]' class="form-control" placeholder="Capacity">	
+                                        {!! Form::text('venue_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}
+                                        @if ($errors->has('venue_avail'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('venue_avail') }}</strong>
+                                        </span>
+                                        @endif
+
+
 
                                     </div>
 
 
                                     <div class="col-md-2">
-                                        <input type="text" name='venue_price[]' class="form-control" placeholder="Enter Venue Rates">
+                                        {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Venu Price']) !!}
+                                        @if ($errors->has('venue_price'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('venue_price') }}</strong>
+                                        </span>
+                                        @endif
+
                                     </div>
 
 
                                     <div class="col-md-2">
-                                        <input type="text" name='venue_descr[]' class="form-control" placeholder="Description">
+                                        {!! Form::text('venue_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Venue Short Description']) !!}
+                                        @if ($errors->has('venue_descr'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('venue_descr') }}</strong>
+                                        </span>
+                                        @endif
+
                                     </div>
 
                                     <div class="col-md-2">
-                                        <input type="file"  class="file-styled" name='venue_img[]'>
+                                        {{ Form::file('venue_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
+                                        @if ($errors->has('venue_img'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('venue_img') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
+                                <a href="javascript:void(0)" class="venu-add-more" class='btn btn-Success' >Add</a>
 
-                                <div id='venue_res'>
-
-                                </div>
-                                <a href="javascript:void(0)" id="add_venue" class='btn btn-Success' >Add</a>
 
 
                                 <br>
@@ -403,48 +456,82 @@
                                 <div class="form-group">
                                     <label class="col-lg-1 control-label">Description:</label>
                                     <div class="col-lg-9">
-                                        <textarea rows="3" cols="3" name='conmain_descr'  class="form-control" placeholder="Give a description about your Conference facility"></textarea>
+                                        {!! Form::textarea('confer_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venu_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Conference facility']) !!}
+                                        @if ($errors->has('confer_desc'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_desc') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group confer-parents">
 
                                     <div class="col-md-2">
-                                        <input type="text" name='confer_name[]' class="form-control" placeholder="Enter Conference Name">	
+
+                                        {!! Form::text('confer_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Conference Name']) !!}
+                                        @if ($errors->has('confer_name'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_name') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                        {!! Form::text('confer_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}
+                                        @if ($errors->has('confer_avail'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_avail') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
 
 
                                     <div class="col-md-2">
+                                        {!! Form::text('confer_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Conference Price']) !!}
+                                        @if ($errors->has('confer_price'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_price') }}</strong>
+                                        </span>
+                                        @endif
 
-                                        <input type="text" name='confer_avail[]' class="form-control" placeholder="Capacity">	
+                                    </div>
+
+
+                                    <div class="col-md-2">
+                                        {!! Form::text('confer_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Conference Short Description']) !!}
+                                        @if ($errors->has('confer_short_descr'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_short_descr') }}</strong>
+                                        </span>
+                                        @endif
+
                                     </div>
 
                                     <div class="col-md-2">
-                                        <input type="text" name='confer_price[]' class="form-control" placeholder="Enter Conference Rates">
+                                        {{ Form::file('confer_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
+                                        @if ($errors->has('confer_img'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_img') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
+                                    confer-remove
 
-                                    <div class="col-md-2">
-                                        <input type="text" name='confer_descr[]' class="form-control" placeholder="Description">
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <input type="file"  class="file-styled" name='confer_img[]'>
-                                    </div>
                                 </div>
 
-                                <div id='confer_res'>
-
-                                </div>
-                                
+                                <a href="javascript:void(0)" class="confer-add-more" class='btn btn-Success' >Add</a>
                             </div>
-                            
-                                <div class="text-right">
+
+                            <div class="text-right">
                                 <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
                             </div>
 
 
                         </div>
                     </div>
+
                     {!! Form::close() !!}
 
                 </div>
@@ -539,6 +626,120 @@ Add Accommodation
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/city.js')}}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
 
+<script>
+            var room_temp = '<div class="form-group parentss">'+
+            
+            '<div class="col-md-2">'+
+           '{!! Form::multiselect('capacity[]', $room_type, null, ['class'=>'form-control select-icons']) !!}</div>'+
+           
+            '<div class="col-md-2">'+
+            '{!! Form::multiselect('room_type[]', $room_cap, null, ['class'=>'form-control select-icons']) !!}'+
+            '</div>'+
+            
+            '<div class="col-md-2">'+
+            '{!! Form::text('room_avail[]', null, ['class' => 'form-control', 'placeholder' => 'Room Available']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('room_price[]', null, ['class' => 'form-control', 'placeholder' => 'Room Price']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('room_short_desc[]', null, ['class' => 'form-control', 'placeholder' => 'Short Description']) !!}'+
+            '</div>'+
+            
+            '<div class="col-md-2">'+
+            '{{ Form::file('room_img[]', ['id' => 'acco_image', 'class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '</div>'+
+            '<a href="javascript:void(0)" class="btn-remove">Remove</a>'+
+            '</div>';
+    
+        $(".btn-add-more").on('click', function(e){
+            e.preventDefault();
+            $(this).before(room_temp)
+        });
+        
+        $(document).on('click','.btn-remove',function(e){    
+                e.preventDefault();
+                $(this).parents(".parentss").remove();
+        });
+
+</script>
+
+<script>
+    
+        var venu_temp = '<div class="form-group venu-parents">'+
+                
+            '<div class="col-md-2">'+
+            '{!! Form::text('venu_name[]', null, ['class' => 'form-control', 'placeholder' => 'Venu Name']) !!}'+
+            '</div>'+    
+            
+            '<div class="col-md-2">'+
+            '{!! Form::text('venu_avail[]', null, ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('venu_price[]', null, ['class' => 'form-control', 'placeholder' => 'Venu Price']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('venu_short_desc[]', null, ['class' => 'form-control', 'placeholder' => 'Venu Short Description']) !!}'+
+            '</div>'+
+            
+            '<div class="col-md-2">'+
+            '{{ Form::file('venu_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '</div>'+
+            '<a href="javascript:void(0)" class="venu-remove">Remove</a>'+
+            '</div>';
+    
+        $(".venu-add-more").on('click', function(e){
+            e.preventDefault();
+            $(this).before(venu_temp)
+        });
+        
+        $(document).on('click','.venu-remove',function(e){    
+                e.preventDefault();
+                $(this).parents(".venu-parents").remove();
+        });
+</script>	
+
+<script>
+    
+    
+    var confer_temp = '<div class="form-group confer-parents">'+
+                
+            '<div class="col-md-2">'+
+            '{!! Form::text('confer_name[]', null, ['class' => 'form-control', 'placeholder' => 'Conference Name']) !!}'+
+            '</div>'+    
+            
+            '<div class="col-md-2">'+
+            '{!! Form::text('confer_avail[]', null, ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('confer_price[]', null, ['class' => 'form-control', 'placeholder' => 'Conference Price']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('confer_short_desc[]', null, ['class' => 'form-control', 'placeholder' => 'Conference Short Description']) !!}'+
+            '</div>'+
+            
+            '<div class="col-md-2">'+
+            '{{ Form::file('confer_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '</div>'+
+            '<a href="javascript:void(0)" class="confer-remove">Remove</a>'+
+            '</div>';
+    
+        $(".confer-add-more").on('click', function(e){
+            e.preventDefault();
+            $(this).before(confer_temp)
+        });
+        
+        $(document).on('click','.confer-remove',function(e){    
+                e.preventDefault();
+                $(this).parents(".confer-parents").remove();
+        });
+</script>
 
 <script>
 $(document).ready(function () {
@@ -597,72 +798,6 @@ function remove_activity(did)
 <script>
     $(document).ready(function () {
 
-        $('#add_room').click(function ()
-        {
-
-            var ran = Math.floor((Math.random() * 100000) + 1);
-
-            var uid = 'R' + ran;
-
-            var room_group = '<div class="form-group" id="' + uid + '"><div class="col-md-2">';
-            room_group += '<select  data-placeholder="Room Type" class="form-control select-icons" name="room_type[]" >';
-            room_group += '<option value="">Choose Room Type</option>';
-
-<?php
-if (isset($arr_room) && !empty($arr_room)) {
-    foreach ($arr_room as $room_dat) {
-        ?>
-                    room_group += '<option value="<?php echo (isset($room_dat) && !empty($room_dat)) ? $room_dat->id : '' ?>"><?php echo (isset($room_dat) && !empty($room_dat)) ? $room_dat->name : '' ?></option>';
-        <?php
-    }
-}
-?>
-
-
-
-            room_group += '</select></div>';
-
-            room_group += '<div class="col-md-2"><select  data-placeholder="Max Guest" class="form-control" name="cap[]" >';
-            room_group += '<option value="">Max Guest</option>';
-<?php
-for ($cap = 1; $cap <= 20; $cap++) {
-    ?>
-                room_group += '<option  value="<?php echo $cap; ?>"><?php echo $cap; ?></option>';
-    <?php
-}
-?>
-            room_group += '</select></div>';
-
-            room_group += '<div class="col-md-2"><input type="text" name="avail[]" class="form-control" placeholder="Room Available"></div>';
-
-            room_group += '<div class="col-md-2"><input type="text" name="room_price[]" class="form-control" placeholder="Enter Rates"></div>';
-
-            room_group += '<div class="col-md-2"><input type="text" name="descr[]" class="form-control" placeholder="Description"></div>';
-
-            room_group += '<div class="col-md-2"><input type="file" name="room_img[]" class="form-control" placeholder="room_img[]"></div><br><a href="javascript:void(0)" onclick="remove_room(' + ran + ')">Remove</a></div>';
-
-            $('#room_res').append(room_group);
-
-        });
-
-
-
-
-    });
-
-    function remove_room(did)
-    {
-        var final = 'R' + did;
-        $('#' + final).remove();
-    }
-
-</script>
-
-
-
-<script>
-    $(document).ready(function () {
-
 
         $('#add_extra').click(function ()
         {
@@ -695,7 +830,6 @@ for ($cap = 1; $cap <= 20; $cap++) {
     }
 
 </script>
-
 
 
 <script>
@@ -760,91 +894,5 @@ for ($cap = 1; $cap <= 20; $cap++) {
         });
     });
 </script>
-
-
-<script>
-    $(document).ready(function () {
-
-
-        $('#add_venue').click(function ()
-        {
-
-            var ran = Math.floor((Math.random() * 100000) + 1);
-            var uid = 'V' + ran;
-
-
-            var venue_group = '<div class="form-group" id="' + uid + '">';
-
-            venue_group += '<div class="col-md-2"><input type="text" name="venue_name[]" class="form-control" placeholder="Enter Venue Name"></div>';
-
-            venue_group += '<div class="col-md-2"><input type="text" name="venue_avail[]" class="form-control" placeholder="Capacity"></div>';
-
-            venue_group += '<div class="col-md-2"><input type="text" name="venue_price[]" class="form-control" placeholder="Enter Venue Rates"></div>';
-
-
-            venue_group += '<div class="col-md-2"><input type="text" name="venue_descr[]" class="form-control" placeholder="Description"></div>';
-
-            venue_group += '<div class="col-md-2"><input type="file"  class="form-control" name="venue_img[]"></div><br><a href="javascript:void(0)" onclick="remove_venue(' + ran + ')">Remove</a></div>';
-
-
-
-
-
-            $('#venue_res').append(venue_group);
-
-        });
-
-
-    });
-
-    function remove_venue(did)
-    {
-        var final = 'V' + did;
-        $('#' + final).remove();
-    }
-</script>	
-
-
-<script>
-    $(document).ready(function () {
-
-
-        $('#add_confer').click(function ()
-        {
-
-            var ran = Math.floor((Math.random() * 100000) + 1);
-            var uid = 'C' + ran;
-
-            var confer_group = '<div class="form-group" id="' + uid + '"><div class="col-md-2"><input type="text" name="confer_name[]" class="form-control" placeholder="Enter Conference Name"></div>';
-
-            confer_group += '<div class="col-md-2"><input type="text" name="confer_avail[]" class="form-control" placeholder="Capacity"></div>';
-
-            confer_group += '<div class="col-md-2"><input type="text" name="confer_price[]" class="form-control" placeholder="Enter Conference Rates"></div>';
-
-
-            confer_group += '<div class="col-md-2"><input type="text" name="confer_descr[]" class="form-control" placeholder="Description"></div>';
-
-            confer_group += '<div class="col-md-2"><input type="file"  class="form-control" name="confer_img[]"></div><br><a href="javascript:void(0)" onclick="remove_confer(' + ran + ')">Remove</a></div>';
-
-
-
-
-
-            $('#confer_res').append(confer_group);
-
-        });
-
-    });
-
-    function remove_confer(did)
-    {
-        var final = 'C' + did;
-        $('#' + final).remove();
-    }
-
-</script>
-
-
-
 
 @endsection
