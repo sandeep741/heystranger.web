@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
             state: {required: true},
             country: {required: true},
             city: {required: true},
-
+            maxfile : true,
         },
         submitHandler: function (form) {
 
@@ -163,5 +163,48 @@ jQuery(document).ready(function () {
         $(".member-login-box").show();
 
     });
-
+    
 });
+
+
+$.validator.addMethod('maxfile', function (value, element) {
+            return $.getFileLimit();
+        },'');
+
+$.getFileLimit = function () {
+    //get the input and the file list
+   var input = document.getElementById('acco_image');
+   if(input.files.length>5){
+       $('.validation').css('display','block');
+       $(".validation").text('Upload Max 5 Files allowed');
+       return false;
+   }else{
+       $('.validation').css('display','none');
+       $(".validation").text('');
+       return true;
+   }
+}
+
+
+
+
+
+/*$.validator.addMethod('filesize', function (value, element) {
+            return $.getExtension(element);
+        },'');
+
+$.getExtension = function (element) {
+   if (element.files && element.files.length) {
+            file = element.files[0];            
+            alert(file.size);
+            if( file.size && file.size >= 2048 ){
+                $('.validation').css('display','block');
+       $(".validation").text('Upload Max 2 MB allowed');
+                return false;
+            }
+        }
+}*/
+
+
+
+

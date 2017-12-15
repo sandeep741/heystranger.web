@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Model\Accommodation\AccomVenuPromo;
 use App\Model\Accommodation\AccommodationList;
 use App\Model\Accommodation\AccomVenuPromosImage;
+use App\Model\RoomList\RoomList;
+use App\Model\SurroundingList\SurroundingList;
 use App\Http\Requests\Partner\AccommodationRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Model\State\State;
@@ -55,11 +57,16 @@ class AccommodationController extends Controller {
         try {
             $user = Auth::guard('admin')->user();
             $accomm_data = new AccommodationList;
+            $room_data = new RoomList;
+            $surr_data = new SurroundingList;
             $country = new Country;
 
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'DESC')->where('status', 1)->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
-            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country'));
+            $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            
+            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -102,7 +109,7 @@ class AccommodationController extends Controller {
 
                         $uploadcount = 0;
                         foreach ($files as $k => $file) {
-                            $rules = array('accomm_images' => 'required|mimes:png,gif,jpeg'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                            $rules = array('accomm_images' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
                             $validator = Validator::make(array('accomm_images' => $file), $rules);
                             if ($validator->passes()) {
 
@@ -158,8 +165,9 @@ class AccommodationController extends Controller {
                 $msg = "Record Not Added Successfully";
             }
             $request->session()->flash($flag, $msg);
-            $tab_type = $accommodation->tab_type;
-            return redirect(route('accomodation.create'))->with(compact('tab_type'));
+            $request->session()->put('tab_type', $accommodation->tab_type);
+            
+            return redirect(route('accomodation.create'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
