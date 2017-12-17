@@ -242,7 +242,7 @@
                             <div class="form-group">
                                 <label class="col-lg-1 control-label">Description:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('room_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Accommodation']) !!}
+                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Accommodation']) !!}
                                     @if ($errors->has('room_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_desc') }}</strong>
@@ -255,7 +255,7 @@
 
                                 <div class="col-md-2">
 
-                                    {{-- Form::select('room_type',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons']) --}}
+                                    {{-- Form::select('room_type[]',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons']) --}}
 
                                     <?php
                                     $room_type = [];
@@ -289,11 +289,11 @@
                                         );
                                     }
                                     ?>
-                                    {!! Form::multiselect('capacity', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+                                    {!! Form::multiselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
 
-                                    @if ($errors->has('capacity'))
+                                    @if ($errors->has('room_type'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('capacity') }}</strong>
+                                        <strong>{{ $errors->first('room_type') }}</strong>
                                     </span>
                                     @endif
 
@@ -301,11 +301,11 @@
 
                                     <div class="col-md-2">
                                     
-                                    {!! Form::multiselect('capacity', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+                                    {!! Form::multiselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
 
-                                    @if ($errors->has('capacity'))
+                                    @if ($errors->has('guest'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('capacity') }}</strong>
+                                        <strong>{{ $errors->first('guest') }}</strong>
                                     </span>
                                     @endif
 
@@ -313,7 +313,7 @@
 
                                 <div class="col-md-2">
 
-                                    {!! Form::text('room_avail', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Available']) !!}
+                                    {!! Form::text('room_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Available']) !!}
                                     @if ($errors->has('room_avail'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_avail') }}</strong>
@@ -324,7 +324,7 @@
 
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_price', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Price']) !!}
+                                    {!! Form::text('room_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Price']) !!}
                                     @if ($errors->has('room_price'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_price') }}</strong>
@@ -333,7 +333,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_short_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Short Description']) !!}
+                                    {!! Form::text('room_short_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Short Description']) !!}
                                     @if ($errors->has('room_short_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_short_desc') }}</strong>
@@ -342,12 +342,13 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    {{ Form::file('room_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
+                                    {{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'file-styled', 'multiple' => false]) }}
                                     @if ($errors->has('room_img'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_img') }}</strong>
                                     </span>
                                     @endif
+                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
 
                                 </div>
                             </div>

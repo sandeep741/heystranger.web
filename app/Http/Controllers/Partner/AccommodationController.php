@@ -8,6 +8,7 @@ use App\Model\Accommodation\AccomVenuPromo;
 use App\Model\Accommodation\AccommodationList;
 use App\Model\Accommodation\AccomVenuPromosImage;
 use App\Model\RoomList\RoomList;
+use App\Model\RoomList\RoomDetail;
 use App\Model\SurroundingList\SurroundingList;
 use App\Http\Requests\Partner\AccommodationRequest;
 use Illuminate\Support\Facades\Validator;
@@ -174,6 +175,26 @@ class AccommodationController extends Controller {
     }
 
     public function insertRoom(Request $request) {
+        
+        $acco_id = '';
+        
+        if(!empty(session()->get('accom_id'))){
+            $acco_id = session()->get('accom_id');
+        }
+        
+        $room_detail = new RoomDetail;
+        $room_detail->accom_venu_promos_id = $acco_id;
+        $room_detail->room_type_id = $request->room_type;
+        $room_detail->guest = $request->guest;
+        $room_detail->available = $request->room_avail;
+        $room_detail->price = $request->room_price;
+        $room_detail->desc = $request->desc;
+        $room_detail->short_desc = $request->room_short_desc;
+        $room_detail->room_image = $request->room_img;
+        $room_detail->type = $request->type;
+        $room_detail->created_by = Auth::user()->id;
+        
+        dd($room_detail);
         
     }
 
