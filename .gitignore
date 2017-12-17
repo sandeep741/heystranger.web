@@ -12,3 +12,5 @@ yarn-error.log
 .env
 /database
 /nbproject/
+public/accom_venu_promo_images
+public/room_images

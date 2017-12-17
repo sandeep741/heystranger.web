@@ -174,28 +174,98 @@ class AccommodationController extends Controller {
         }
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function insertRoom(Request $request) {
-        
+
         $acco_id = '';
-        
-        if(!empty(session()->get('accom_id'))){
+
+        if (!empty(session()->get('accom_id'))) {
             $acco_id = session()->get('accom_id');
         }
-        
-        $room_detail = new RoomDetail;
-        $room_detail->accom_venu_promos_id = $acco_id;
-        $room_detail->room_type_id = $request->room_type;
-        $room_detail->guest = $request->guest;
-        $room_detail->available = $request->room_avail;
-        $room_detail->price = $request->room_price;
-        $room_detail->desc = $request->desc;
-        $room_detail->short_desc = $request->room_short_desc;
-        $room_detail->room_image = $request->room_img;
-        $room_detail->type = $request->type;
-        $room_detail->created_by = Auth::user()->id;
-        
-        dd($room_detail);
-        
+
+        $cnt = count($request->room_type);
+
+        for ($i = 0; $i < $cnt; $i++) {
+            $room_detail = new RoomDetail;
+            $room_detail->accom_venu_promos_id = $acco_id;
+            $room_detail->room_type_id = $request->room_type[$i];
+            $room_detail->guest = $request->guest[$i];
+            $room_detail->available = $request->room_avail[$i];
+            $room_detail->price = $request->room_price[$i];
+            $room_detail->desc = $request->desc[$i];
+            $room_detail->short_desc = $request->room_short_desc[$i];
+            $room_detail->room_image = ( isset($request->room_img[$i]) && !empty($request->room_img[$i]) ? $request->room_img[$i]->getClientOriginalName() : '');
+            $room_detail->type = $request->type;
+            $room_detail->created_by = Auth::user()->id;
+
+            if ($room_detail->save()) {
+                /* room multiple image upload */
+                if ($request->file('room_img')) {
+                    if (isset($request->file('room_img')[$i]) && !empty($request->file('room_img')[$i])) {
+                        $files = $request->file('room_img')[$i];
+                    }
+
+                    $uploadcount = 0;
+                    $rules = array('room_img' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                    $validator = Validator::make(array('room_img' => $files), $rules);
+                    if ($validator->passes()) {
+
+                        $filename = $room_detail->id . '_' . $files->getClientOriginalName();
+
+                        // make thumb nail of image
+                        $destinationThumb = 'room_images/thumbnail';
+                        if (!file_exists($destinationThumb)) {
+                            mkdir($destinationThumb, 0777, true);
+                        }
+
+                        // image reszie
+                        $destinationResize = 'room_images/resize';
+                        if (!file_exists($destinationResize)) {
+                            mkdir($destinationResize, 0777, true);
+                        }
+
+                        $img = Image::make($files->getRealPath());
+
+                        $img->resize(80, 80, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationThumb . '/' . $filename);
+
+                        $img = Image::make($files->getRealPath());
+                        $img->resize(300, 300, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationResize . '/' . $filename);
+
+                        $destinationPath = 'room_images';
+                        $files->move($destinationPath, $filename);
+
+                        $uploadcount ++;
+                    }
+                }
+
+                $flg = '1';
+                $msg = "Record Added Successfully";
+            } else {
+                $flg = '0';
+                $msg = "Record not Added Successfully";
+            }
+        }
+
+        if (isset($flg) && !empty($flg)) {
+            $flag = 'success';
+            $msg = "Record Added Successfully";
+        } else {
+            $flag = 'danger';
+            $msg = "Record Not Added Successfully";
+        }
+
+        $request->session()->flash($flag, $msg);
+        $request->session()->put('tab_type', 3);
+        return redirect(route('accomodation.create'));
     }
 
     /**

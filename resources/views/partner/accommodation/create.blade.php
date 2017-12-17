@@ -222,8 +222,8 @@
                     {!!
                     Form::open(
                     array(
-                    'name' => 'frm_accommodation',
-                    'id' => 'frm_accommodation',
+                    'name' => 'frm_room',
+                    'id' => 'frm_room',
                     'url' => route('room'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
@@ -242,7 +242,7 @@
                             <div class="form-group">
                                 <label class="col-lg-1 control-label">Description:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a description about your Accommodation']) !!}
+                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
                                     @if ($errors->has('room_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_desc') }}</strong>
@@ -261,7 +261,7 @@
                                     $room_type = [];
                                     $room_type[] = array(
                                         'value' => '',
-                                        'display' => 'Select Type of Room',
+                                        'display' => 'Select Type of Room *',
                                         'data-icon' => 'stumbleupon'
                                     );
                                     foreach ($arr_room as $value) {
@@ -276,7 +276,7 @@
 
                                     $room_cap[] = array(
                                         'value' => '',
-                                        'display' => 'Max Guest',
+                                        'display' => 'Max Guest *',
                                         'data-icon' => 'stumbleupon'
                                     );
 
@@ -289,7 +289,7 @@
                                         );
                                     }
                                     ?>
-                                    {!! Form::multiselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+                                    {!! Form::multiselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('room_type'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -301,7 +301,7 @@
 
                                     <div class="col-md-2">
                                     
-                                    {!! Form::multiselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons']) !!}
+                                    {!! Form::multiselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('guest'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -313,7 +313,7 @@
 
                                 <div class="col-md-2">
 
-                                    {!! Form::text('room_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Available']) !!}
+                                    {!! Form::text('room_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}
                                     @if ($errors->has('room_avail'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_avail') }}</strong>
@@ -324,7 +324,7 @@
 
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Room Price']) !!}
+                                    {!! Form::text('room_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}
                                     @if ($errors->has('room_price'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_price') }}</strong>
@@ -333,7 +333,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_short_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Short Description']) !!}
+                                    {!! Form::text('room_short_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
                                     @if ($errors->has('room_short_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_short_desc') }}</strong>
@@ -632,26 +632,26 @@ Add Accommodation
             var room_temp = '<div class="form-group parentss">'+
             
             '<div class="col-md-2">'+
-           '{!! Form::multiselect('capacity[]', $room_type, null, ['class'=>'form-control select-icons']) !!}</div>'+
+           '{!! Form::multiselect('room_type[]', $room_type, null, ['class'=>'form-control required select-icons']) !!}</div>'+
            
             '<div class="col-md-2">'+
-            '{!! Form::multiselect('room_type[]', $room_cap, null, ['class'=>'form-control select-icons']) !!}'+
+            '{!! Form::multiselect('guest[]', $room_cap, null, ['class'=>'form-control required select-icons']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
-            '{!! Form::text('room_avail[]', null, ['class' => 'form-control', 'placeholder' => 'Room Available']) !!}'+
+            '{!! Form::text('room_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Available']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_price[]', null, ['class' => 'form-control', 'placeholder' => 'Room Price']) !!}'+
+            '{!! Form::text('room_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Price']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_short_desc[]', null, ['class' => 'form-control', 'placeholder' => 'Short Description']) !!}'+
+            '{!! Form::text('room_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
-            '{{ Form::file('room_img[]', ['id' => 'acco_image', 'class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '{{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
             '<a href="javascript:void(0)" class="btn-remove">Remove</a>'+
             '</div>';
