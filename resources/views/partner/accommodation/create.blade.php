@@ -203,6 +203,7 @@
                                         <strong>{{ $errors->first('establish_details') }}</strong>
                                     </span>
                                     @endif
+                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
 
                                 </div>
                             </div>

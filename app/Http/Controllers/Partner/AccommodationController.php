@@ -97,7 +97,7 @@ class AccommodationController extends Controller {
             $accommodation->contact_no = $request->contact_no;
             $accommodation->alternate_no = $request->alternate_no;
             $accommodation->created_by = Auth::user()->id;
-            $accommodation->type = 1;
+            $accommodation->type = $request->type;
 
             if ($accommodation->save()) {
 
