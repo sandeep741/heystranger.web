@@ -97,7 +97,6 @@ class AccommodationController extends Controller {
             $accommodation->contact_no = $request->contact_no;
             $accommodation->alternate_no = $request->alternate_no;
             $accommodation->created_by = Auth::user()->id;
-            $accommodation->tab_type = 1;
             $accommodation->type = 1;
 
             if ($accommodation->save()) {
@@ -167,7 +166,7 @@ class AccommodationController extends Controller {
             }
             $request->session()->flash($flag, $msg);
             $request->session()->put('accom_id', $accommodation->id);
-            $request->session()->put('tab_type', $accommodation->tab_type);
+            $request->session()->put('tab_type', 2);
             return redirect(route('accomodation.create'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();

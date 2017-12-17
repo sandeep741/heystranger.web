@@ -7,23 +7,23 @@
         <div class="tabbable tab-content-bordered content-group-lg">
             <ul class="nav nav-tabs nav-lg nav-tabs-highlight">
 
-                <li class="{{ (session()->get('tab_type') < 1) ? 'active' : '' }}">
+                <li class="{{ (empty(session()->get('tab_type'))) ? 'active' : '' }}">
                     <a href="#james" data-toggle="{{ (session()->get('tab_type') < 1) ? 'tab' : '' }}">
                         Accommodation Detail <span class="status-mark position-right border-danger"></span>
                     </a>
                 </li>
-                <li class="{{ (session()->get('tab_type') == 1) ? 'active' : '' }}">
-                    <a href="#rooms" data-toggle="{{ (session()->get('tab_type') == 1) ? 'tab' : '' }}">
+                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '2') ? 'in active' : '' }}">
+                    <a href="#rooms" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '2') ? 'tab' : '' }}">
                         Room<span class="status-mark position-right border-success"></span>
                     </a>
                 </li>
-                <li class="{{ (session()->get('tab_type') <= 2) ? 'active' : '' }}">
-                    <a href="#william" data-toggle="{{ (session()->get('tab_type') <= 1) ? 'tab' : '' }}">
+                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'active' : '' }}">
+                    <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'tab' : '' }}">
                         Keywords & Meta Tags <span class="status-mark position-right border-success"></span>
                     </a>
                 </li>
-                <li>
-                    <a href="#jared" data-toggle="tab">
+                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'active' : '' }}">
+                    <a href="#jared" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'tab' : '' }}">
                         Video & Map <span class="status-mark position-right border-warning"></span>
                     </a>
                 </li>
@@ -32,7 +32,7 @@
             <div class="tab-content">
 
                 <!---Accommodation form--->
-                <div class="tab-pane fade in {{ (session()->get('tab_type') < 1) ? 'active' : '' }} has-padding" id="james">
+                <div class="tab-pane fade {{ (empty(session()->get('tab_type'))) ? 'in active' : '' }} has-padding" id="james">
 
                     {!!
                     Form::open(
@@ -216,7 +216,7 @@
                 </div>
 
                 <!---Room form--->
-                <div class="tab-pane {{ (session()->get('tab_type') == 1) ? 'in active' : '' }} fade has-padding" id="rooms">
+                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '2') ? 'in active' : '' }} fade has-padding" id="rooms">
 
                     {!!
                     Form::open(
@@ -537,7 +537,7 @@
                 </div>
 
                 <!---meta tag form--->
-                <div class="tab-pane fade {{ (session()->get('tab_type') == 3) ? 'in active' : '' }} has-padding" id="william">
+                <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'in active' : '' }} has-padding" id="william">
                     <form action="#" class="form-horizontal">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
@@ -575,7 +575,7 @@
                 </div>
 
                 <!---video & map form--->
-                <div class="tab-pane fade has-padding" id="jared">
+                <div class="tab-pane fade has-padding {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'in active' : '' }}" id="jared">
                     <form action="#" class="form-horizontal">
                         <div class="panel panel-flat">
                             <div class="panel-heading">

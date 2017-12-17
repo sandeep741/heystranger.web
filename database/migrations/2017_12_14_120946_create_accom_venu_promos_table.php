@@ -30,7 +30,6 @@ class CreateAccomVenuPromosTable extends Migration
             $table->string('establish_details')->nullable();
             $table->enum('status', ['1', '0']);
             $table->enum('type', ['', 'A', 'V', 'P']);
-            $table->tinyInteger('tab_type');
             $table->integer('created_by')->unsigned();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->timestamps();
