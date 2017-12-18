@@ -9,6 +9,8 @@ use App\Model\Accommodation\AccommodationList;
 use App\Model\Accommodation\AccomVenuPromosImage;
 use App\Model\RoomList\RoomList;
 use App\Model\RoomList\RoomDetail;
+use App\Model\AmenityList\AmenityList;
+use App\Model\ActivityList\ActivityList;
 use App\Model\SurroundingList\SurroundingList;
 use App\Http\Requests\Partner\AccommodationRequest;
 use Illuminate\Support\Facades\Validator;
@@ -61,13 +63,20 @@ class AccommodationController extends Controller {
             $room_data = new RoomList;
             $surr_data = new SurroundingList;
             $country = new Country;
+            $amenity = new AmenityList;
+            $activity = new ActivityList;
 
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'DESC')->where('status', 1)->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_amenity = $amenity->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
+            
+            
 
-            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr'));
+            
+            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }

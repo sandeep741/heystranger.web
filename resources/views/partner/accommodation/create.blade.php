@@ -19,11 +19,21 @@
                 </li>
                 <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'active' : '' }}">
                     <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'tab' : '' }}">
-                        Keywords & Meta Tags <span class="status-mark position-right border-success"></span>
+                        Activities <span class="status-mark position-right border-success"></span>
                     </a>
                 </li>
                 <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'active' : '' }}">
-                    <a href="#jared" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'tab' : '' }}">
+                    <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'tab' : '' }}">
+                        Policies <span class="status-mark position-right border-success"></span>
+                    </a>
+                </li>
+                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'active' : '' }}">
+                    <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'tab' : '' }}">
+                        Keywords & Meta Tags <span class="status-mark position-right border-success"></span>
+                    </a>
+                </li>
+                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'active' : '' }}">
+                    <a href="#jared" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'tab' : '' }}">
                         Video & Map <span class="status-mark position-right border-warning"></span>
                     </a>
                 </li>
@@ -264,14 +274,17 @@
                                         'display' => 'Select Type of Room *',
                                         'data-icon' => 'stumbleupon'
                                     );
-                                    foreach ($arr_room as $value) {
-                                        $room_type[] = array(
-                                            'value' => $value->id,
-                                            'display' => $value->name,
-                                            'data-icon' => 'stumbleupon'
-                                        );
+
+                                    if (isset($arr_room) && !empty($arr_room)) {
+                                        foreach ($arr_room as $value) {
+                                            $room_type[] = array(
+                                                'value' => $value->id,
+                                                'display' => $value->name,
+                                                'data-icon' => 'stumbleupon'
+                                            );
+                                        }
                                     }
-                                    
+
                                     $room_cap = [];
 
                                     $room_cap[] = array(
@@ -289,7 +302,7 @@
                                         );
                                     }
                                     ?>
-                                    {!! Form::multiselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('room_type'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -299,9 +312,9 @@
 
                                 </div>
 
-                                    <div class="col-md-2">
-                                    
-                                    {!! Form::multiselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                <div class="col-md-2">
+
+                                    {!! Form::fancyselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('guest'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -353,7 +366,7 @@
                                 </div>
                             </div>
 
-                            <a href="javascript:void(0)" id="add_room" class='btn btn-Success btn-add-more' >Add</a>
+                            <a href="javascript:void(0)" class='btn btn-success btn-add-more' >Add More</a>
 
 
                             <h5>Do you have Venue & Conference facilities at this property</h5>			
@@ -447,10 +460,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" class="venu-add-more" class='btn btn-Success' >Add</a>
-
-
-
+                                <a href="javascript:void(0)" class="venu-add-more btn btn-success" >Add More</a>
                                 <br>
                                 <br>
                                 <h6>Conference</h6>
@@ -519,11 +529,9 @@
                                         </span>
                                         @endif
                                     </div>
-                                    confer-remove
-
                                 </div>
 
-                                <a href="javascript:void(0)" class="confer-add-more" class='btn btn-Success' >Add</a>
+                                <a href="javascript:void(0)" class="confer-add-more btn btn-success">Add More</a>
                             </div>
 
                             <div class="text-right">
@@ -538,8 +546,362 @@
 
                 </div>
 
+                <!---Activity form--->
+                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'in active' : '' }} fade has-padding" id="rooms">
+
+                    {!!
+                    Form::open(
+                    array(
+                    'name' => 'frm_activity',
+                    'id' => 'frm_activity',
+                    'url' => route('room'),
+                    'autocomplete' => 'off',
+                    'class' => 'form-horizontal',
+                    'files' => false
+                    )
+                    )
+                    !!}
+
+                    <?php
+                    $amenity_option = [];
+
+                    if (!empty($arr_amenity) && count($arr_amenity) > 0) {
+                        foreach ($arr_amenity as $amenity) {
+                            $amenity_option[] = array(
+                                'value' => $amenity->id,
+                                'display' => $amenity->name,
+                                'data-icon' => 'stumbleupon'
+                            );
+                        }
+                    }
+
+
+                    $activity_property = [];
+                    if (!empty($arr_amenity) && count($arr_amenity) > 0) {
+
+                        if (!empty($arr_activity) && count($arr_activity) > 0) {
+                            foreach ($arr_activity as $actvity) {
+                                $activity_property[] = array(
+                                    'value' => $actvity->id,
+                                    'display' => $actvity->name,
+                                    'data-icon' => 'stumbleupon'
+                                );
+                            }
+                        }
+                    }
+
+                    $surr = [];
+                    $surr[] = array(
+                        'value' => '',
+                        'display' => 'Select Type of Attractoin *',
+                        'data-icon' => 'stumbleupon'
+                    );
+
+                    if (!empty($arr_surr) && count($arr_surr) > 0) {
+                        foreach ($arr_surr as $surrvalue) {
+                            $surr[] = array(
+                                'value' => $surrvalue->id,
+                                'display' => $surrvalue->name,
+                                'data-icon' => 'stumbleupon'
+                            );
+                        }
+                    }
+
+
+                    $shuttle_option = [];
+                    $shuttle_option = array(array(
+                            'value' => '',
+                            'display' => 'Shuttle Service *',
+                            'data-icon' => 'stumbleupon'
+                        ),
+                        array(
+                            'value' => 'Y',
+                            'display' => 'Yes',
+                            'data-icon' => 'stumbleupon'
+                        ),
+                        array(
+                            'value' => 'N',
+                            'display' => 'No',
+                            'data-icon' => 'stumbleupon'
+                        )
+                    );
+                    ?>
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Activities</h5>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Amenity:</label>
+                                <div class="col-lg-10">
+                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
+                                    @if ($errors->has('room_desc'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_desc') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Amenity on property:</label>
+                                <div class="col-lg-10">
+                                    {!! Form::multiselect('amenity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Amenity on Property *', 'data-placeholder' => "Amenity on property", 'multiple' => 'multiple']) !!}
+
+                                    @if ($errors->has('amenity_property'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('amenity_property') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Activity:</label>
+                                <div class="col-lg-10">
+                                    {!! Form::textarea('activity_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
+                                    @if ($errors->has('activity_desc'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('activity_desc') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Activity on Property :</label>
+                                <div class="col-lg-10">
+                                    {!! Form::multiselect('$activity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Activity on Property *', 'data-placeholder' => "Activity on property", 'multiple' => 'multiple']) !!}
+                                    @if ($errors->has('activity_property'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('activity_property') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group attract-parents">
+                                <h5>Popular Attraction and surroundings: Please provide as many details as possible</h5>
+
+                                <div class="col-md-4">
+
+                                    {!! Form::text('attraction_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}
+
+                                    @if ($errors->has('attraction_name'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('attraction_name') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    {!! Form::fancyselect('surrounding[]', $surr, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+
+                                    @if ($errors->has('surrounding'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('surrounding') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    {!! Form::text('approx_dist[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
+                                    @if ($errors->has('approx_dist'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('approx_dist') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+
+                            </div>
+                            <a href="javascript:void(0)" class="attract-add-more btn btn-success">Add More</a>
+
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Transport</h6>
+                            </div> 			
+
+                            <div class="form-group">
+                                <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
+                                <div class="col-lg-12">
+                                    {!! Form::fancyselect('shuttle[]', $shuttle_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+
+                <!---policy form--->
+                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'in active' : '' }} fade has-padding" id="rooms">
+
+                    {!!
+                    Form::open(
+                    array(
+                    'name' => 'frm_policy',
+                    'id' => 'frm_policy',
+                    'url' => route('room'),
+                    'autocomplete' => 'off',
+                    'class' => 'form-horizontal',
+                    'files' => false
+                    )
+                    )
+                    !!}
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Policies</h5>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <div class="form-group">
+                                <label class="col-lg-1 control-label">Amenity:</label>
+                                <div class="col-lg-9">
+                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
+                                    @if ($errors->has('room_desc'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_desc') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group parentss">
+
+                                <div class="col-md-2">
+
+                                    {{-- Form::select('room_type[]',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons']) --}}
+
+                                    <?php
+                                    $room_type = [];
+                                    $room_type[] = array(
+                                        'value' => '',
+                                        'display' => 'Select Type of Room *',
+                                        'data-icon' => 'stumbleupon'
+                                    );
+
+                                    if (isset($arr_room) && !empty($arr_room)) {
+                                        foreach ($arr_room as $value) {
+                                            $room_type[] = array(
+                                                'value' => $value->id,
+                                                'display' => $value->name,
+                                                'data-icon' => 'stumbleupon'
+                                            );
+                                        }
+                                    }
+
+                                    $room_cap = [];
+
+                                    $room_cap[] = array(
+                                        'value' => '',
+                                        'display' => 'Max Guest *',
+                                        'data-icon' => 'stumbleupon'
+                                    );
+
+                                    for ($i = 1; $i <= 50; $i++) {
+
+                                        $room_cap[] = array(
+                                            'value' => $i,
+                                            'display' => $i,
+                                            'data-icon' => 'stumbleupon'
+                                        );
+                                    }
+                                    ?>
+                                    {!! Form::fancyselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+
+                                    @if ($errors->has('room_type'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_type') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    {!! Form::fancyselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+
+                                    @if ($errors->has('guest'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('guest') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+
+                                <div class="col-md-2">
+
+                                    {!! Form::text('room_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}
+                                    @if ($errors->has('room_avail'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_avail') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+
+
+                                <div class="col-md-2">
+                                    {!! Form::text('room_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}
+                                    @if ($errors->has('room_price'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-2">
+                                    {!! Form::text('room_short_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
+                                    @if ($errors->has('room_short_desc'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_short_desc') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-2">
+                                    {{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                    @if ($errors->has('room_img'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('room_img') }}</strong>
+                                    </span>
+                                    @endif
+                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="text-right">
+                                <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+
                 <!---meta tag form--->
-                <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'in active' : '' }} has-padding" id="william">
+                <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'in active' : '' }} has-padding" id="william">
                     <form action="#" class="form-horizontal">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
@@ -577,7 +939,7 @@
                 </div>
 
                 <!---video & map form--->
-                <div class="tab-pane fade has-padding {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'in active' : '' }}" id="jared">
+                <div class="tab-pane fade has-padding {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'in active' : '' }}" id="jared">
                     <form action="#" class="form-horizontal">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
@@ -621,6 +983,7 @@ Add Accommodation
 @endsection
 
 @section('jscript')
+
 <script type="text/javascript" src="{{ asset('/assets/admin/js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/assets/admin/js/uniform.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/assets/admin/js/app.js') }}"></script>
@@ -628,14 +991,15 @@ Add Accommodation
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/city.js')}}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
 
+
 <script>
             var room_temp = '<div class="form-group parentss">'+
             
             '<div class="col-md-2">'+
-           '{!! Form::multiselect('room_type[]', $room_type, null, ['class'=>'form-control required select-icons']) !!}</div>'+
+           '{!! Form::fancyselect('room_type[]', $room_type, null, ['class'=>'form-control required select-icons']) !!}</div>'+
            
             '<div class="col-md-2">'+
-            '{!! Form::multiselect('guest[]', $room_cap, null, ['class'=>'form-control required select-icons']) !!}'+
+            '{!! Form::fancyselect('guest[]', $room_cap, null, ['class'=>'form-control required select-icons']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
@@ -653,7 +1017,7 @@ Add Accommodation
             '<div class="col-md-2">'+
             '{{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
-            '<a href="javascript:void(0)" class="btn-remove">Remove</a>'+
+            '<a href="javascript:void(0)" class="btn-remove label label-danger">Remove</a>'+
             '</div>';
     
         $(".btn-add-more").on('click', function(e){
@@ -691,7 +1055,7 @@ Add Accommodation
             '<div class="col-md-2">'+
             '{{ Form::file('venu_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
-            '<a href="javascript:void(0)" class="venu-remove">Remove</a>'+
+            '<a href="javascript:void(0)" class="venu-remove label label-danger">Remove</a>'+
             '</div>';
     
         $(".venu-add-more").on('click', function(e){
@@ -729,7 +1093,7 @@ Add Accommodation
             '<div class="col-md-2">'+
             '{{ Form::file('confer_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
-            '<a href="javascript:void(0)" class="confer-remove">Remove</a>'+
+            '<a href="javascript:void(0)" class="confer-remove label label-danger">Remove</a>'+
             '</div>';
     
         $(".confer-add-more").on('click', function(e){
@@ -744,56 +1108,32 @@ Add Accommodation
 </script>
 
 <script>
-$(document).ready(function () {
-
-
-    $('#add_act').click(function ()
-    {
-
-
-        var ran = Math.floor((Math.random() * 100000) + 1);
-
-        var uid = 'A' + ran;
-
-        var form_group = '<div class="form-group" id="' + uid + '">';
-        form_group += '<div class="col-lg-4 col-md-4 col-sm-4">';
-        form_group += '<input type="text" class="form-control"  value="" placeholder="Name Of Attraction" name="est_name[]">';
-        form_group += '</div>';
-        form_group += '<div class="col-lg-4 col-md-4 col-sm-4"><select  data-placeholder="Attraction Activity" class="form-control" name="actvity2[]" ><option value="">Attraction Activity</option>';
-
-
-
-
-<?php
-if (isset($arr_surr) && !empty($arr_surr)) {
-    foreach ($arr_surr as $surr_dat) {
-        ?>
-                form_group += '<option data-icon="stumbleupon" value="<?php echo (isset($surr_dat) && !empty($surr_dat)) ? $surr_dat->id : '' ?>"><?php echo (isset($surr_dat) && !empty($surr_dat)) ? $surr_dat->name : '' ?></option>';
-        <?php
-    }
-}
-?>
-
-
-
-
-
-        form_group += '</select></div>';
-
-        form_group += '<div class="col-lg-4 col-md-4 col-sm-4"><input type="text" class="form-control"  value="" placeholder="Approximate Distance" name="approx_dis[]"></div><br><a href="javascript:void(0)" onclick="remove_activity(' + ran + ')">Remove</a></div>';
-
-        $('#res').append(form_group);
-
-    });
-
-
-});
-
-function remove_activity(did)
-{
-    var final = 'A' + did;
-    $('#' + final).remove();
-}
+    
+    var attract_temp = '<div class="form-group attract-parents">'+
+                
+            '<div class="col-md-4">'+
+            '{!! Form::text('attraction_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}'+
+            '</div>'+    
+            
+            '<div class="col-md-4">'+
+            '{!! Form::fancyselect('surrounding[]', $surr, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'form-control select-icons required']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-4">'+
+            '{!! Form::text('approx_dist[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}'+
+            '</div>'+
+            '<a href="javascript:void(0)" class="attract-remove label label-danger">Remove</a>'+
+            '</div>';
+    
+        $(".attract-add-more").on('click', function(e){
+            e.preventDefault();
+            $(this).before(attract_temp)
+        });
+        
+        $(document).on('click','.attract-remove',function(e){    
+                e.preventDefault();
+                $(this).parents(".attract-parents").remove();
+        });
 
 </script>
 
@@ -896,5 +1236,6 @@ function remove_activity(did)
         });
     });
 </script>
+
 
 @endsection
