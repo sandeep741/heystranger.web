@@ -8,7 +8,7 @@
             <ul class="nav nav-tabs nav-lg nav-tabs-highlight">
 
                 <li class="{{ (empty(session()->get('tab_type'))) ? 'active' : '' }}">
-                    <a href="#james" data-toggle="{{ (session()->get('tab_type') < 1) ? 'tab' : '' }}">
+                    <a href="#accommodation" data-toggle="{{ (session()->get('tab_type') < 1) ? 'tab' : '' }}">
                         Accommodation Detail <span class="status-mark position-right border-danger"></span>
                     </a>
                 </li>
@@ -18,22 +18,22 @@
                     </a>
                 </li>
                 <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'active' : '' }}">
-                    <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'tab' : '' }}">
+                    <a href="#activity" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'tab' : '' }}">
                         Activities <span class="status-mark position-right border-success"></span>
                     </a>
                 </li>
                 <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'active' : '' }}">
-                    <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'tab' : '' }}">
+                    <a href="#policy" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'tab' : '' }}">
                         Policies <span class="status-mark position-right border-success"></span>
                     </a>
                 </li>
                 <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'active' : '' }}">
-                    <a href="#william" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'tab' : '' }}">
+                    <a href="#keywords" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'tab' : '' }}">
                         Keywords & Meta Tags <span class="status-mark position-right border-success"></span>
                     </a>
                 </li>
                 <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'active' : '' }}">
-                    <a href="#jared" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'tab' : '' }}">
+                    <a href="#videomap" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'tab' : '' }}">
                         Video & Map <span class="status-mark position-right border-warning"></span>
                     </a>
                 </li>
@@ -42,7 +42,7 @@
             <div class="tab-content">
 
                 <!---Accommodation form--->
-                <div class="tab-pane fade {{ (empty(session()->get('tab_type'))) ? 'in active' : '' }} has-padding" id="james">
+                <div class="tab-pane fade {{ (empty(session()->get('tab_type'))) ? 'in active' : '' }} has-padding" id="accommodation">
 
                     {!!
                     Form::open(
@@ -234,7 +234,7 @@
                     array(
                     'name' => 'frm_room',
                     'id' => 'frm_room',
-                    'url' => route('room'),
+                    'url' => route('room-detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
@@ -252,7 +252,7 @@
                             <div class="form-group">
                                 <label class="col-lg-1 control-label">Description:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
+                                    {!! Form::textarea('room_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
                                     @if ($errors->has('room_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_desc') }}</strong>
@@ -304,9 +304,9 @@
                                     ?>
                                     {!! Form::fancyselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
-                                    @if ($errors->has('room_type'))
+                                    @if ($errors->has('room_type.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_type') }}</strong>
+                                        <strong>{{ $errors->first('room_type.0') }}</strong>
                                     </span>
                                     @endif
 
@@ -316,9 +316,9 @@
 
                                     {!! Form::fancyselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
-                                    @if ($errors->has('guest'))
+                                    @if ($errors->has('guest.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('guest') }}</strong>
+                                        <strong>{{ $errors->first('guest.0') }}</strong>
                                     </span>
                                     @endif
 
@@ -327,9 +327,9 @@
                                 <div class="col-md-2">
 
                                     {!! Form::text('room_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}
-                                    @if ($errors->has('room_avail'))
+                                    @if ($errors->has('room_avail.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_avail') }}</strong>
+                                        <strong>{{ $errors->first('room_avail.0') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -338,18 +338,18 @@
 
                                 <div class="col-md-2">
                                     {!! Form::text('room_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}
-                                    @if ($errors->has('room_price'))
+                                    @if ($errors->has('room_price.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_price') }}</strong>
+                                        <strong>{{ $errors->first('room_price.0') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
                                 <div class="col-md-2">
                                     {!! Form::text('room_short_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
-                                    @if ($errors->has('room_short_desc'))
+                                    @if ($errors->has('room_short_desc.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_short_desc') }}</strong>
+                                        <strong>{{ $errors->first('room_short_desc.0') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -547,14 +547,14 @@
                 </div>
 
                 <!---Activity form--->
-                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'in active' : '' }} fade has-padding" id="rooms">
+                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'in active' : '' }} fade has-padding" id="activity">
 
                     {!!
                     Form::open(
                     array(
                     'name' => 'frm_activity',
                     'id' => 'frm_activity',
-                    'url' => route('room'),
+                    'url' => route('activity-detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => false
@@ -576,12 +576,12 @@
                     }
 
 
-                    $activity_property = [];
-                    if (!empty($arr_amenity) && count($arr_amenity) > 0) {
+                    $activity_option = [];
+                    if (!empty($arr_activity) && count($arr_activity) > 0) {
 
                         if (!empty($arr_activity) && count($arr_activity) > 0) {
                             foreach ($arr_activity as $actvity) {
-                                $activity_property[] = array(
+                                $activity_option[] = array(
                                     'value' => $actvity->id,
                                     'display' => $actvity->name,
                                     'data-icon' => 'stumbleupon'
@@ -637,10 +637,10 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('room_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
-                                    @if ($errors->has('room_desc'))
+                                    {!! Form::textarea('amenity_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->amenity : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
+                                    @if ($errors->has('amenity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_desc') }}</strong>
+                                        <strong>{{ $errors->first('amenity_desc') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -649,7 +649,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity on property:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('amenity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Amenity on Property *', 'data-placeholder' => "Amenity on property", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('amenity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property", 'multiple' => 'multiple']) !!}
 
                                     @if ($errors->has('amenity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -662,7 +662,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('activity_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
+                                    {!! Form::textarea('activity_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
                                     @if ($errors->has('activity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_desc') }}</strong>
@@ -674,7 +674,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity on Property :</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('$activity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Activity on Property *', 'data-placeholder' => "Activity on property", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('activity_property[]', $activity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('activity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_property') }}</strong>
@@ -690,9 +690,9 @@
 
                                     {!! Form::text('attraction_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}
 
-                                    @if ($errors->has('attraction_name'))
+                                    @if ($errors->has('attraction_name.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('attraction_name') }}</strong>
+                                        <strong>{{ $errors->first('attraction_name.0') }}</strong>
                                     </span>
                                     @endif
 
@@ -702,9 +702,9 @@
 
                                     {!! Form::fancyselect('surrounding[]', $surr, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
 
-                                    @if ($errors->has('surrounding'))
+                                    @if ($errors->has('surrounding.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('surrounding') }}</strong>
+                                        <strong>{{ $errors->first('surrounding.0') }}</strong>
                                     </span>
                                     @endif
 
@@ -713,9 +713,9 @@
                                 <div class="col-md-4">
 
                                     {!! Form::text('approx_dist[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
-                                    @if ($errors->has('approx_dist'))
+                                    @if ($errors->has('approx_dist.0'))
                                     <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('approx_dist') }}</strong>
+                                        <strong>{{ $errors->first('approx_dist.0') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -731,8 +731,14 @@
                             <div class="form-group">
                                 <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
                                 <div class="col-lg-12">
-                                    {!! Form::fancyselect('shuttle[]', $shuttle_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('shuttle', $shuttle_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    @if ($errors->has('shuttle'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('shuttle') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
+                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
@@ -747,14 +753,14 @@
                 </div>
 
                 <!---policy form--->
-                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'in active' : '' }} fade has-padding" id="rooms">
+                <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'in active' : '' }} fade has-padding" id="policy">
 
                     {!!
                     Form::open(
                     array(
                     'name' => 'frm_policy',
                     'id' => 'frm_policy',
-                    'url' => route('room'),
+                    'url' => route('activity-detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => false
@@ -901,7 +907,7 @@
                 </div>
 
                 <!---meta tag form--->
-                <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'in active' : '' }} has-padding" id="william">
+                <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'in active' : '' }} has-padding" id="keywords">
                     <form action="#" class="form-horizontal">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
@@ -939,7 +945,7 @@
                 </div>
 
                 <!---video & map form--->
-                <div class="tab-pane fade has-padding {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'in active' : '' }}" id="jared">
+                <div class="tab-pane fade has-padding {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'in active' : '' }}" id="videomap">
                     <form action="#" class="form-horizontal">
                         <div class="panel panel-flat">
                             <div class="panel-heading">
@@ -967,6 +973,7 @@
                         </div>
                     </form>
                 </div>
+                
             </div>
         </div>
     </div>

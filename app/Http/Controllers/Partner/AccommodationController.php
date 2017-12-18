@@ -4,19 +4,34 @@ namespace App\Http\Controllers\Partner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Model\Accommodation\AccomVenuPromo;
 use App\Model\Accommodation\AccommodationList;
 use App\Model\Accommodation\AccomVenuPromosImage;
+
 use App\Model\RoomList\RoomList;
 use App\Model\RoomList\RoomDetail;
+
 use App\Model\AmenityList\AmenityList;
+use App\Model\AmenityList\AmenityDetail;
+
 use App\Model\ActivityList\ActivityList;
+use App\Model\ActivityList\ActivityDetail;
+
 use App\Model\SurroundingList\SurroundingList;
-use App\Http\Requests\Partner\AccommodationRequest;
-use Illuminate\Support\Facades\Validator;
+use App\Model\SurroundingList\SurroundingDetail;
+
 use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
+
+use App\Http\Requests\Partner\AccommodationRequest;
+use App\Http\Requests\Partner\ActivityDetailRequest;
+use App\Http\Requests\Partner\RoomDetailRequest;
+
+use Illuminate\Support\Facades\Validator;
+
+
 use Auth;
 use Image;
 
@@ -72,10 +87,7 @@ class AccommodationController extends Controller {
             $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_amenity = $amenity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
-            
-            
 
-            
             return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -189,7 +201,7 @@ class AccommodationController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function insertRoom(Request $request) {
+    public function roomDetail(RoomDetailRequest $request) {
 
         $acco_id = '';
 
@@ -206,7 +218,7 @@ class AccommodationController extends Controller {
             $room_detail->guest = $request->guest[$i];
             $room_detail->available = $request->room_avail[$i];
             $room_detail->price = $request->room_price[$i];
-            $room_detail->desc = $request->desc[$i];
+            $room_detail->desc = $request->desc;
             $room_detail->short_desc = $request->room_short_desc[$i];
             $room_detail->room_image = ( isset($request->room_img[$i]) && !empty($request->room_img[$i]) ? $request->room_img[$i]->getClientOriginalName() : '');
             $room_detail->type = $request->type;
@@ -274,6 +286,91 @@ class AccommodationController extends Controller {
 
         $request->session()->flash($flag, $msg);
         $request->session()->put('tab_type', 3);
+        return redirect(route('accomodation.create'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function activityDetail(ActivityDetailRequest $request) {
+
+        $acco_id = '';
+
+        if (!empty(session()->get('accom_id'))) {
+            $acco_id = session()->get('accom_id');
+        }
+
+        $cnt = count($request->amenity_property);
+        $activity_cnt = count($request->activity_property);
+        $attarc_cnt = count($request->attraction_name);
+
+        for ($i = 0; $i < $cnt; $i++) {
+            $amenity_detail = new AmenityDetail;
+            $amenity_detail->accom_venu_promos_id = $acco_id;
+            $amenity_detail->desc = $request->amenity_desc;
+            $amenity_detail->amenity_id = $request->amenity_property[$i];
+            $amenity_detail->type = $request->type;
+            $amenity_detail->created_by = Auth::user()->id;
+
+            if ($amenity_detail->save()) {
+                $flg = '1';
+                $msg = "Record Added Successfully";
+            } else {
+                $flg = '0';
+                $msg = "Record not Added Successfully";
+            }
+        }
+
+        for ($j = 0; $j < $activity_cnt; $j++) {
+            $activity_detail = new ActivityDetail;
+            $activity_detail->accom_venu_promos_id = $acco_id;
+            $activity_detail->desc = $request->activity_desc;
+            $activity_detail->activity_id = $request->activity_property[$j];
+            $activity_detail->type = $request->type;
+            $activity_detail->created_by = Auth::user()->id;
+
+            if ($activity_detail->save()) {
+                $flg = '1';
+                $msg = "Record Added Successfully";
+            } else {
+                $flg = '0';
+                $msg = "Record not Added Successfully";
+            }
+        }
+
+
+        for ($k = 0; $k < $attarc_cnt; $k++) {
+            $surr_detail = new SurroundingDetail;
+            $surr_detail->accom_venu_promos_id = $acco_id;
+            $surr_detail->name = $request->attraction_name[$k];
+            $surr_detail->surrounding_id = $request->surrounding[$k];
+            $surr_detail->distance = $request->approx_dist[$k];
+            $surr_detail->shuttle = $request->shuttle;
+            $surr_detail->type = $request->type;
+            $surr_detail->created_by = Auth::user()->id;
+
+            if ($surr_detail->save()) {
+                $flg = '1';
+                $msg = "Record Added Successfully";
+            } else {
+                $flg = '0';
+                $msg = "Record not Added Successfully";
+            }
+        }
+
+        if (isset($flg) && !empty($flg)) {
+            $flag = 'success';
+            $msg = "Record Added Successfully";
+        } else {
+            $flag = 'danger';
+            $msg = "Record Not Added Successfully";
+        }
+
+        $request->session()->flash($flag, $msg);
+        $request->session()->put('tab_type', 4);
         return redirect(route('accomodation.create'));
     }
 
