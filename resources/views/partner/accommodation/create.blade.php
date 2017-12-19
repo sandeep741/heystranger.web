@@ -418,10 +418,10 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('venue_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}
-                                        @if ($errors->has('venue_avail'))
+                                        {!! Form::text('capacity[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}
+                                        @if ($errors->has('capacity.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_avail') }}</strong>
+                                            <strong>{{ $errors->first('capacity.0') }}</strong>
                                         </span>
                                         @endif
 
@@ -432,9 +432,9 @@
 
                                     <div class="col-md-2">
                                         {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Venu Price']) !!}
-                                        @if ($errors->has('venue_price'))
+                                        @if ($errors->has('venue_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_price') }}</strong>
+                                            <strong>{{ $errors->first('venue_price.0') }}</strong>
                                         </span>
                                         @endif
 
@@ -442,20 +442,20 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Venue Short Description']) !!}
-                                        @if ($errors->has('venue_descr'))
+                                        {!! Form::text('venue_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Venue Short Description']) !!}
+                                        @if ($errors->has('venue_short_descr.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_descr') }}</strong>
+                                            <strong>{{ $errors->first('venue_short_descr.0') }}</strong>
                                         </span>
                                         @endif
 
                                     </div>
 
                                     <div class="col-md-2">
-                                        {{ Form::file('venue_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
-                                        @if ($errors->has('venue_img'))
+                                        {{ Form::file('venu_img[]', ['id' => 'venu_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                        @if ($errors->has('venu_img.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_img') }}</strong>
+                                            <strong>{{ $errors->first('venu_img.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -482,9 +482,9 @@
                                     <div class="col-md-2">
 
                                         {!! Form::text('confer_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Conference Name']) !!}
-                                        @if ($errors->has('confer_name'))
+                                        @if ($errors->has('confer_name.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_name') }}</strong>
+                                            <strong>{{ $errors->first('confer_name.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -492,9 +492,9 @@
                                     <div class="col-md-2">
 
                                         {!! Form::text('confer_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Capacity']) !!}
-                                        @if ($errors->has('confer_avail'))
+                                        @if ($errors->has('confer_avail.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_avail') }}</strong>
+                                            <strong>{{ $errors->first('confer_avail.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -502,9 +502,9 @@
 
                                     <div class="col-md-2">
                                         {!! Form::text('confer_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Conference Price']) !!}
-                                        @if ($errors->has('confer_price'))
+                                        @if ($errors->has('confer_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_price') }}</strong>
+                                            <strong>{{ $errors->first('confer_price.0') }}</strong>
                                         </span>
                                         @endif
 
@@ -513,9 +513,9 @@
 
                                     <div class="col-md-2">
                                         {!! Form::text('confer_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Conference Short Description']) !!}
-                                        @if ($errors->has('confer_short_descr'))
+                                        @if ($errors->has('confer_short_descr.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_short_descr') }}</strong>
+                                            <strong>{{ $errors->first('confer_short_descr.0') }}</strong>
                                         </span>
                                         @endif
 
@@ -523,9 +523,9 @@
 
                                     <div class="col-md-2">
                                         {{ Form::file('confer_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
-                                        @if ($errors->has('confer_img'))
+                                        @if ($errors->has('confer_img.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_img') }}</strong>
+                                            <strong>{{ $errors->first('confer_img.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>

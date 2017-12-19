@@ -9,6 +9,8 @@ use App\Model\Accommodation\AccommodationList;
 use App\Model\Accommodation\AccomVenuPromosImage;
 use App\Model\RoomList\RoomList;
 use App\Model\RoomList\RoomDetail;
+use App\Model\Venu\VenuDetail;
+use App\Model\Conference\ConferenceDetail;
 use App\Model\AmenityList\AmenityList;
 use App\Model\AmenityList\AmenityDetail;
 use App\Model\ActivityList\ActivityList;
@@ -202,7 +204,11 @@ class AccommodationController extends Controller {
             }
 
             $cnt = count($request->room_type);
+            $venu_cnt = count($request->venue_name);
+            $confer_cnt = count($request->confer_name);
             $room_detail = new RoomDetail;
+            $venu_detail = new VenuDetail;
+            $confer_detail = new ConferenceDetail;
 
             for ($i = 0; $i < $cnt; $i++) {
 
@@ -222,7 +228,7 @@ class AccommodationController extends Controller {
                     $files = "";
                     if ($request->file('room_img')) {
                         if (isset($request->file('room_img')[$i]) && !empty($request->file('room_img')[$i])) {
-                            
+
                             $files = $request->file('room_img')[$i];
                         }
 
@@ -260,6 +266,138 @@ class AccommodationController extends Controller {
                             $files->move($destinationPath, $filename);
 
                             $uploadcount ++;
+                        }
+                    }
+
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            for ($j = 0; $j < $venu_cnt; $j++) {
+
+                $venu_detail->accom_venu_promos_id = $acco_id;
+                $venu_detail->desc = $request->venu_desc;
+                $venu_detail->name = $request->venue_name[$j];
+                $venu_detail->capacity = $request->venu_capacity[$j];
+                $venu_detail->price = $request->venue_price[$j];
+                $venu_detail->short_desc = $request->venue_short_descr[$j];
+                $venu_detail->venu_image = ( isset($request->venue_img[$j]) && !empty($request->venue_img[$j]) ? $request->venue_img[$j]->getClientOriginalName() : '');
+                $venu_detail->type = $request->type;
+                $venu_detail->created_by = Auth::user()->id;
+
+                if ($venu_detail->save()) {
+                    /* room multiple image upload */
+                    $venu_files = "";
+                    if ($request->file('venu_img')) {
+                        if (isset($request->file('venu_img')[$j]) && !empty($request->file('venu_img')[$j])) {
+
+                            $venu_files = $request->file('venu_img')[$j];
+                        }
+
+                        $venu_uploadcount = 0;
+                        $venu_rules = array('venu_img' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                        $venu_validator = Validator::make(array('venu_img' => $venu_files), $venu_rules);
+                        if ($venu_validator->passes()) {
+
+                            $venu_filename = $venu_detail->id . '_' . $venu_files->getClientOriginalName();
+
+                            // make thumb nail of image
+                            $venu_destinationThumb = 'venu_images/thumbnail';
+                            if (!file_exists($venu_destinationThumb)) {
+                                mkdir($venu_destinationThumb, 0777, true);
+                            }
+
+                            // image reszie
+                            $venu_destinationResize = 'venu_images/resize';
+                            if (!file_exists($venu_destinationResize)) {
+                                mkdir($venu_destinationResize, 0777, true);
+                            }
+
+                            $venu_img = Image::make($venu_files->getRealPath());
+
+                            $venu_img->resize(80, 80, function ($venu_constraint) {
+                                $venu_constraint->aspectRatio();
+                            })->save($venu_destinationThumb . '/' . $venu_filename);
+
+                            $venu_img = Image::make($venu_files->getRealPath());
+                            $venu_img->resize(300, 300, function ($venu_constraint) {
+                                $venu_constraint->aspectRatio();
+                            })->save($venu_destinationResize . '/' . $venu_filename);
+
+                            $venu_destinationPath = 'venu_images';
+                            $venu_files->move($venu_destinationPath, $venu_filename);
+
+                            $venu_uploadcount ++;
+                        }
+                    }
+
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            for ($k = 0; $k < $confer_cnt; $k++) {
+
+                $confer_detail->accom_venu_promos_id = $acco_id;
+                $confer_detail->desc = $request->confer_desc;
+                $confer_detail->name = $request->confer_name[$k];
+                $confer_detail->capacity = $request->confer_avail[$k];
+                $confer_detail->price = $request->confer_price[$k];
+                $confer_detail->short_desc = $request->confer_short_descr[$k];
+                $confer_detail->confer_image = ( isset($request->confer_img[$k]) && !empty($request->confer_img[$k]) ? $request->confer_img[$k]->getClientOriginalName() : '');
+                $confer_detail->type = $request->type;
+                $confer_detail->created_by = Auth::user()->id;
+
+                if ($confer_detail->save()) {
+                    /* room multiple image upload */
+                    $confer_files = "";
+                    if ($request->file('confer_img')) {
+                        if (isset($request->file('confer_img')[$k]) && !empty($request->file('confer_img')[$k])) {
+
+                            $confer_files = $request->file('confer_img')[$k];
+                        }
+
+                        $confer_uploadcount = 0;
+                        $confer_rules = array('confer_img' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                        $confer_validator = Validator::make(array('confer_img' => $confer_files), $confer_rules);
+                        if ($confer_validator->passes()) {
+
+                            $confer_filename = $confer_detail->id . '_' . $confer_files->getClientOriginalName();
+
+                            // make thumb nail of image
+                            $confer_destinationThumb = 'confer_images/thumbnail';
+                            if (!file_exists($confer_destinationThumb)) {
+                                mkdir($confer_destinationThumb, 0777, true);
+                            }
+
+                            // image reszie
+                            $confer_destinationResize = 'confer_images/resize';
+                            if (!file_exists($confer_destinationResize)) {
+                                mkdir($confer_destinationResize, 0777, true);
+                            }
+
+                            $confer_img = Image::make($confer_files->getRealPath());
+
+                            $confer_img->resize(80, 80, function ($confer_constraint) {
+                                $confer_constraint->aspectRatio();
+                            })->save($confer_destinationThumb . '/' . $confer_filename);
+
+                            $confer_img = Image::make($confer_files->getRealPath());
+                            $confer_img->resize(300, 300, function ($confer_constraint) {
+                                $confer_constraint->aspectRatio();
+                            })->save($confer_destinationResize . '/' . $confer_filename);
+
+                            $conferu_destinationPath = 'confer_images';
+                            $confer_files->move($conferu_destinationPath, $confer_filename);
+
+                            $confer_uploadcount ++;
                         }
                     }
 
