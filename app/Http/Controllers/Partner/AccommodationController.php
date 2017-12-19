@@ -418,7 +418,7 @@ class AccommodationController extends Controller {
             }
 
             $request->session()->flash($flag, $msg);
-            $request->session()->put('tab_type', 2);
+            $request->session()->put('tab_type', 3);
             return redirect(route('accomodation.create'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
