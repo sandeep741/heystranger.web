@@ -4,34 +4,24 @@ namespace App\Http\Controllers\Partner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Model\Accommodation\AccomVenuPromo;
 use App\Model\Accommodation\AccommodationList;
 use App\Model\Accommodation\AccomVenuPromosImage;
-
 use App\Model\RoomList\RoomList;
 use App\Model\RoomList\RoomDetail;
-
 use App\Model\AmenityList\AmenityList;
 use App\Model\AmenityList\AmenityDetail;
-
 use App\Model\ActivityList\ActivityList;
 use App\Model\ActivityList\ActivityDetail;
-
 use App\Model\SurroundingList\SurroundingList;
 use App\Model\SurroundingList\SurroundingDetail;
-
 use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
-
 use App\Http\Requests\Partner\AccommodationRequest;
 use App\Http\Requests\Partner\ActivityDetailRequest;
 use App\Http\Requests\Partner\RoomDetailRequest;
-
 use Illuminate\Support\Facades\Validator;
-
-
 use Auth;
 use Image;
 
@@ -203,90 +193,98 @@ class AccommodationController extends Controller {
      */
     public function roomDetail(RoomDetailRequest $request) {
 
-        $acco_id = '';
+        try {
 
-        if (!empty(session()->get('accom_id'))) {
-            $acco_id = session()->get('accom_id');
-        }
+            $acco_id = '';
 
-        $cnt = count($request->room_type);
+            if (!empty(session()->get('accom_id'))) {
+                $acco_id = session()->get('accom_id');
+            }
 
-        for ($i = 0; $i < $cnt; $i++) {
+            $cnt = count($request->room_type);
             $room_detail = new RoomDetail;
-            $room_detail->accom_venu_promos_id = $acco_id;
-            $room_detail->room_type_id = $request->room_type[$i];
-            $room_detail->guest = $request->guest[$i];
-            $room_detail->available = $request->room_avail[$i];
-            $room_detail->price = $request->room_price[$i];
-            $room_detail->desc = $request->desc;
-            $room_detail->short_desc = $request->room_short_desc[$i];
-            $room_detail->room_image = ( isset($request->room_img[$i]) && !empty($request->room_img[$i]) ? $request->room_img[$i]->getClientOriginalName() : '');
-            $room_detail->type = $request->type;
-            $room_detail->created_by = Auth::user()->id;
 
-            if ($room_detail->save()) {
-                /* room multiple image upload */
-                if ($request->file('room_img')) {
-                    if (isset($request->file('room_img')[$i]) && !empty($request->file('room_img')[$i])) {
-                        $files = $request->file('room_img')[$i];
-                    }
+            for ($i = 0; $i < $cnt; $i++) {
 
-                    $uploadcount = 0;
-                    $rules = array('room_img' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
-                    $validator = Validator::make(array('room_img' => $files), $rules);
-                    if ($validator->passes()) {
+                $room_detail->accom_venu_promos_id = $acco_id;
+                $room_detail->room_type_id = $request->room_type[$i];
+                $room_detail->guest = $request->guest[$i];
+                $room_detail->available = $request->room_avail[$i];
+                $room_detail->price = $request->room_price[$i];
+                $room_detail->desc = $request->desc;
+                $room_detail->short_desc = $request->room_short_desc[$i];
+                $room_detail->room_image = ( isset($request->room_img[$i]) && !empty($request->room_img[$i]) ? $request->room_img[$i]->getClientOriginalName() : '');
+                $room_detail->type = $request->type;
+                $room_detail->created_by = Auth::user()->id;
 
-                        $filename = $room_detail->id . '_' . $files->getClientOriginalName();
-
-                        // make thumb nail of image
-                        $destinationThumb = 'room_images/thumbnail';
-                        if (!file_exists($destinationThumb)) {
-                            mkdir($destinationThumb, 0777, true);
+                if ($room_detail->save()) {
+                    /* room multiple image upload */
+                    $files = "";
+                    if ($request->file('room_img')) {
+                        if (isset($request->file('room_img')[$i]) && !empty($request->file('room_img')[$i])) {
+                            
+                            $files = $request->file('room_img')[$i];
                         }
 
-                        // image reszie
-                        $destinationResize = 'room_images/resize';
-                        if (!file_exists($destinationResize)) {
-                            mkdir($destinationResize, 0777, true);
+                        $uploadcount = 0;
+                        $rules = array('room_img' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                        $validator = Validator::make(array('room_img' => $files), $rules);
+                        if ($validator->passes()) {
+
+                            $filename = $room_detail->id . '_' . $files->getClientOriginalName();
+
+                            // make thumb nail of image
+                            $destinationThumb = 'room_images/thumbnail';
+                            if (!file_exists($destinationThumb)) {
+                                mkdir($destinationThumb, 0777, true);
+                            }
+
+                            // image reszie
+                            $destinationResize = 'room_images/resize';
+                            if (!file_exists($destinationResize)) {
+                                mkdir($destinationResize, 0777, true);
+                            }
+
+                            $img = Image::make($files->getRealPath());
+
+                            $img->resize(80, 80, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->save($destinationThumb . '/' . $filename);
+
+                            $img = Image::make($files->getRealPath());
+                            $img->resize(300, 300, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->save($destinationResize . '/' . $filename);
+
+                            $destinationPath = 'room_images';
+                            $files->move($destinationPath, $filename);
+
+                            $uploadcount ++;
                         }
-
-                        $img = Image::make($files->getRealPath());
-
-                        $img->resize(80, 80, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })->save($destinationThumb . '/' . $filename);
-
-                        $img = Image::make($files->getRealPath());
-                        $img->resize(300, 300, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })->save($destinationResize . '/' . $filename);
-
-                        $destinationPath = 'room_images';
-                        $files->move($destinationPath, $filename);
-
-                        $uploadcount ++;
                     }
+
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
                 }
+            }
 
-                $flg = '1';
+            if (isset($flg) && !empty($flg)) {
+                $flag = 'success';
                 $msg = "Record Added Successfully";
             } else {
-                $flg = '0';
-                $msg = "Record not Added Successfully";
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
             }
-        }
 
-        if (isset($flg) && !empty($flg)) {
-            $flag = 'success';
-            $msg = "Record Added Successfully";
-        } else {
-            $flag = 'danger';
-            $msg = "Record Not Added Successfully";
+            $request->session()->flash($flag, $msg);
+            $request->session()->put('tab_type', 2);
+            return redirect(route('accomodation.create'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-
-        $request->session()->flash($flag, $msg);
-        $request->session()->put('tab_type', 3);
-        return redirect(route('accomodation.create'));
     }
 
     /**
@@ -297,81 +295,89 @@ class AccommodationController extends Controller {
      */
     public function activityDetail(ActivityDetailRequest $request) {
 
-        $acco_id = '';
+        try {
 
-        if (!empty(session()->get('accom_id'))) {
-            $acco_id = session()->get('accom_id');
-        }
+            $acco_id = '';
 
-        $cnt = count($request->amenity_property);
-        $activity_cnt = count($request->activity_property);
-        $attarc_cnt = count($request->attraction_name);
+            if (!empty(session()->get('accom_id'))) {
+                $acco_id = session()->get('accom_id');
+            }
 
-        for ($i = 0; $i < $cnt; $i++) {
+            $cnt = count($request->amenity_property);
+            $activity_cnt = count($request->activity_property);
+            $attarc_cnt = count($request->attraction_name);
+
             $amenity_detail = new AmenityDetail;
-            $amenity_detail->accom_venu_promos_id = $acco_id;
-            $amenity_detail->desc = $request->amenity_desc;
-            $amenity_detail->amenity_id = $request->amenity_property[$i];
-            $amenity_detail->type = $request->type;
-            $amenity_detail->created_by = Auth::user()->id;
-
-            if ($amenity_detail->save()) {
-                $flg = '1';
-                $msg = "Record Added Successfully";
-            } else {
-                $flg = '0';
-                $msg = "Record not Added Successfully";
-            }
-        }
-
-        for ($j = 0; $j < $activity_cnt; $j++) {
             $activity_detail = new ActivityDetail;
-            $activity_detail->accom_venu_promos_id = $acco_id;
-            $activity_detail->desc = $request->activity_desc;
-            $activity_detail->activity_id = $request->activity_property[$j];
-            $activity_detail->type = $request->type;
-            $activity_detail->created_by = Auth::user()->id;
-
-            if ($activity_detail->save()) {
-                $flg = '1';
-                $msg = "Record Added Successfully";
-            } else {
-                $flg = '0';
-                $msg = "Record not Added Successfully";
-            }
-        }
-
-
-        for ($k = 0; $k < $attarc_cnt; $k++) {
             $surr_detail = new SurroundingDetail;
-            $surr_detail->accom_venu_promos_id = $acco_id;
-            $surr_detail->name = $request->attraction_name[$k];
-            $surr_detail->surrounding_id = $request->surrounding[$k];
-            $surr_detail->distance = $request->approx_dist[$k];
-            $surr_detail->shuttle = $request->shuttle;
-            $surr_detail->type = $request->type;
-            $surr_detail->created_by = Auth::user()->id;
 
-            if ($surr_detail->save()) {
-                $flg = '1';
+            for ($i = 0; $i < $cnt; $i++) {
+
+                $amenity_detail->accom_venu_promos_id = $acco_id;
+                $amenity_detail->desc = $request->amenity_desc;
+                $amenity_detail->amenity_id = $request->amenity_property[$i];
+                $amenity_detail->type = $request->type;
+                $amenity_detail->created_by = Auth::user()->id;
+
+                if ($amenity_detail->save()) {
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            for ($j = 0; $j < $activity_cnt; $j++) {
+
+                $activity_detail->accom_venu_promos_id = $acco_id;
+                $activity_detail->desc = $request->activity_desc;
+                $activity_detail->activity_id = $request->activity_property[$j];
+                $activity_detail->type = $request->type;
+                $activity_detail->created_by = Auth::user()->id;
+
+                if ($activity_detail->save()) {
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            for ($k = 0; $k < $attarc_cnt; $k++) {
+
+                $surr_detail->accom_venu_promos_id = $acco_id;
+                $surr_detail->name = $request->attraction_name[$k];
+                $surr_detail->surrounding_id = $request->surrounding[$k];
+                $surr_detail->distance = $request->approx_dist[$k];
+                $surr_detail->shuttle = $request->shuttle;
+                $surr_detail->type = $request->type;
+                $surr_detail->created_by = Auth::user()->id;
+
+                if ($surr_detail->save()) {
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            if (isset($flg) && !empty($flg)) {
+                $flag = 'success';
                 $msg = "Record Added Successfully";
             } else {
-                $flg = '0';
-                $msg = "Record not Added Successfully";
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
             }
-        }
 
-        if (isset($flg) && !empty($flg)) {
-            $flag = 'success';
-            $msg = "Record Added Successfully";
-        } else {
-            $flag = 'danger';
-            $msg = "Record Not Added Successfully";
+            $request->session()->flash($flag, $msg);
+            $request->session()->put('tab_type', 4);
+            return redirect(route('accomodation.create'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
-
-        $request->session()->flash($flag, $msg);
-        $request->session()->put('tab_type', 4);
-        return redirect(route('accomodation.create'));
     }
 
     /**

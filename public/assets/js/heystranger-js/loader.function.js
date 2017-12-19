@@ -3,7 +3,7 @@ $.loader = function (val) {
         $(function () {
             $.loadingBlockShow({
                 imgPath: '/assets/images/default.svg',
-                text: 'jQuery Script Loading ...',
+                text: 'please wait...',
                 style: {
                     position: 'fixed',
                     width: '100%',

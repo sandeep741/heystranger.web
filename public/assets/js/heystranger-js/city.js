@@ -14,6 +14,9 @@ jQuery(document).ready(function () {
             },
             headers: {
             },
+            beforeSend: function () {
+                $.loader("on");
+            },
             success: function (response) {
                 $('.state_id').append(new Option("Please Select State *", ''));
                 $(response).each(function (i) {
@@ -21,6 +24,9 @@ jQuery(document).ready(function () {
                 });
                 //$(".state_id").addClass("chosen-select").change();
                 //$('.state_id').trigger('chosen:updated');
+            },
+            complete: function () {
+                $.loader("off");
             }
         });
     });
@@ -36,6 +42,9 @@ jQuery(document).ready(function () {
             },
             headers: {
             },
+            beforeSend: function () {
+                $.loader("on");
+            },
             success: function (data) {
                 $('.address_city_id').append(new Option("Please Select City *", ''));
                 $(data).each(function (i) {
@@ -43,6 +52,9 @@ jQuery(document).ready(function () {
                 });
                 //$(".address_city_id").addClass("chosen-select").change();
                 //$('.address_city_id').trigger('chosen:updated');
+            },
+           complete: function () {
+                $.loader("off");
             }
         });
     });
