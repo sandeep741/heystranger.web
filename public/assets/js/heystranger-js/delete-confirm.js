@@ -1,8 +1,8 @@
 jQuery(document).ready(function () {
 
-    $(".delete-record").click(function () {
+    $(".delete-record").click(function (e) {
 
-        event.preventDefault()
+        e.preventDefault()
         var id = $(this).attr('id');
 
         $.confirm({
@@ -16,7 +16,7 @@ jQuery(document).ready(function () {
                     text: 'Yes, sure!',
                     btnClass: 'btn-orange',
                     action: function () {
-                        event.preventDefault();
+                        e.preventDefault();
                         document.getElementById('delete-form-' + id).submit();
                     }
                 },
