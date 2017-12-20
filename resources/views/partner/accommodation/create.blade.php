@@ -763,12 +763,14 @@
                     'url' => route('policy-detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
-                    'files' => false
+                    'files' => true
                     )
                     )
                     !!}
                     
                     <?php
+                    
+                    $payment_option = [];
 
                     if (!empty($arr_payment) && count($arr_payment) > 0) {
                         foreach ($arr_payment as $payment) {
@@ -783,7 +785,7 @@
                     $acco_option = [];
                     $acco_option = array(array(
                             'value' => '',
-                            'display' => 'Select Duration of Accommodation',
+                            'display' => 'Select Duration of Accommodation *',
                             'data-icon' => 'stumbleupon'
                         ),
                         array(
@@ -825,7 +827,7 @@
                     $contractor_option = [];
                     $contractor_option = array(array(
                             'value' => '',
-                            'display' => 'Select Contractors Deals',
+                            'display' => 'Select Contractors Deals *',
                             'data-icon' => 'stumbleupon'
                         ),
                         array(
@@ -843,7 +845,7 @@
                     $extra_option = [];
                     $extra_option = array(array(
                             'value' => '',
-                            'display' => 'Select Extra Condition',
+                            'display' => 'Select Extra Condition *',
                             'data-icon' => 'stumbleupon'
                         ),
                         array(
@@ -870,12 +872,17 @@
                             <div class="form-group extra-parents">
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('deposite', config('constants.policy')['policy_share'].'% Deposit', ['class' => 'form-control required', 'readonly' => 'true', 'placeholder' => 'Enter Deposit *']) !!}
+                                    {!! Form::text('deposite', config('constants.policy')['policy_share'].'% Deposit', ['class' => 'form-control required', 'readonly' => 'true']) !!}
                                 </div>
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('cancel', null, ['class' => 'form-control required', 'placeholder' => 'Enter Cancellation Policy']) !!}
+                                    {!! Form::text('cancel', null, ['class' => 'form-control required', 'placeholder' => 'Enter Cancellation Policy *']) !!}
+                                    @if ($errors->has('cancel'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('cancel') }}</strong>
+                                    </span>
+                                    @endif
                                     
                                 </div>
                             </div>
@@ -888,35 +895,51 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('timein', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time In']) !!}
+                                    {!! Form::text('timein', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time In *']) !!}
+                                    @if ($errors->has('timein'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('timein') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('timeout', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time Out']) !!}
+                                    {!! Form::text('timeout', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time Out *']) !!}
+                                    @if ($errors->has('timeout'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('timeout') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-lg-6">
-                                    {!! Form::text('child_extra', null, ['class' => 'form-control required', 'placeholder' => 'Children & Extra']) !!}
+                                    {!! Form::text('child_extra', null, ['class' => 'form-control', 'placeholder' => 'Children & Extra']) !!}
                                 </div>
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('pets', null, ['class' => 'form-control required', 'placeholder' => 'Pets']) !!}
+                                    {!! Form::text('pets', null, ['class' => 'form-control', 'placeholder' => 'Pets']) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::multiselect('payment_type[]', $payment_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('payment_type[]', $payment_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
+                                    @if ($errors->has('payment_type'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('payment_type') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
 
                                 <div class="col-lg-6">
-                                    <input type="text" name='lang_spoken' class="form-control" placeholder="Language Spoken At Facility">
+                                    {!! Form::text('lang_spoken', null, ['class' => 'form-control', 'placeholder' => 'Language Spoken At Facility']) !!}
+                                    
                                 </div>
                             </div>
 
@@ -924,16 +947,30 @@
                                 
                                 <div class="col-lg-4">
                                     {!! Form::fancyselect('acco_duration', $acco_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    @if ($errors->has('acco_duration'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('acco_duration') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
                                 <div class="col-lg-4">
                                     {!! Form::fancyselect('corpo_deals', $corporate_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    @if ($errors->has('corpo_deals'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('corpo_deals') }}</strong>
+                                    </span>
+                                    @endif
                                     
                                 </div>
 
                                 <div class="col-lg-4">
                                     {!! Form::fancyselect('contract_deal', $contractor_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
-                                    
+                                    @if ($errors->has('contract_deal'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('contract_deal') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
 
@@ -942,6 +979,11 @@
                                 <label class="col-lg-3 control-label">Your  Terms</label>
                                 <div class="col-lg-9">
                                     {!! Form::textarea('policy_terms', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Terms *']) !!}
+                                    @if ($errors->has('policy_terms'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('policy_terms') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
                             </div>
@@ -952,21 +994,37 @@
                             <div class="form-group extra-parents">
 
                                 <div class="col-md-3">
-                                    {!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item']) !!}
+                                    {!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item Name *']) !!}
+                                    @if ($errors->has('item.0'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('item.0') }}</strong>
+                                    </span>
+                                    @endif
 
                                 </div>
 
                                 <div class="col-md-3">
                                     {!! Form::text('extra_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Enter Price *']) !!}
+                                    @if ($errors->has('extra_price.0'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('extra_price.0') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                                 
                                 <div class="col-md-3">
-                                    {!! Form::fancyselect('extra_cond', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('extra_cond[]', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    @if ($errors->has('extra_cond.0'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('extra_cond.0') }}</strong>
+                                    </span>
+                                    @endif
                                    
                                 </div>
 
                                 <div class="col-md-3">
                                     {{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                                 </div>
                             </div>
 
@@ -974,7 +1032,7 @@
                         </div>
 
                         <div class="text-right">
-                            <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="policy" value="room" class="btn btn-primary">Submit</button>
                         </div>
 
 
@@ -1227,7 +1285,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-3">'+
-            '{!! Form::fancyselect('extra_cond', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'form-control select-icons required']) !!}'+
+            '{!! Form::fancyselect('extra_cond[]', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'form-control select-icons required']) !!}'+
             '</div>'+
             
             '<div class="col-md-3">'+

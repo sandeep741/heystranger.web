@@ -38,6 +38,17 @@ jQuery(document).ready(function () {
             form.submit();
         }
     });
+    
+    $('#frm_policy').validate({// initialize the plugin
+        debug: true,
+        errorClass: 'text-danger',
+        errorElement: 'span',
+        rules: {
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
 
     ///////////////for laravel login form validation//////////////
 

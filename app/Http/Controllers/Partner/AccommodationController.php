@@ -18,6 +18,9 @@ use App\Model\ActivityList\ActivityDetail;
 use App\Model\SurroundingList\SurroundingList;
 use App\Model\SurroundingList\SurroundingDetail;
 use App\Model\PaymentModeList\PaymentModeList;
+use App\Model\PaymentModeList\PaymentAccept;
+use App\Model\Policy\PoliciyDetail;
+use App\Model\Offer\OfferDetail;
 use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
@@ -75,7 +78,7 @@ class AccommodationController extends Controller {
             $amenity = new AmenityList;
             $activity = new ActivityList;
             $payment_list = new PaymentModeList;
-            
+
 
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'DESC')->where('status', 1)->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
@@ -84,6 +87,7 @@ class AccommodationController extends Controller {
             $arr_amenity = $amenity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
+
             return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -210,12 +214,12 @@ class AccommodationController extends Controller {
             $cnt = count($request->room_type);
             $venu_cnt = count($request->venue_name);
             $confer_cnt = count($request->confer_name);
-            $room_detail = new RoomDetail;
-            $venu_detail = new VenuDetail;
-            $confer_detail = new ConferenceDetail;
+
+
+
 
             for ($i = 0; $i < $cnt; $i++) {
-
+                $room_detail = new RoomDetail;
                 $room_detail->accom_venu_promos_id = $acco_id;
                 $room_detail->room_type_id = $request->room_type[$i];
                 $room_detail->guest = $request->guest[$i];
@@ -282,7 +286,7 @@ class AccommodationController extends Controller {
             }
 
             for ($j = 0; $j < $venu_cnt; $j++) {
-
+                $venu_detail = new VenuDetail;
                 $venu_detail->accom_venu_promos_id = $acco_id;
                 $venu_detail->desc = $request->venu_desc;
                 $venu_detail->name = $request->venue_name[$j];
@@ -348,7 +352,7 @@ class AccommodationController extends Controller {
             }
 
             for ($k = 0; $k < $confer_cnt; $k++) {
-
+                $confer_detail = new ConferenceDetail;
                 $confer_detail->accom_venu_promos_id = $acco_id;
                 $confer_detail->desc = $request->confer_desc;
                 $confer_detail->name = $request->confer_name[$k];
@@ -449,12 +453,12 @@ class AccommodationController extends Controller {
             $activity_cnt = count($request->activity_property);
             $attarc_cnt = count($request->attraction_name);
 
-            $amenity_detail = new AmenityDetail;
-            $activity_detail = new ActivityDetail;
-            $surr_detail = new SurroundingDetail;
+
+
+
 
             for ($i = 0; $i < $cnt; $i++) {
-
+                $amenity_detail = new AmenityDetail;
                 $amenity_detail->accom_venu_promos_id = $acco_id;
                 $amenity_detail->desc = $request->amenity_desc;
                 $amenity_detail->amenity_id = $request->amenity_property[$i];
@@ -471,7 +475,7 @@ class AccommodationController extends Controller {
             }
 
             for ($j = 0; $j < $activity_cnt; $j++) {
-
+                $activity_detail = new ActivityDetail;
                 $activity_detail->accom_venu_promos_id = $acco_id;
                 $activity_detail->desc = $request->activity_desc;
                 $activity_detail->activity_id = $request->activity_property[$j];
@@ -488,7 +492,7 @@ class AccommodationController extends Controller {
             }
 
             for ($k = 0; $k < $attarc_cnt; $k++) {
-
+                $surr_detail = new SurroundingDetail;
                 $surr_detail->accom_venu_promos_id = $acco_id;
                 $surr_detail->name = $request->attraction_name[$k];
                 $surr_detail->surrounding_id = $request->surrounding[$k];
@@ -521,7 +525,7 @@ class AccommodationController extends Controller {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -538,73 +542,98 @@ class AccommodationController extends Controller {
                 $acco_id = session()->get('accom_id');
             }
 
-            $cnt = count($request->amenity_property);
-            $activity_cnt = count($request->activity_property);
-            $attarc_cnt = count($request->attraction_name);
+            $cnt = count($request->payment_type);
+            $item_cnt = count($request->item);
 
-            $amenity_detail = new AmenityDetail;
-            $activity_detail = new ActivityDetail;
-            $surr_detail = new SurroundingDetail;
+            $policy_detail = new PoliciyDetail;
 
-            for ($i = 0; $i < $cnt; $i++) {
+            $policy_detail->accom_venu_promos_id = $acco_id;
+            $policy_detail->policy_cancel = $request->cancel;
+            $policy_detail->time_in = $request->timein;
+            $policy_detail->time_out = $request->timeout;
+            $policy_detail->extra_child = $request->child_extra;
+            $policy_detail->pets = $request->pets;
+            $policy_detail->lang_spoken = $request->lang_spoken;
+            $policy_detail->acco_duration = $request->acco_duration;
+            $policy_detail->corpo_deals = $request->corpo_deals;
+            $policy_detail->contract_deal = $request->contract_deal;
+            $policy_detail->policy_terms = $request->policy_terms;
+            $policy_detail->type = $request->type;
+            $policy_detail->created_by = Auth::user()->id;
 
-                $amenity_detail->accom_venu_promos_id = $acco_id;
-                $amenity_detail->desc = $request->amenity_desc;
-                $amenity_detail->amenity_id = $request->amenity_property[$i];
-                $amenity_detail->type = $request->type;
-                $amenity_detail->created_by = Auth::user()->id;
 
-                if ($amenity_detail->save()) {
-                    $flg = '1';
-                    $msg = "Record Added Successfully";
-                } else {
-                    $flg = '0';
-                    $msg = "Record not Added Successfully";
+            if ($policy_detail->save()) {
+
+                $polic_id = $policy_detail->id;
+                for ($i = 0; $i < $cnt; $i++) {
+                    $payment_detail = new PaymentAccept;
+                    $payment_detail->policy_id = $polic_id;
+                    $payment_detail->payment_mode_id = $request->payment_type[$i];
+                    $payment_detail->save();
                 }
-            }
 
-            for ($j = 0; $j < $activity_cnt; $j++) {
+                for ($j = 0; $j < $item_cnt; $j++) {
+                    $offer_detail = new OfferDetail;
 
-                $activity_detail->accom_venu_promos_id = $acco_id;
-                $activity_detail->desc = $request->activity_desc;
-                $activity_detail->activity_id = $request->activity_property[$j];
-                $activity_detail->type = $request->type;
-                $activity_detail->created_by = Auth::user()->id;
+                    $offer_detail->accom_venu_promos_id = $acco_id;
+                    $offer_detail->name = $request->item[$j];
+                    $offer_detail->price = $request->extra_price[$j];
+                    $offer_detail->condition = $request->extra_cond[$j];
+                    $offer_detail->offer_image = $request->extra_img[$j];
+                    $offer_detail->created_by = Auth::user()->id;
 
-                if ($activity_detail->save()) {
-                    $flg = '1';
-                    $msg = "Record Added Successfully";
-                } else {
-                    $flg = '0';
-                    $msg = "Record not Added Successfully";
+                    if ($offer_detail->save()) {
+                        
+
+                        /* offer multiple image upload */
+                        $extra_files = "";
+                        if ($request->file('extra_img')) {
+                            if (isset($request->file('extra_img')[$j]) && !empty($request->file('extra_img')[$j])) {
+
+                                $extra_files = $request->file('extra_img')[$j];
+                            }
+
+                            $extra_uploadcount = 0;
+                            $extra_rules = array('extra_img' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                            $extra_validator = Validator::make(array('extra_img' => $extra_files), $extra_rules);
+                            if ($extra_validator->passes()) {
+
+                                $extra_filename = $offer_detail->id . '_' . $extra_files->getClientOriginalName();
+                                
+
+                                // make thumb nail of image
+                                $extra_destinationThumb = 'extra_images/thumbnail';
+                                if (!file_exists($extra_destinationThumb)) {
+                                    mkdir($extra_destinationThumb, 0777, true);
+                                }
+                                // image reszie
+                                $extra_destinationResize = 'extra_images/resize';
+                                if (!file_exists($extra_destinationResize)) {
+                                    mkdir($extra_destinationResize, 0777, true);
+                                }
+
+                                $extra_img = Image::make($extra_files->getRealPath());
+
+                                $extra_img->resize(80, 80, function ($extra_constraint) {
+                                    $extra_constraint->aspectRatio();
+                                })->save($extra_destinationThumb . '/' . $extra_filename);
+
+                                $extra_img = Image::make($extra_files->getRealPath());
+                                $extra_img->resize(300, 300, function ($extra_constraint) {
+                                    $extra_constraint->aspectRatio();
+                                })->save($extra_destinationResize . '/' . $extra_filename);
+
+                                $extra_destinationPath = 'extra_images';
+                                $extra_files->move($extra_destinationPath, $extra_filename);
+
+                                $extra_uploadcount ++;
+                            }
+                        }
+
+                        $flag = 'success';
+                        $msg = "Record Added Successfully";
+                    }
                 }
-            }
-
-            for ($k = 0; $k < $attarc_cnt; $k++) {
-
-                $surr_detail->accom_venu_promos_id = $acco_id;
-                $surr_detail->name = $request->attraction_name[$k];
-                $surr_detail->surrounding_id = $request->surrounding[$k];
-                $surr_detail->distance = $request->approx_dist[$k];
-                $surr_detail->shuttle = $request->shuttle;
-                $surr_detail->type = $request->type;
-                $surr_detail->created_by = Auth::user()->id;
-
-                if ($surr_detail->save()) {
-                    $flg = '1';
-                    $msg = "Record Added Successfully";
-                } else {
-                    $flg = '0';
-                    $msg = "Record not Added Successfully";
-                }
-            }
-
-            if (isset($flg) && !empty($flg)) {
-                $flag = 'success';
-                $msg = "Record Added Successfully";
-            } else {
-                $flag = 'danger';
-                $msg = "Record Not Added Successfully";
             }
 
             $request->session()->flash($flag, $msg);

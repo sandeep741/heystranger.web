@@ -34,11 +34,19 @@ class PolicyDetailRequest extends Request {
         case 'POST':
         {
             return [
-                'name' => 'required|unique:accom_venu_promos,title',
-                'country' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'reserving_email' => 'email',
+                'cancel' => 'required',
+                'timein' => 'required',
+                'timeout' => 'required',
+                'child_extra' => 'required',
+                'payment_type' => 'required',
+                'acco_duration' => 'required',
+                'corpo_deals' => 'required',
+                'contract_deal' => 'required',
+                'policy_terms' => 'required',
+                'item.0' => 'required',
+                'extra_price.0' => 'required',
+                'extra_cond.0' => 'required',
+                
             ];
         }
         case 'PUT':
@@ -46,7 +54,9 @@ class PolicyDetailRequest extends Request {
         {
             if(Input::get('id')){
             return [
-                'name' => 'required|unique:accom_venu_promos,title,'.Input::get('id').',id'
+                'item.0.required' => 'Item name required',
+                'extra_price.0.required' => 'Price required',
+                'extra_cond.0.required' => 'condition required',
             ];
             }
             return [];
@@ -66,8 +76,9 @@ class PolicyDetailRequest extends Request {
      */
     public function messages() {
         return [
-            'name.required' => 'Name is required.',
-            'name.unique' => 'Accommodation name not available',
+            'item.0.required' => 'Item name required',
+            'extra_price.0.required' => 'Price required',
+            'extra_cond.0.required' => 'condition required',
         ];
     }
 
