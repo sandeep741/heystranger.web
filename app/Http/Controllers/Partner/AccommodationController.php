@@ -24,10 +24,12 @@ use App\Model\Offer\OfferDetail;
 use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
+use App\Model\MetaTag\MetaTagDetail;
 use App\Http\Requests\Partner\AccommodationRequest;
 use App\Http\Requests\Partner\ActivityDetailRequest;
 use App\Http\Requests\Partner\RoomDetailRequest;
 use App\Http\Requests\Partner\PolicyDetailRequest;
+use App\Http\Requests\Partner\MetaDescriptionRequest;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Image;
@@ -630,6 +632,50 @@ class AccommodationController extends Controller {
 
             $request->session()->flash($flag, $msg);
             $request->session()->put('tab_type', 5);
+            return redirect(route('accomodation.create'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function metaDescription(MetaDescriptionRequest $request) {
+
+        try {
+
+            $acco_id = '';
+
+            if (!empty(session()->get('accom_id'))) {
+                $acco_id = session()->get('accom_id');
+            }
+
+            $cnt = count($request->payment_type);
+            $item_cnt = count($request->item);
+
+            $meta_detail = new MetaTagDetail;
+
+            $meta_detail->accom_venu_promos_id = $acco_id;
+            $meta_detail->title = $request->title;
+            $meta_detail->keyword = $request->keyword;
+            $meta_detail->meta_desc = $request->meta_desc;
+            $meta_detail->type = $request->type;
+            $meta_detail->created_by = Auth::user()->id;
+
+            if ($meta_detail->save()) {
+                $flag = 'success';
+                $msg = "Record Added Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
+            }
+
+            $request->session()->flash($flag, $msg);
+            $request->session()->put('tab_type', 6);
             return redirect(route('accomodation.create'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();

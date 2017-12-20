@@ -1030,7 +1030,7 @@
 
                             <a href="javascript:void(0)" class='btn btn-success extra-add-more'>Add</a>
                         </div>
-
+                        
                         <div class="text-right">
                             <button type="submit" name="policy" value="room" class="btn btn-primary">Submit</button>
                         </div>
@@ -1040,50 +1040,88 @@
                 </div>
 
                     {!! Form::close() !!}
-
-                </div>
-
-                <!---meta tag form--->
+                    
+                
+                 <!---meta tag form--->
                 <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'in active' : '' }} has-padding" id="keywords">
-                    <form action="#" class="form-horizontal">
+                    {!!
+                    Form::open(
+                    array(
+                    'name' => 'frm_meta',
+                    'id' => 'frm_meta',
+                    'url' => route('metatag-detail'),
+                    'autocomplete' => 'off',
+                    'class' => 'form-horizontal',
+                    'files' => true
+                    )
+                    )
+                    !!}
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <h5 class="panel-title">Keywords & Metatags</h5>
                             </div>
+                            
                             <div class="panel-body">
-
 
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Title:</label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control" placeholder="Enter Your Title">
+                                        {!! Form::text('title', null, ['class' => 'form-control required', 'placeholder' => 'Enter Your Title *']) !!}
+                                        @if ($errors->has('title'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                    @endif
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Keywords:</label>
                                     <div class="col-lg-9">
-                                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter your Keywords here"></textarea>
+                                        {!! Form::textarea('keyword', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Keywords here *']) !!}
+                                        @if ($errors->has('keyword'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('keyword') }}</strong>
+                                    </span>
+                                    @endif
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Meta Tags:</label>
                                     <div class="col-lg-9">
-                                        <textarea rows="5" cols="5" class="form-control" placeholder="Enter your Meta Tags here"></textarea>
+                                        {!! Form::textarea('meta_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Meta Tags here *']) !!}
+                                        @if ($errors->has('meta_desc'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('meta_desc') }}</strong>
+                                    </span>
+                                    @endif
                                     </div>
+                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                                 </div>
 
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Update </button>
+                                    <button type="submit" class="btn btn-primary">Submit </button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                 </div>
 
                 <!---video & map form--->
                 <div class="tab-pane fade has-padding {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'in active' : '' }}" id="videomap">
-                    <form action="#" class="form-horizontal">
+                    {!!
+                    Form::open(
+                    array(
+                    'name' => 'frm_meta',
+                    'id' => 'frm_meta',
+                    'url' => route('metatag-detail'),
+                    'autocomplete' => 'off',
+                    'class' => 'form-horizontal',
+                    'files' => true
+                    )
+                    )
+                    !!}
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <h5 class="panel-title">Video and Map</h5>
@@ -1092,7 +1130,12 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label">Accommodation Video </label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control" placeholder="Paste Your Accommodation Link here">
+                                        {!! Form::text('video_link', null, ['class' => 'form-control required', 'placeholder' => 'Paste Your Accommodation Link here *']) !!}
+                                        @if ($errors->has('video_link'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('video_link') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -1104,12 +1147,16 @@
 
 
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Update </button>
+                                    <button type="submit" class="btn btn-primary">Submit </button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                 </div>
+
+                </div>
+
+                
                 
             </div>
         </div>
