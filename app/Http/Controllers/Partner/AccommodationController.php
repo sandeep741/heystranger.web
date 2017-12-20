@@ -17,12 +17,14 @@ use App\Model\ActivityList\ActivityList;
 use App\Model\ActivityList\ActivityDetail;
 use App\Model\SurroundingList\SurroundingList;
 use App\Model\SurroundingList\SurroundingDetail;
+use App\Model\PaymentModeList\PaymentModeList;
 use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
 use App\Http\Requests\Partner\AccommodationRequest;
 use App\Http\Requests\Partner\ActivityDetailRequest;
 use App\Http\Requests\Partner\RoomDetailRequest;
+use App\Http\Requests\Partner\PolicyDetailRequest;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Image;
@@ -72,6 +74,8 @@ class AccommodationController extends Controller {
             $country = new Country;
             $amenity = new AmenityList;
             $activity = new ActivityList;
+            $payment_list = new PaymentModeList;
+            
 
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'DESC')->where('status', 1)->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
@@ -79,8 +83,8 @@ class AccommodationController extends Controller {
             $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_amenity = $amenity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
-
-            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity'));
+            $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
+            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -432,6 +436,99 @@ class AccommodationController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function activityDetail(ActivityDetailRequest $request) {
+
+        try {
+
+            $acco_id = '';
+
+            if (!empty(session()->get('accom_id'))) {
+                $acco_id = session()->get('accom_id');
+            }
+
+            $cnt = count($request->amenity_property);
+            $activity_cnt = count($request->activity_property);
+            $attarc_cnt = count($request->attraction_name);
+
+            $amenity_detail = new AmenityDetail;
+            $activity_detail = new ActivityDetail;
+            $surr_detail = new SurroundingDetail;
+
+            for ($i = 0; $i < $cnt; $i++) {
+
+                $amenity_detail->accom_venu_promos_id = $acco_id;
+                $amenity_detail->desc = $request->amenity_desc;
+                $amenity_detail->amenity_id = $request->amenity_property[$i];
+                $amenity_detail->type = $request->type;
+                $amenity_detail->created_by = Auth::user()->id;
+
+                if ($amenity_detail->save()) {
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            for ($j = 0; $j < $activity_cnt; $j++) {
+
+                $activity_detail->accom_venu_promos_id = $acco_id;
+                $activity_detail->desc = $request->activity_desc;
+                $activity_detail->activity_id = $request->activity_property[$j];
+                $activity_detail->type = $request->type;
+                $activity_detail->created_by = Auth::user()->id;
+
+                if ($activity_detail->save()) {
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            for ($k = 0; $k < $attarc_cnt; $k++) {
+
+                $surr_detail->accom_venu_promos_id = $acco_id;
+                $surr_detail->name = $request->attraction_name[$k];
+                $surr_detail->surrounding_id = $request->surrounding[$k];
+                $surr_detail->distance = $request->approx_dist[$k];
+                $surr_detail->shuttle = $request->shuttle;
+                $surr_detail->type = $request->type;
+                $surr_detail->created_by = Auth::user()->id;
+
+                if ($surr_detail->save()) {
+                    $flg = '1';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flg = '0';
+                    $msg = "Record not Added Successfully";
+                }
+            }
+
+            if (isset($flg) && !empty($flg)) {
+                $flag = 'success';
+                $msg = "Record Added Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
+            }
+
+            $request->session()->flash($flag, $msg);
+            $request->session()->put('tab_type', 4);
+            return redirect(route('accomodation.create'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function policyDetail(PolicyDetailRequest $request) {
 
         try {
 

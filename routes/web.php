@@ -70,6 +70,7 @@ Route::get('accommodations', 'PartnerController@index');
 Route::resource('accomodation', 'Partner\AccommodationController');
 Route::post('room_detail', 'Partner\AccommodationController@roomDetail')->name('room-detail');
 Route::post('activity_detail', 'Partner\AccommodationController@activityDetail')->name('activity-detail');
+Route::post('policy-detail', 'Partner\AccommodationController@policyDetail')->name('policy-detail');
 
 
 /////////////Routes for Ajax////////////
