@@ -9,6 +9,8 @@ jQuery(document).ready(function () {
             state: {required: true},
             country: {required: true},
             city: {required: true},
+            contact_no: {minlength: 10, maxlength: 12, number: true},
+            alternate_no: {minlength: 10, maxlength: 12, number: true},
             maxfile: true,
         },
         submitHandler: function (form) {

@@ -215,17 +215,15 @@ class AccommodationController extends Controller {
             $venu_cnt = count($request->venue_name);
             $confer_cnt = count($request->confer_name);
 
-
-
-
             for ($i = 0; $i < $cnt; $i++) {
+
                 $room_detail = new RoomDetail;
                 $room_detail->accom_venu_promos_id = $acco_id;
                 $room_detail->room_type_id = $request->room_type[$i];
                 $room_detail->guest = $request->guest[$i];
                 $room_detail->available = $request->room_avail[$i];
                 $room_detail->price = $request->room_price[$i];
-                $room_detail->desc = $request->desc;
+                $room_detail->desc = $request->room_desc;
                 $room_detail->short_desc = $request->room_short_desc[$i];
                 $room_detail->room_image = ( isset($request->room_img[$i]) && !empty($request->room_img[$i]) ? $request->room_img[$i]->getClientOriginalName() : '');
                 $room_detail->type = $request->type;
@@ -279,13 +277,11 @@ class AccommodationController extends Controller {
 
                     $flg = '1';
                     $msg = "Record Added Successfully";
-                } else {
-                    $flg = '0';
-                    $msg = "Record not Added Successfully";
                 }
             }
 
             for ($j = 0; $j < $venu_cnt; $j++) {
+
                 $venu_detail = new VenuDetail;
                 $venu_detail->accom_venu_promos_id = $acco_id;
                 $venu_detail->desc = $request->venu_desc;
@@ -298,7 +294,7 @@ class AccommodationController extends Controller {
                 $venu_detail->created_by = Auth::user()->id;
 
                 if ($venu_detail->save()) {
-                    /* room multiple image upload */
+                    /* venu multiple image upload */
                     $venu_files = "";
                     if ($request->file('venu_img')) {
                         if (isset($request->file('venu_img')[$j]) && !empty($request->file('venu_img')[$j])) {
@@ -345,13 +341,11 @@ class AccommodationController extends Controller {
 
                     $flg = '1';
                     $msg = "Record Added Successfully";
-                } else {
-                    $flg = '0';
-                    $msg = "Record not Added Successfully";
                 }
             }
 
             for ($k = 0; $k < $confer_cnt; $k++) {
+
                 $confer_detail = new ConferenceDetail;
                 $confer_detail->accom_venu_promos_id = $acco_id;
                 $confer_detail->desc = $request->confer_desc;
@@ -411,9 +405,6 @@ class AccommodationController extends Controller {
 
                     $flg = '1';
                     $msg = "Record Added Successfully";
-                } else {
-                    $flg = '0';
-                    $msg = "Record not Added Successfully";
                 }
             }
 
@@ -579,11 +570,12 @@ class AccommodationController extends Controller {
                     $offer_detail->name = $request->item[$j];
                     $offer_detail->price = $request->extra_price[$j];
                     $offer_detail->condition = $request->extra_cond[$j];
-                    $offer_detail->offer_image = $request->extra_img[$j];
+                    $offer_detail->offer_image = ( isset($request->extra_img[$j]) && !empty($request->extra_img[$j]) ? $request->extra_img[$j]->getClientOriginalName() : '');
+                    ;
                     $offer_detail->created_by = Auth::user()->id;
 
                     if ($offer_detail->save()) {
-                        
+
 
                         /* offer multiple image upload */
                         $extra_files = "";
@@ -599,7 +591,7 @@ class AccommodationController extends Controller {
                             if ($extra_validator->passes()) {
 
                                 $extra_filename = $offer_detail->id . '_' . $extra_files->getClientOriginalName();
-                                
+
 
                                 // make thumb nail of image
                                 $extra_destinationThumb = 'extra_images/thumbnail';
@@ -637,7 +629,7 @@ class AccommodationController extends Controller {
             }
 
             $request->session()->flash($flag, $msg);
-            $request->session()->put('tab_type', 4);
+            $request->session()->put('tab_type', 5);
             return redirect(route('accomodation.create'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
