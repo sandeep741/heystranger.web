@@ -25,11 +25,13 @@ use App\Model\State\State;
 use App\Model\Country\Country;
 use App\Model\City\City;
 use App\Model\MetaTag\MetaTagDetail;
+use App\Model\VideoMap\VideoMapDetail;
 use App\Http\Requests\Partner\AccommodationRequest;
 use App\Http\Requests\Partner\ActivityDetailRequest;
 use App\Http\Requests\Partner\RoomDetailRequest;
 use App\Http\Requests\Partner\PolicyDetailRequest;
 use App\Http\Requests\Partner\MetaDescriptionRequest;
+use App\Http\Requests\Partner\VideoMapRequest;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Image;
@@ -677,6 +679,50 @@ class AccommodationController extends Controller {
             $request->session()->flash($flag, $msg);
             $request->session()->put('tab_type', 6);
             return redirect(route('accomodation.create'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function videoMapDetail(VideoMapRequest $request) {
+
+        try {
+
+            $acco_id = '';
+
+            if (!empty(session()->get('accom_id'))) {
+                $acco_id = session()->get('accom_id');
+            }
+
+            $cnt = count($request->payment_type);
+            $item_cnt = count($request->item);
+
+            $video_detail = new VideoMapDetail;
+
+            $video_detail->accom_venu_promos_id = $acco_id;
+            $video_detail->video_link = $request->video_link;
+            $video_detail->lat = $request->lat;
+            $video_detail->long = $request->long;
+            $video_detail->type = $request->type;
+            $video_detail->created_by = Auth::user()->id;
+            if ($video_detail->save()) {
+                $flag = 'success';
+                $msg = "Record Added Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Added Successfully";
+            }
+
+            $request->session()->flash($flag, $msg);
+            $request->session()->forget('tab_type');
+            $request->session()->forget('accom_id');
+            return redirect(route('accomodation.index'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }

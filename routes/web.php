@@ -68,10 +68,11 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('partner', 'PartnerController@index')->name('partner');
 Route::get('accommodations', 'PartnerController@index');
 Route::resource('accomodation', 'Partner\AccommodationController');
-Route::post('room_detail', 'Partner\AccommodationController@roomDetail')->name('room-detail');
-Route::post('activity_detail', 'Partner\AccommodationController@activityDetail')->name('activity-detail');
-Route::post('policy-detail', 'Partner\AccommodationController@policyDetail')->name('policy-detail');
-Route::post('meta-detail', 'Partner\AccommodationController@metaDescription')->name('metatag-detail');
+Route::post('room-detail', 'Partner\AccommodationController@roomDetail')->name('room_detail');
+Route::post('activity-detail', 'Partner\AccommodationController@activityDetail')->name('activity_detail');
+Route::post('policy-detail', 'Partner\AccommodationController@policyDetail')->name('policy_detail');
+Route::post('meta-detail', 'Partner\AccommodationController@metaDescription')->name('metatag_detail');
+Route::post('video-map-detail', 'Partner\AccommodationController@videoMapDetail')->name('video_map_detail');
 
 
 /////////////Routes for Ajax////////////

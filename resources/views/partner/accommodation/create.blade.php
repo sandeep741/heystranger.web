@@ -234,7 +234,7 @@
                     array(
                     'name' => 'frm_room',
                     'id' => 'frm_room',
-                    'url' => route('room-detail'),
+                    'url' => route('room_detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
@@ -554,7 +554,7 @@
                     array(
                     'name' => 'frm_activity',
                     'id' => 'frm_activity',
-                    'url' => route('activity-detail'),
+                    'url' => route('activity_detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => false
@@ -760,7 +760,7 @@
                     array(
                     'name' => 'frm_policy',
                     'id' => 'frm_policy',
-                    'url' => route('policy-detail'),
+                    'url' => route('policy_detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
@@ -1034,22 +1034,18 @@
                         <div class="text-right">
                             <button type="submit" name="policy" value="room" class="btn btn-primary">Submit</button>
                         </div>
-
-
-                    </div>
+                </div>
+                    {!! Form::close() !!}
                 </div>
 
-                    {!! Form::close() !!}
-                    
-                
-                 <!---meta tag form--->
+                <!---meta tag form--->
                 <div class="tab-pane fade {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'in active' : '' }} has-padding" id="keywords">
                     {!!
                     Form::open(
                     array(
                     'name' => 'frm_meta',
                     'id' => 'frm_meta',
-                    'url' => route('metatag-detail'),
+                    'url' => route('metatag_detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
@@ -1113,24 +1109,56 @@
                     {!!
                     Form::open(
                     array(
-                    'name' => 'frm_meta',
-                    'id' => 'frm_meta',
-                    'url' => route('metatag-detail'),
+                    'name' => 'frm_video',
+                    'id' => 'frm_video',
+                    'url' => route('video_map_detail'),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
                     )
                     )
                     !!}
+                    
+                    
+                    <?php 
+                    $video_option = [];
+                    $video_option = array(array(
+                            'value' => '',
+                            'display' => 'Choose Here',
+                            'data-icon' => 'stumbleupon'
+                        ),
+                        array(
+                            'value' => 'Y',
+                            'display' => 'Yes',
+                            'data-icon' => 'stumbleupon'
+                        ),
+                        array(
+                            'value' => 'N',
+                            'display' => 'No',
+                            'data-icon' => 'stumbleupon'
+                        )
+                    );
+                    
+                    
+                    ?>
                         <div class="panel panel-flat">
                             <div class="panel-heading">
                                 <h5 class="panel-title">Video and Map</h5>
                             </div>
                             <div class="panel-body">
+                                
                                 <div class="form-group">
+                                    <label class="col-lg-6 control-label">Do you have any video link :</label>
+                                    <div class="col-lg-12">
+                                        {!! Form::fancyselect('video_cond', $video_option, null, ['id'=>'vid_con', 'class'=>'select-icons required']) !!}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group" id="viddiv" style='display:none;'>
                                     <label class="col-lg-3 control-label">Accommodation Video </label>
                                     <div class="col-lg-9">
-                                        {!! Form::text('video_link', null, ['class' => 'form-control required', 'placeholder' => 'Paste Your Accommodation Link here *']) !!}
+                                        {!! Form::text('video_link', null, ['class' => 'form-control required url', 'placeholder' => 'Paste Your Accommodation Link here *']) !!}
                                         @if ($errors->has('video_link'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('video_link') }}</strong>
@@ -1138,11 +1166,30 @@
                                         @endif
                                     </div>
                                 </div>
+                                <h4> Location</h4>							
+
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Accommodation Location:</label>
+                                    <label class="col-lg-3 control-label">Latitude:</label>
                                     <div class="col-lg-9">
-                                        <input type="text" class="form-control" placeholder="Enter Your Google Map Link here">
+                                        {!! Form::text('lat', null, ['class' => 'form-control required latCoord', 'placeholder' => 'Enter Latitude *']) !!}
+                                        @if ($errors->has('lat'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('lat') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Longitude:</label>
+                                    <div class="col-lg-9">
+                                        {!! Form::text('long', null, ['class' => 'form-control required longCoord', 'placeholder' => 'Enter Longitude *']) !!}
+                                        @if ($errors->has('long'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('long') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                                 </div>
 
 
@@ -1387,8 +1434,9 @@ Add Accommodation
         });
         
         var bm = $('#vid_con').val();
+        
 
-        if (bm == 'Yes')
+        if (bm == 'Y')
         {
             $('#viddiv').css("display", "block");
         }
@@ -1397,14 +1445,17 @@ Add Accommodation
         {
             var conn2 = $('#vid_con').val();
 
-            if (conn2 == 'Yes')
+            if (conn2 == 'Y')
             {
-                $('#viddiv').css("display", "block");
+                //$('#viddiv').css("display", "block");
+                $('#viddiv').show();
+                
             } else
             {
-                $('#vidtext').val('');
+                //$('#vidtext').val('');
 
-                $('#viddiv').css("display", "none");
+                //$('#viddiv').css("display", "none");
+                $('#viddiv').hide();
             }
 
 
