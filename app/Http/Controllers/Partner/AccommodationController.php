@@ -59,9 +59,11 @@ class AccommodationController extends Controller {
      */
     public function index() {
         try {
+            
+            $datas = AccomVenuPromo::getAccommodationList();
             $user = Auth::guard('admin')->user();
-
-            return view('partner.accommodation.index')->with(compact('user'));
+            return view('partner.accommodation.index')->with(compact('user','datas'));
+            
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -745,7 +747,31 @@ class AccommodationController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        
+        try {
+            $user = Auth::guard('admin')->user();
+            $accomm_data = new AccommodationList;
+            $room_data = new RoomList;
+            $surr_data = new SurroundingList;
+            $country = new Country;
+            $amenity = new AmenityList;
+            $activity = new ActivityList;
+            $payment_list = new PaymentModeList;
+
+
+            $arr_accommo_detail = AccomVenuPromo::getAccommodationById($id);
+            $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_amenity = $amenity->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
+
+            return view('partner.accommodation.edit')->with(compact('user', 'arr_accommo_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**

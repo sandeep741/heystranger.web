@@ -135,6 +135,11 @@ Breadcrumbs::register('accomodation.create', function($breadcrumbs) {
     $breadcrumbs->push('Add Accommodation', route('accomodation.create'));
 });
 
+Breadcrumbs::register('accomodation.edit', function($breadcrumbs, $accommodation) {
+    $breadcrumbs->parent('accomodation.index');
+    $breadcrumbs->push('Update Accommodation', route('accomodation.edit', $accommodation));
+});
+
 // Home > About
 /*Breadcrumbs::register('about', function($breadcrumbs)
 {
