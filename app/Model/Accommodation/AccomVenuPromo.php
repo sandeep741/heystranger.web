@@ -12,7 +12,7 @@ class AccomVenuPromo extends Model
         
         $arrCond = array('type' => 'A', 'status' => '1');
         $sqlQuery = self::with('accomType');
-        $datas = $sqlQuery->where($arrCond)->orderBy('id', 'DESC')->paginate(5);
+        $datas = $sqlQuery->where($arrCond)->orderBy('id', 'DESC')->paginate(10);
         return ($datas ? $datas : []);
     }
     
