@@ -894,7 +894,7 @@ class AccommodationController extends Controller {
      * @param
      * @return json
      * @since version 0.1
-     * @author Meghendra S Yadav
+     * @author Sandeep Kumar
      */
     public function removeProductImage(Request $request) {
         $varID = $request->get('varID');
