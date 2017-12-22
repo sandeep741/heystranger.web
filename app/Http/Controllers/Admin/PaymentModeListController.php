@@ -33,7 +33,7 @@ class PaymentModeListController extends Controller {
         try {
             $user = Auth::guard('admin')->user();
             $all_records = new PaymentModeList;
-            $datas = $all_records->orderBy('id', 'DESC')->paginate(5);
+            $datas = $all_records->orderBy('name', 'ASC')->paginate(5);
             return view('admin.paymentmodelist.index')->with(compact('user', 'datas'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
