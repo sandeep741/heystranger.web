@@ -81,9 +81,9 @@
                                     @endif
 
                                 </div>
-
+<?php //dd($arr_accommo_detail); ?>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('accom_type',[''=>'Select type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->accomType->id : ''),['class'=>'form-control'])}}
+                                    {{Form::select('accom_type',[''=>'Select type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($arr_accommo_detail->accomType) && !empty($arr_accommo_detail->accomType) ? $arr_accommo_detail->accomType->id : ''),['class'=>'form-control'])}}
 
                                     @if ($errors->has('accom_type'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -120,7 +120,7 @@
 
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('country',[''=>'Select Country *']+@$arr_country->pluck('name','id')->toArray(), (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->countryName->id : ''),['id'=> 'state_id', 'class'=>'form-control country_id'])}}
+                                    {{Form::select('country',[''=>'Select Country *']+@$arr_country->pluck('name','id')->toArray(), (isset($arr_accommo_detail->countryName) && !empty($arr_accommo_detail->countryName) ? $arr_accommo_detail->countryName->id : ''),['id'=> 'state_id', 'class'=>'form-control country_id'])}}
 
                                     @if ($errors->has('country'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -131,7 +131,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('state',[''=>'Select State *', $arr_accommo_detail->stateName->id => $arr_accommo_detail->stateName->name], (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->stateName->id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
+                                    {{Form::select('state',[''=>'Select State *', $arr_accommo_detail->stateName->id => $arr_accommo_detail->stateName->name], (isset($arr_accommo_detail->stateName) && !empty($arr_accommo_detail->stateName) ? $arr_accommo_detail->stateName->id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
 
                                     @if ($errors->has('state'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -144,7 +144,7 @@
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     
-                                    {{Form::select('city',[''=>'Select city *', $arr_accommo_detail->cityName->id => $arr_accommo_detail->cityName->name], (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->cityName->id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
+                                    {{Form::select('city',[''=>'Select city *', $arr_accommo_detail->cityName->id => $arr_accommo_detail->cityName->name], (isset($arr_accommo_detail->cityName) && !empty($arr_accommo_detail->cityName) ? $arr_accommo_detail->cityName->id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
 
                                     @if ($errors->has('city'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -226,30 +226,6 @@
 
                                 </div>
                             </div>
-                            
-                            <!--<div class="form-group">
-                                <label class="col-sm-2 control-label">Accommodation Image</label>
-                                <div class="col-sm-8">
-                                    {{ Form::file('accomm_images[]', ['id' => 'acco_image', 'class' => 'file-styled maxfile', 'multiple' => true]) }}
-                                    @if(isset($arr_accommo_detail) && count($arr_accommo_detail->accommoImages) > 0)
-                                    <p class="mk-actv-thmb-msg">check the radio button to make active thumb.</p>
-                                    
-                                        @foreach($arr_accommo_detail->accommoImages as $varImage)
-                                        <span class="prod-img-span" style="position: relative;">
-                                            <span class="img-del-cls" title="Delete Image" id="{{ $varImage->image_name }}_{{ $varImage->id }}">
-                                                <i class="fa fa-times-circle"></i>
-                                            </span>
-                                            <img src="{{ url('/')}}/accom_venu_promo_images/{{ $varImage->image_name }}" height="140" width="140"/>
-                                            {{ Form::radio('active_thumb', $varImage->id, $varImage->active_thumb=='1'?$varImage->id:'', ['class' => 'active_thumb_cls',
-                                                            'data-toggle' => 'tooltip',
-                                                            'title' => 'check to make it active thumb']) }}
-                                        </span>
-                                        @endforeach
-                                    
-                                    @endif
-                                    {{ Form::input('hidden', 'id', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->id : ''), ['readonly' => 'readonly']) }}
-                                </div>
-                            </div>-->
                             
                             
                                     <div class="form-group">

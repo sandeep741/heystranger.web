@@ -35,8 +35,8 @@
 
             <tr>
                 <td>{{ ($datas->currentpage()-1) * $datas->perpage() + $key + 1 }}</td>
-                <td>{{ $data ? $data->title : '' }}</td>
-                <td>{{ $data ? $data->accomType->name : '' }}</td>
+                <td>{{ (isset($data) && !empty($data)) ? $data->title : '' }}</td>
+                <td>{{ (isset($data->accomType) && !empty($data->accomType)) ? $data->accomType->name : '' }}</td>
                 <td>{{ (isset($data) && !empty($data) && ($data->status == '1')) ? 'Active' : 'Inactive' }}</td>
                 <!--<td>{{ $data ? $data->establish_details : '' }}</td>-->
                 <td>{{ $data ? $data->updated_at->diffForHumans() : '' }}</td>
