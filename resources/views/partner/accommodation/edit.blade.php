@@ -129,7 +129,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('state',[''=>'Select State *'], (isset($edit_data) && !empty($edit_data) ? @$edit_data->state_id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
+                                    {{Form::select('state',[''=>'Select State *', $arr_accommo_detail->stateName->id => $arr_accommo_detail->stateName->name], (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->stateName->id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
 
                                     @if ($errors->has('state'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -141,7 +141,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('city',[''=>'Select city *'], (isset($edit_data) && !empty($edit_data) ? @$edit_data->city_id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
+                                    
+                                    {{Form::select('city',[''=>'Select city *', $arr_accommo_detail->cityName->id => $arr_accommo_detail->cityName->name], (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->cityName->id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
 
                                     @if ($errors->has('city'))
                                     <span class="help-block" style = "display:block;color:red;">

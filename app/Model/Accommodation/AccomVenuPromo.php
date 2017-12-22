@@ -38,11 +38,33 @@ class AccomVenuPromo extends Model
         return $this->belongsTo(\App\Model\Country\Country::class,'id');
     }
     
+    /**
+     * stateName
+     * @return
+     * @since 0.1
+     * @author Sandeep Kumar
+     */
+    public function stateName()
+    {
+        return $this->belongsTo(\App\Model\State\State::class,'id');
+    }
+    
+    /**
+     * cityName
+     * @return
+     * @since 0.1
+     * @author Sandeep Kumar
+     */
+    public function cityName()
+    {
+        return $this->belongsTo(\App\Model\City\City::class,'id');
+    }
+    
     
     public static function getAccommodationById($id){
         
         $arrCond = array('id' => $id);
-        $sqlQuery = self::with('accomType', 'countryName');
+        $sqlQuery = self::with('accomType', 'countryName', 'stateName', 'cityName');
         $datas = $sqlQuery->where($arrCond)->first();
         return ($datas ? $datas : []);
     }
