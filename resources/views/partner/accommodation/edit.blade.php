@@ -55,13 +55,15 @@
                     array(
                     'name' => 'frm_accommodation',
                     'id' => 'frm_accommodation',
-                    'url' => 'accomodation/'.(isset($edit_data) && !empty($edit_data) ? $edit_data->id : ''),
+                    'url' => 'accomodation/'.(isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
                     )
                     )
                     !!}
+                    
+                    {{ method_field('PUT') }}
                     <div class="panel panel-flat">
                         <div class="panel-heading">
                             <h5 class="panel-title">Accommodation Detail</h5>
@@ -199,7 +201,7 @@
 
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <!--<div class="col-lg-6 col-md-6 col-sm-12">
                                     {{ Form::file('accomm_images[]', ['id' => 'acco_image', 'class' => 'file-styled maxfile', 'multiple' => true]) }}
                                     @if ($errors->has('accomm_images'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -207,9 +209,9 @@
                                     </span>
                                     @endif
                                     <div class="validation text-danger" style="display:none;"></div>
-                                </div>
+                                </div>-->
                             </div>
-
+                            
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Establishment Detail:</label>
 
@@ -224,9 +226,58 @@
 
                                 </div>
                             </div>
-
+                            
+                            <!--<div class="form-group">
+                                <label class="col-sm-2 control-label">Accommodation Image</label>
+                                <div class="col-sm-8">
+                                    {{ Form::file('accomm_images[]', ['id' => 'acco_image', 'class' => 'file-styled maxfile', 'multiple' => true]) }}
+                                    @if(isset($arr_accommo_detail) && count($arr_accommo_detail->accommoImages) > 0)
+                                    <p class="mk-actv-thmb-msg">check the radio button to make active thumb.</p>
+                                    
+                                        @foreach($arr_accommo_detail->accommoImages as $varImage)
+                                        <span class="prod-img-span" style="position: relative;">
+                                            <span class="img-del-cls" title="Delete Image" id="{{ $varImage->image_name }}_{{ $varImage->id }}">
+                                                <i class="fa fa-times-circle"></i>
+                                            </span>
+                                            <img src="{{ url('/')}}/accom_venu_promo_images/{{ $varImage->image_name }}" height="140" width="140"/>
+                                            {{ Form::radio('active_thumb', $varImage->id, $varImage->active_thumb=='1'?$varImage->id:'', ['class' => 'active_thumb_cls',
+                                                            'data-toggle' => 'tooltip',
+                                                            'title' => 'check to make it active thumb']) }}
+                                        </span>
+                                        @endforeach
+                                    
+                                    @endif
+                                    {{ Form::input('hidden', 'id', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->id : ''), ['readonly' => 'readonly']) }}
+                                </div>
+                            </div>-->
+                            
+                            
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Accommodation Image</label>
+                                        <div class="col-sm-10">
+                                            {{ Form::file('accomm_images[]', ['id' => 'acco_image', 'class' => 'file-styled maxfile', 'multiple' => true]) }}
+                                            @if(isset($arr_accommo_detail) && count($arr_accommo_detail->accommoImages) > 0)
+                                            <p class="mk-actv-thmb-msg">check the radio button to make active thumb.</p>
+                                            <div class="edit-prod-image-cls">
+                                                @foreach($arr_accommo_detail->accommoImages as $varImage)
+                                                <span class="prod-img-span" style="position: relative;">
+                                                    <span class="img-del-cls" title="Delete Image" id="{{ $varImage->image_name }}_{{ $varImage->id }}">
+                                                        <a href="javascript:void" id="{{ $varImage->id }}" class="delete-image"><i class="fa fa-times-circle"></i></a>
+                                                    </span>
+                                                    <img src="{{ url('/')}}/accom_venu_promo_images/{{ $varImage->image_name }}" height="140" width="140"/>
+                                                    {{ Form::radio('active_thumb', $varImage->id, $varImage->active_thumb=='1'?$varImage->id:'', ['class' => 'active_thumb_cls',
+                                                            'data-toggle' => 'tooltip',
+                                                            'title' => 'check to make it active thumb']) }}
+                                                </span>
+                                                @endforeach
+                                            </div>
+                                            @endif
+                                        </div>
+                                        <div class="validation text-danger" style="display:none;"></div>
+                                    </div>
+                            
                             <div class="text-right">
-                                <button type="submit" name="acco" value="accom" class="btn btn-primary">Submit form </button>
+                                <button type="submit" name="acco" value="accom" class="btn btn-primary">Update</button>
                             </div>
                         </div>
                     </div>
@@ -1222,6 +1273,21 @@ Add Accommodation
 @endsection
 
 @section('addtional_css')
+<style>
+.img-del-cls {
+    color: #f00;
+    font-size: 20px;
+    position: absolute;
+    right: -5px;
+    top: -14px;
+    cursor: pointer;
+}
+.mk-actv-thmb-msg {
+    color: #f00;
+    font-size: 13px;
+    margin: 5px 0 -10px 4px;
+}
+</style>
 
 @endsection
 
@@ -1233,6 +1299,7 @@ Add Accommodation
 <script type="text/javascript" src="{{ asset('/assets/admin/js/form_layouts.js') }}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/city.js')}}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/delete-image.js')}}"></script>
 
 <script type="text/javascript">
             //////////////////////////room add more////////////////////////

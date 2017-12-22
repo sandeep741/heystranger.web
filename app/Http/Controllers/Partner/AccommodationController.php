@@ -35,6 +35,7 @@ use App\Http\Requests\Partner\VideoMapRequest;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Image;
+use Response;
 
 class AccommodationController extends Controller {
 
@@ -59,11 +60,10 @@ class AccommodationController extends Controller {
      */
     public function index() {
         try {
-            
+
             $datas = AccomVenuPromo::getAccommodationList();
             $user = Auth::guard('admin')->user();
-            return view('partner.accommodation.index')->with(compact('user','datas'));
-            
+            return view('partner.accommodation.index')->with(compact('user', 'datas'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -747,7 +747,7 @@ class AccommodationController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        
+
         try {
             $user = Auth::guard('admin')->user();
             $accomm_data = new AccommodationList;
@@ -757,9 +757,8 @@ class AccommodationController extends Controller {
             $amenity = new AmenityList;
             $activity = new ActivityList;
             $payment_list = new PaymentModeList;
-
-
             $arr_accommo_detail = AccomVenuPromo::getAccommodationById($id);
+
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
@@ -781,8 +780,144 @@ class AccommodationController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        //
+    public function update(AccommodationRequest $request, $id) {
+
+        $accommodation = AccomVenuPromo::find($id);
+        $accommodation->title = $request->name;
+        $accommodation->slug = str_slug($request->name, '-');
+        $accommodation->accom_type_id = $request->accom_type;
+        $accommodation->establish_details = $request->establish_details;
+        $accommodation->rating = $request->rating;
+        $accommodation->reserve_email = $request->reserving_email;
+        $accommodation->country_id = $request->country;
+        $accommodation->state_id = $request->state;
+        $accommodation->city_id = $request->city;
+        $accommodation->street_address = $request->street_address;
+        $accommodation->area = $request->area;
+        $accommodation->contact_no = $request->contact_no;
+        $accommodation->alternate_no = $request->alternate_no;
+        $accommodation->created_by = Auth::user()->id;
+        $accommodation->type = $request->type;
+
+
+        /* product multiple image upload */
+        if ($request->file('accomm_images')) {
+            $files = $request->file('accomm_images');
+
+            $uploadcount = 0;
+            foreach ($files as $k => $file) {
+                $rules = array('accomm_images' => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                $validator = Validator::make(array('accomm_images' => $file), $rules);
+                if ($validator->passes()) {
+
+                    $filename = $accommodation->id . '_' . $file->getClientOriginalName();
+
+                    // make thumb nail of image
+                    $destinationThumb = 'accom_venu_promo_images/thumbnail';
+                    if (!file_exists($destinationThumb)) {
+                        mkdir($destinationThumb, 0777, true);
+                    }
+
+                    // image reszie
+                    $destinationResize = 'accom_venu_promo_images/resize';
+                    if (!file_exists($destinationResize)) {
+                        mkdir($destinationResize, 0777, true);
+                    }
+
+                    $img = Image::make($file->getRealPath());
+
+                    $img->resize(80, 80, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationThumb . '/' . $filename);
+
+                    $img = Image::make($file->getRealPath());
+                    $img->resize(300, 300, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationResize . '/' . $filename);
+
+                    $destinationPath = 'accom_venu_promo_images';
+                    $file->move($destinationPath, $filename);
+
+                    /* add image name in database */
+                    $image = new AccomVenuPromosImage;
+                    $image->accom_venu_pro_id = $accommodation->id;
+                    $image->image_name = $filename;
+
+                    if ($accommodation->id == '' && $k == 0) {
+                        $image->status = 1;
+                    }
+
+                    $image->save();
+
+                    $uploadcount ++;
+                }
+            }
+        }
+
+        $this->setActiveThumb($id, $request->get("active_thumb", 0));
+
+        if ($accommodation->save()) {
+            $flag = 'success';
+            $msg = "Record Updated Successfully";
+        } else {
+            $flag = 'danger';
+            $msg = "Record Not Updated Successfully";
+        }
+        $request->session()->flash($flag, $msg);
+        return redirect(route('accomodation.index'));
+    }
+
+    /**
+     * setActiveThumb
+     * @param
+     * @return array
+     * @since 0.1
+     * @author Sandeep Kumar
+     */
+    public function setActiveThumb($pID, $active) {
+
+        if (!empty($active)) {
+            /* set all 0 first */
+            $arrProductImage1 = [];
+            $arrProductImage1['active_thumb'] = '0';
+            AccomVenuPromosImage::updateDataByProduct($arrProductImage1, $pID);
+
+            /* set active thumb now */
+            $arrProductImage = [];
+            $arrProductImage['active_thumb'] = '1';
+            AccomVenuPromosImage::updateDataByImage($arrProductImage, $active);
+        }
+    }
+
+    /**
+     * removeProductImage
+     * @param
+     * @return json
+     * @since version 0.1
+     * @author Meghendra S Yadav
+     */
+    public function removeProductImage(Request $request) {
+        $varID = $request->get('varID');
+
+        $data = AccomVenuPromosImage::find($varID);
+
+        $path = 'accom_venu_promo_images/';
+        $pathT = 'accom_venu_promo_images/thumbnail/';
+        $pathR = 'accom_venu_promo_images/resize/';
+        if ($data->image_name != "") {
+            if (file_exists($path . $data->image_name)) {
+                unlink($path . $data->image_name);
+            }
+            if (file_exists($pathT . $data->image_name)) {
+                unlink($pathT . $data->image_name);
+            }
+            if (file_exists($pathR . $data->image_name)) {
+                unlink($pathR . $data->image_name);
+            }
+        }
+
+        $result = $data->delete();
+        return ($result ? Response::json($result) : $result);
     }
 
     /**

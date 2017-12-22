@@ -64,7 +64,7 @@ if (isset($active) && !empty($active)) {
                             <li><a href="{{ route("activitylist.index") }}" style="{{ ($parent_route == 'activitylist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activity on property</a></li>
                             <li><a href="{{ route("roomlist.index") }}" style="{{ ($parent_route == 'roomlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Room Type List</a></li>
                             <li><a href="{{ route("paymentmodelist.index") }}" style="{{ ($parent_route == 'paymentmodelist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Payment Mode List</a></li>
-                            <li><a href="{{ route("surroundinglist.index") }}" style="{{ ($parent_route == 'surroundinglist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Surrounding List</a></li>
+                            <li><a href="{{ route("surroundinglist.index") }}" style="{{ ($parent_route == 'surroundinglist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}" id="layout2">Activities in Surroundings</a></li>
                         </ul>
                     </li>
                     @endif

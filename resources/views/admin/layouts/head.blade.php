@@ -9,6 +9,8 @@
 <link href="{{ asset('/assets/admin/css/core.css') }}" rel="stylesheet" type="text/css" media="all"/>
 <link href="{{ asset('/assets/admin/css/components.css') }}" rel="stylesheet" type="text/css" media="all"/>
 <link href="{{ asset('/assets/admin/css/colors.css') }}" rel="stylesheet" type="text/css" media="all"/>
+<link href="{{ asset('/assets/admin/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" media="all"/>
+<link href="{{ asset('/assets/admin/dev-custom-styles.css') }}" rel="stylesheet" type="text/css" media="all"/>
 <link rel="icon"  type="image/png"  href="{{ asset('/assets/images/favicon.png') }}">
 <link rel="stylesheet" href="{{ asset('/assets/css/heystranger-css/jquery-confirm.css') }}">
 <!-- /global stylesheets -->

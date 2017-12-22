@@ -51,6 +51,7 @@
     <!--======================confirm box js include here=========================-->
     <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/jquery.confirm.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/delete-confirm.js') }}"></script>
+    <script> var csrf_token = "{{ csrf_token() }}"</script>
     <!-- /core JS files -->
     @yield('jscript')
     </body>

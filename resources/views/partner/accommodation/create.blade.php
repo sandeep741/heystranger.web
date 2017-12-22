@@ -219,7 +219,7 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="acco" value="accom" class="btn btn-primary">Submit form </button>
+                                <button type="submit" name="acco" value="accom" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>

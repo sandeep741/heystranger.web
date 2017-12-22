@@ -46,7 +46,11 @@ class AccommodationRequest extends Request {
         {
             if(Input::get('id')){
             return [
-                'name' => 'required|unique:accom_venu_promos,title,'.Input::get('id').',id'
+                'name' => 'required|unique:accom_venu_promos,title,'.Input::get('id').',id',
+                'country' => 'required',
+                'state' => 'required',
+                'city' => 'required',
+                'reserving_email' => 'email',
             ];
             }
             return [];

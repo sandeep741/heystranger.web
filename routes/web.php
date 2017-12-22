@@ -73,6 +73,7 @@ Route::post('activity-detail', 'Partner\AccommodationController@activityDetail')
 Route::post('policy-detail', 'Partner\AccommodationController@policyDetail')->name('policy_detail');
 Route::post('meta-detail', 'Partner\AccommodationController@metaDescription')->name('metatag_detail');
 Route::post('video-map-detail', 'Partner\AccommodationController@videoMapDetail')->name('video_map_detail');
+Route::get('remove-accommodation-image', 'Partner\AccommodationController@removeProductImage')->name('remove_accommodation_image');
 
 
 /////////////Routes for Ajax////////////
@@ -94,6 +95,12 @@ Route::group(['prefix' => 'ajax', 'middleware' => 'web'], function() {
     Route::get('getCity', [
         'as' => 'get_city',
         'uses' => 'AjaxController@getCity'
+            ]
+    );
+    
+    Route::post('accommo-image-delete', [
+        'as' => 'accommo_image_delete',
+        'uses' => 'Partner\AccommodationController@removeProductImage'
             ]
     );
 });
