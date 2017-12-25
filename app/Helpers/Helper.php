@@ -5,6 +5,8 @@ namespace App\Helpers;
 use App;
 use Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
+use Image;
 use Request;
 
 class Helper {
@@ -165,6 +167,101 @@ class Helper {
             }
 
             return $data;
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
+
+    /* UploadImage
+     * @paran
+     * @return array
+     * @author Sandeep Kumar
+     */
+
+    public static function UploadImage($request, $arr_img, $i = null) {
+
+        try {
+
+            /* room multiple image upload */
+            if ($request->file($arr_img['img_name']) && !empty($request->file($arr_img['img_name']))) {
+
+                $files = $request->file($arr_img['img_name']);
+
+                if (isset($i)) {
+
+                    $rules = array($arr_img['img_name'] => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                    $validator = Validator::make(array($arr_img['img_name'] => $files[$i]), $rules);
+
+                    if ($validator->passes()) {
+
+                        $filename = $arr_img['id'] . '_' . $files[$i]->getClientOriginalName();
+                        // make thumb nail of image
+                        $destinationThumb = $arr_img['folder'] . '/thumbnail';
+                        if (!file_exists($destinationThumb)) {
+                            mkdir($destinationThumb, 0777, true);
+                        }
+
+                        // image reszie
+                        $destinationResize = $arr_img['folder'] . '/resize';
+                        if (!file_exists($destinationResize)) {
+                            mkdir($destinationResize, 0777, true);
+                        }
+
+                        $img = Image::make($files[$i]->getRealPath());
+
+                        $img->resize(80, 80, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationThumb . '/' . $filename);
+
+                        $img = Image::make($files[$i]->getRealPath());
+                        $img->resize(300, 300, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($destinationResize . '/' . $filename);
+
+                        $destinationPath = $arr_img['folder'];
+                        $files[$i]->move($destinationPath, $filename);
+                    }
+                    return true;
+                } else {
+
+                    foreach ($files as $file) {
+
+                        $rules = array($arr_img['img_name'] => 'required|mimes:png,gif,jpeg|max:2048'); //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+                        $validator = Validator::make(array($arr_img['img_name'] => $file), $rules);
+
+                        if ($validator->passes()) {
+
+                            $filename = $arr_img['id'] . '_' . $arr_img['time'] . '_' . $file->getClientOriginalName();
+                            // make thumb nail of image
+                            $destinationThumb = $arr_img['folder'] . '/thumbnail';
+                            if (!file_exists($destinationThumb)) {
+                                mkdir($destinationThumb, 0777, true);
+                            }
+
+                            // image reszie
+                            $destinationResize = $arr_img['folder'] . '/resize';
+                            if (!file_exists($destinationResize)) {
+                                mkdir($destinationResize, 0777, true);
+                            }
+
+                            $img = Image::make($file->getRealPath());
+
+                            $img->resize(80, 80, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->save($destinationThumb . '/' . $filename);
+
+                            $img = Image::make($file->getRealPath());
+                            $img->resize(300, 300, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->save($destinationResize . '/' . $filename);
+
+                            $destinationPath = $arr_img['folder'];
+                            $file->move($destinationPath, $filename);
+                        }
+                    }
+                    return true;
+                }
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }

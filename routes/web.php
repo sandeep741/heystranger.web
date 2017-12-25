@@ -79,9 +79,8 @@ Route::get('remove-accommodation-image', 'Partner\AccommodationController@remove
 /////////////Routes for Ajax////////////
 
 Route::prefix('ajax')->group(function () {
-    
+
     //Route::get('getState', 'AjaxController@getState');
-        
 });
 
 
@@ -91,16 +90,22 @@ Route::group(['prefix' => 'ajax', 'middleware' => 'web'], function() {
         'uses' => 'AjaxController@getState'
             ]
     );
-    
+
     Route::get('getCity', [
         'as' => 'get_city',
         'uses' => 'AjaxController@getCity'
             ]
     );
-    
+
     Route::post('accommo-image-delete', [
         'as' => 'accommo_image_delete',
-        'uses' => 'Partner\AccommodationController@removeProductImage'
+        'uses' => 'AjaxController@removeProductImage'
+            ]
+    );
+
+    Route::post('room-delete', [
+        'as' => 'room_delete',
+        'uses' => 'AjaxController@removeRoom'
             ]
     );
 });

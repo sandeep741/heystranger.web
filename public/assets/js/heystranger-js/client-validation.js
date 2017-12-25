@@ -24,6 +24,11 @@ jQuery(document).ready(function () {
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
+            "room_type[]": "required",
+            "guest[]": "required",
+            "room_avail[]": "required",
+            "room_price[]": "required",
+            "room_short_desc[]": "required"
         },
         submitHandler: function (form) {
             form.submit();
@@ -35,6 +40,11 @@ jQuery(document).ready(function () {
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
+            "room_type[]": "required",
+            "guest[]": "required",
+            "room_avail[]": "required",
+            "room_price[]": "required",
+            "room_short_desc[]": "required"
         },
         submitHandler: function (form) {
             form.submit();
@@ -46,6 +56,11 @@ jQuery(document).ready(function () {
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
+            "room_type[]": "required",
+            "guest[]": "required",
+            "room_avail[]": "required",
+            "room_price[]": "required",
+            "room_short_desc[]": "required"
         },
         submitHandler: function (form) {
             form.submit();
@@ -62,7 +77,7 @@ jQuery(document).ready(function () {
             form.submit();
         }
     });
-    
+
     $('#frm_video').validate({// initialize the plugin
         debug: true,
         errorClass: 'text-danger',
@@ -258,16 +273,16 @@ $.getFileLimit = function () {
  }
  }*/
 
-$.validator.addMethod('latCoord', function(value, element) {
-  console.log(this.optional(element))
-return this.optional(element) ||
-  value.length >= 4 && /^(?=.)-?((8[0-5]?)|([0-7]?[0-9]))?(?:\.[0-9]{1,20})?$/.test(value);
+$.validator.addMethod('latCoord', function (value, element) {
+    console.log(this.optional(element))
+    return this.optional(element) ||
+            value.length >= 4 && /^(?=.)-?((8[0-5]?)|([0-7]?[0-9]))?(?:\.[0-9]{1,20})?$/.test(value);
 }, 'Your Latitude format has error.')
 
-$.validator.addMethod('longCoord', function(value, element) {
-  console.log(this.optional(element))
-return this.optional(element) ||
-  value.length >= 4 && /^(?=.)-?((0?[8-9][0-9])|180|([0-1]?[0-7]?[0-9]))?(?:\.[0-9]{1,20})?$/.test(value);
+$.validator.addMethod('longCoord', function (value, element) {
+    console.log(this.optional(element))
+    return this.optional(element) ||
+            value.length >= 4 && /^(?=.)-?((0?[8-9][0-9])|180|([0-1]?[0-7]?[0-9]))?(?:\.[0-9]{1,20})?$/.test(value);
 }, 'Your Longitude format has error.')
 
 

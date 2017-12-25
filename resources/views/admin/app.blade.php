@@ -40,7 +40,7 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/blockui.min.js') }}"></script>
 
     <!---------------validation js file include------------->
-    <script src="{{ asset('/assets/js/heystranger-js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/heystranger-js/jquery.validate.js') }}"></script>
     <script src="{{ asset('/assets/js/heystranger-js/additional-methods.min.js') }}"></script>
     
     <!--======================loader js include here=========================-->

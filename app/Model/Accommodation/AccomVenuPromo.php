@@ -74,7 +74,7 @@ class AccomVenuPromo extends Model
     
     public static function getAccommodationById($id){
         
-        $arrCond = array('id' => $id);
+        $arrCond = array('id' => $id, 'status' => '1');
         $sqlQuery = self::with('accomType', 'countryName', 'stateName', 'cityName', 'accommoImages');
         $datas = $sqlQuery->where($arrCond)->first();
         return ($datas ? $datas : []);

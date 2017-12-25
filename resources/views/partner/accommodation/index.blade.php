@@ -2,35 +2,35 @@
 @section('content')
 
 <div class="heading-btn-group">
-    <a href="{{ route('accomodation.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add New</a>
+    <a href="{{ route('accomodation.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add Accommodation</a>
 </div>  
 <br>
 
-    <div class="panel panel-white">
-        <div class="panel-heading">
-            <h6 class="panel-title text-semibold">My Accommodation</h6>
-            <div class="heading-elements">
-                <ul class="icons-list">
-                    <li><a data-action="collapse"></a></li>
-                    <li><a data-action="reload"></a></li>
-                    <li><a data-action="close"></a></li>
-                </ul>
-            </div>
+<div class="panel panel-white">
+    <div class="panel-heading">
+        <h6 class="panel-title text-semibold">My Accommodation</h6>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+                <li><a data-action="reload"></a></li>
+                <li><a data-action="close"></a></li>
+            </ul>
         </div>
-        <table class="table table-striped media-library table-lg">
-            <thead>
-                <tr>
-                    <th>S.no</th>
-                    <th>Accommodation Name</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <!--<th>Description</th>-->
-                    <th>Date</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if(isset($datas) && !empty($datas) && count($datas) > 0)
+    </div>
+    <table class="table table-striped media-library table-lg">
+        <thead>
+            <tr>
+                <th>S.no</th>
+                <th>Accommodation Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <!--<th>Description</th>-->
+                <th>Date</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(isset($datas) && !empty($datas) && count($datas) > 0)
             @foreach($datas as $key => $data)
 
             <tr>
@@ -97,16 +97,16 @@
 
             @else
             <tr>
-                <td colspan="5" align="center"><span class="label label-danger">No Record Found</span></td>
+                <td colspan="6" align="center"><span class="label label-danger">No Record Found</span></td>
             </tr>
             @endif
 
             <tr>
-                <td colspan="5" align="center"> {{ $datas->render() }} </td>
+                <td colspan="6" align="center"> {{ $datas->render() }} </td>
             </tr>
         </tbody>
-        </table>
-    </div>
+    </table>
+</div>
 
 @endsection
 

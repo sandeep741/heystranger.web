@@ -45,12 +45,14 @@ class RoomDetailRequest extends Request {
         case 'PUT':
         case 'PATCH':
         {
-            if(Input::get('id')){
             return [
-                'name' => 'required|unique:accom_venu_promos,title,'.Input::get('id').',id'
+                'room_desc' => 'required',
+                'room_type.0' => 'required',
+                'guest.0' => 'required',
+                'room_avail.0' => 'required',
+                'room_price.0' => 'required',
+                'room_short_desc.0' => 'required',
             ];
-            }
-            return [];
         }
         default:break;
         

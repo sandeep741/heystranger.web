@@ -377,8 +377,8 @@
                                     <select  id='condit' name="ven_con_cond" data-placeholder="Choose Here" class="select-icons" >
                                         <option value="">Choose Here</option>	
 
-                                        <option data-icon="stumbleupon" value="Yes">Yes</option>
-                                        <option data-icon="stumbleupon" value="No">No</option>
+                                        <option data-icon="stumbleupon" value="Y">Yes</option>
+                                        <option data-icon="stumbleupon" value="N">No</option>
 
                                     </select>
                                 </div>
@@ -394,10 +394,10 @@
                                     <div class="col-lg-9">
 
 
-                                        {!! Form::textarea('venu_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venu_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Venue facility']) !!}
-                                        @if ($errors->has('venu_desc'))
+                                        {!! Form::textarea('venue_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venue_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Venue facility *']) !!}
+                                        @if ($errors->has('venue_desc'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venu_desc') }}</strong>
+                                            <strong>{{ $errors->first('venue_desc') }}</strong>
                                         </span>
                                         @endif
 
@@ -418,7 +418,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('capacity[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}
+                                        {!! Form::text('venue_capacity[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}
                                         @if ($errors->has('capacity.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('capacity.0') }}</strong>
@@ -431,7 +431,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venu Price']) !!}
+                                        {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Price']) !!}
                                         @if ($errors->has('venue_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_price.0') }}</strong>
@@ -452,10 +452,10 @@
                                     </div>
 
                                     <div class="col-md-2">
-                                        {{ Form::file('venu_img[]', ['id' => 'venu_img', 'class' => 'file-styled', 'multiple' => false]) }}
-                                        @if ($errors->has('venu_img.0'))
+                                        {{ Form::file('venue_img[]', ['id' => 'venue_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                        @if ($errors->has('venue_img.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venu_img.0') }}</strong>
+                                            <strong>{{ $errors->first('venue_img.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -468,7 +468,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-1 control-label">Description:</label>
                                     <div class="col-lg-9">
-                                        {!! Form::textarea('confer_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venu_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Conference facility']) !!}
+                                        {!! Form::textarea('confer_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venu_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Conference facility *']) !!}
                                         @if ($errors->has('confer_desc'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_desc') }}</strong>
@@ -1273,23 +1273,23 @@ Add Accommodation
         var venu_temp = '<div class="form-group venu-parents">'+
                 
             '<div class="col-md-2">'+
-            '{!! Form::text('venu_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Name']) !!}'+
+            '{!! Form::text('venue_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Name']) !!}'+
             '</div>'+    
             
             '<div class="col-md-2">'+
-            '{!! Form::text('venu_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}'+
+            '{!! Form::text('venue_capacity[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venu_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Price']) !!}'+
+            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Price']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venu_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Short Description']) !!}'+
+            '{!! Form::text('venue_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Short Description']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
-            '{{ Form::file('venu_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '{{ Form::file('venue_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="venu-remove label label-danger">Remove</a>'+
             '</div>';
@@ -1419,7 +1419,7 @@ Add Accommodation
         {
             var co = $('#condit').val();
 
-            if (co == 'Yes')
+            if (co == 'Y')
             {
                 $('#cv').css("display", "block");
                 $('.both').css("display", "block");
