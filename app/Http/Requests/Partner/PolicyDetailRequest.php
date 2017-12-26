@@ -37,7 +37,6 @@ class PolicyDetailRequest extends Request {
                 'cancel' => 'required',
                 'timein' => 'required',
                 'timeout' => 'required',
-                'child_extra' => 'required',
                 'payment_type' => 'required',
                 'acco_duration' => 'required',
                 'corpo_deals' => 'required',

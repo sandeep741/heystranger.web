@@ -68,7 +68,7 @@ class AccomVenuPromo extends Model
      */
     public function accommoImages()
     {
-        return $this->hasMany(AccomVenuPromosImage::class, 'accom_venu_pro_id');
+        return $this->hasMany(AccomVenuPromosImage::class, 'accom_venu_promos_id');
     }
     
     

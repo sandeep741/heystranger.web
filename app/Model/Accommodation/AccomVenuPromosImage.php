@@ -16,7 +16,7 @@ class AccomVenuPromosImage extends Model
      */
     public static function updateDataByProduct($input, $acco_id)
     {
-        $data = self::where(['accom_venu_pro_id' => (int) $acco_id])->update($input);
+        $data = self::where(['accom_venu_promos_id' => (int) $acco_id])->update($input);
         return $data;
     }
 

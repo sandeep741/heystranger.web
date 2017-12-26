@@ -145,7 +145,7 @@ class AccommodationController extends Controller {
 
                         /* add image name in database */
                         $image = new AccomVenuPromosImage;
-                        $image->accom_venu_pro_id = $accommodation->id;
+                        $image->accom_venu_promos_id = $accommodation->id;
                         $image->image_name = $filename;
 
                         if ($accommodation->id == '' && $k == 0) {
@@ -974,7 +974,7 @@ class AccommodationController extends Controller {
 
                 /* add image name in database */
                 $image = new AccomVenuPromosImage;
-                $image->accom_venu_pro_id = $accommodation->id;
+                $image->accom_venu_promos_id = $accommodation->id;
                 $image->image_name = $filename;
 
                 if ($accommodation->id == '' && $k == 0) {
