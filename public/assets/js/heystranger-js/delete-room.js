@@ -18,7 +18,7 @@ jQuery(document).ready(function () {
                     action: function () {
                         e.preventDefault();
                         $.removeAjax(id, div, flag);
-                        
+
                     }
                 },
                 cancel: function () {
@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
             }
         });
     });
-    
+
     $(".delete-venu").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('v_id');
@@ -46,7 +46,7 @@ jQuery(document).ready(function () {
                     action: function () {
                         e.preventDefault();
                         $.removeAjax(id, div, flag);
-                        
+
                     }
                 },
                 cancel: function () {
@@ -55,7 +55,7 @@ jQuery(document).ready(function () {
             }
         });
     });
-    
+
     $(".delete-confer").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('c_id');
@@ -74,7 +74,7 @@ jQuery(document).ready(function () {
                     action: function () {
                         e.preventDefault();
                         $.removeAjax(id, div, flag);
-                        
+
                     }
                 },
                 cancel: function () {
@@ -83,7 +83,7 @@ jQuery(document).ready(function () {
             }
         });
     });
-    
+
     $(".delete-surr").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('su_id');
@@ -102,7 +102,7 @@ jQuery(document).ready(function () {
                     action: function () {
                         e.preventDefault();
                         $.removeAjax(id, div, flag);
-                        
+
                     }
                 },
                 cancel: function () {
@@ -111,10 +111,10 @@ jQuery(document).ready(function () {
             }
         });
     });
-    
+
     $(".delete-offer").click(function (e) {
         e.preventDefault()
-        var id = $(this).attr('o_id');
+        var id = $(this).attr('off_id');
         var div = $(this).parents(".extra-parents");
         var flag = 'offer';
         $.confirm({
@@ -130,7 +130,7 @@ jQuery(document).ready(function () {
                     action: function () {
                         e.preventDefault();
                         $.removeAjax(id, div, flag);
-                        
+
                     }
                 },
                 cancel: function () {
@@ -139,16 +139,16 @@ jQuery(document).ready(function () {
             }
         });
     });
-    
-    $.removeAjax = function(id, div, flg){
-        
+
+    $.removeAjax = function (id, div, flg) {
+
         $.ajax({
             type: 'POST',
             url: '/ajax/room-delete',
             headers: {'X-CSRF-TOKEN': csrf_token},
             data: {
                 varID: id,
-                flag : flg
+                flag: flg
             },
 
             beforeSend: function () {
@@ -164,7 +164,7 @@ jQuery(document).ready(function () {
                 $.loader("off");
             }
         });
-        
-        
+
+
     }
 });

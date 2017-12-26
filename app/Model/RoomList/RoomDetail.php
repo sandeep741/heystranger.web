@@ -8,10 +8,10 @@ use DB;
 class RoomDetail extends Model {
 
     /**
-     * productImages
+     * roomType
      * @return
      * @since 0.1
-     * @author Sandeep Kumart
+     * @author Sandeep Kumar
      */
     public function roomType() {
         return $this->belongsTo(RoomList::class, 'room_type_id');

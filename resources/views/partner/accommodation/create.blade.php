@@ -219,7 +219,7 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="acco" value="accom" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="acco" value="" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -535,7 +535,7 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="room" value="" class="btn btn-primary">Submit</button>
                             </div>
 
 
@@ -742,7 +742,7 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="activity" value="" class="btn btn-primary">Submit</button>
                             </div>
 
                         </div>
@@ -1029,11 +1029,12 @@
                             </div>
 
                             <a href="javascript:void(0)" class='btn btn-success extra-add-more'>Add</a>
-                        </div>
+                        
                         
                         <div class="text-right">
-                            <button type="submit" name="policy" value="room" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="policy" value="" class="btn btn-primary">Submit</button>
                         </div>
+                            </div>
                 </div>
                     {!! Form::close() !!}
                 </div>

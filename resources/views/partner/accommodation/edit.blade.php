@@ -444,11 +444,8 @@ $urlId = Request::segment(2);
                             <?php $w++ ?>
                             @endforeach
                             @endif
-                            {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
-
-
+                            
                             <a href="javascript:void(0)" class='btn btn-success btn-add-more' >Add More</a>
-
 
                             <h5>Do you have Venue & Conference facilities at this property</h5>			
 
@@ -501,9 +498,6 @@ $urlId = Request::segment(2);
                                             <strong>{{ $errors->first('venue_capacity.0') }}</strong>
                                         </span>
                                         @endif
-
-
-
                                     </div>
 
 
@@ -666,11 +660,12 @@ $urlId = Request::segment(2);
                                 @endif
 
                                 <a href="javascript:void(0)" class="confer-add-more btn btn-success">Add More</a>
+                                {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
                                 {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="room_update" value="room" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="room_update" value="room" class="btn btn-primary">Update</button>
                             </div>
 
 
@@ -891,8 +886,6 @@ $urlId = Request::segment(2);
                             @endforeach
                             @endif
                             
-                            {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
-
                             <a href="javascript:void(0)" class="attract-add-more btn btn-success">Add More</a>
 
                             <div class="panel-heading">
@@ -910,6 +903,7 @@ $urlId = Request::segment(2);
                                     </span>
                                     @endif
                                 </div>
+                                {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
                                 {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                             </div>
 
@@ -1028,6 +1022,14 @@ $urlId = Request::segment(2);
                             'data-icon' => 'stumbleupon'
                         )
                     );
+                    
+                    if(isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0) {
+                     $pmt_accept = [];
+                        foreach($arr_policy_detail->paymentAccept as $val){
+                            $pmt_accept[] = $val->payment_mode_id;
+                        }
+                    }
+                    
                     ?>
 
                     <div class="panel panel-flat">
@@ -1045,7 +1047,7 @@ $urlId = Request::segment(2);
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('cancel', null, ['class' => 'form-control required', 'placeholder' => 'Enter Cancellation Policy *']) !!}
+                                    {!! Form::text('cancel', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->policy_cancel : ''), ['class' => 'form-control required', 'placeholder' => 'Enter Cancellation Policy *']) !!}
                                     @if ($errors->has('cancel'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('cancel') }}</strong>
@@ -1063,7 +1065,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('timein', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time In *']) !!}
+                                    {!! Form::text('timein', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->time_in : ''), ['class' => 'form-control required', 'placeholder' => 'Enter Time In *']) !!}
                                     @if ($errors->has('timein'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('timein') }}</strong>
@@ -1073,7 +1075,7 @@ $urlId = Request::segment(2);
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('timeout', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time Out *']) !!}
+                                    {!! Form::text('timeout', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->time_out : ''), ['class' => 'form-control required', 'placeholder' => 'Enter Time Out *']) !!}
                                     @if ($errors->has('timeout'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('timeout') }}</strong>
@@ -1084,19 +1086,19 @@ $urlId = Request::segment(2);
 
                             <div class="form-group">
                                 <div class="col-lg-6">
-                                    {!! Form::text('child_extra', null, ['class' => 'form-control', 'placeholder' => 'Children & Extra']) !!}
+                                    {!! Form::text('child_extra', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->extra_child : ''), ['class' => 'form-control', 'placeholder' => 'Children & Extra']) !!}
                                 </div>
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('pets', null, ['class' => 'form-control', 'placeholder' => 'Pets']) !!}
+                                    {!! Form::text('pets', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->pets : ''), ['class' => 'form-control', 'placeholder' => 'Pets']) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::multiselect('payment_type[]', $payment_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('payment_type[]', $payment_option, (isset($pmt_accept) && !empty($pmt_accept) && count($pmt_accept) > 0 ? $pmt_accept : '3'), ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('payment_type'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('payment_type') }}</strong>
@@ -1106,7 +1108,7 @@ $urlId = Request::segment(2);
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('lang_spoken', null, ['class' => 'form-control', 'placeholder' => 'Language Spoken At Facility']) !!}
+                                    {!! Form::text('lang_spoken', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->lang_spoken : ''), ['class' => 'form-control', 'placeholder' => 'Language Spoken At Facility']) !!}
 
                                 </div>
                             </div>
@@ -1114,7 +1116,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('acco_duration', $acco_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('acco_duration', $acco_option, (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->acco_duration : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('acco_duration'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('acco_duration') }}</strong>
@@ -1123,7 +1125,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('corpo_deals', $corporate_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('corpo_deals', $corporate_option, (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->corpo_deals : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('corpo_deals'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('corpo_deals') }}</strong>
@@ -1133,7 +1135,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('contract_deal', $contractor_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('contract_deal', $contractor_option, (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->contract_deal : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('contract_deal'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('contract_deal') }}</strong>
@@ -1146,7 +1148,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Your  Terms</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('policy_terms', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Terms *']) !!}
+                                    {!! Form::textarea('policy_terms', (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0 ? $arr_policy_detail->policy_terms : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Terms *']) !!}
                                     @if ($errors->has('policy_terms'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('policy_terms') }}</strong>
@@ -1156,13 +1158,16 @@ $urlId = Request::segment(2);
 
                             </div>
 
-
-                            <h5>Do you offer extra's ( Example:Flower )</h5>			   
+                            <h5>Do you offer extra's ( Example:Flower )</h5>	
+                            
+                            @if(isset($arr_offer_detail) && !empty($arr_offer_detail) && count($arr_offer_detail) > 0)
+                            <?php $a = 1; ?>
+                            @foreach($arr_offer_detail as $offer_detail)
 
                             <div class="form-group extra-parents">
 
                                 <div class="col-md-3">
-                                    {!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item Name *']) !!}
+                                    {!! Form::text('item[]', (isset($offer_detail) && !empty($offer_detail) && count($offer_detail) > 0 ? $offer_detail->name : ''), ['class' => 'form-control required', 'placeholder' => 'Item Name *']) !!}
                                     @if ($errors->has('item.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('item.0') }}</strong>
@@ -1172,7 +1177,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-md-3">
-                                    {!! Form::text('extra_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Enter Price *']) !!}
+                                    {!! Form::text('extra_price[]', (isset($offer_detail) && !empty($offer_detail) && count($offer_detail) > 0 ? $offer_detail->price : ''), ['class' => 'form-control required', 'placeholder' => 'Enter Price *']) !!}
                                     @if ($errors->has('extra_price.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('extra_price.0') }}</strong>
@@ -1181,7 +1186,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-md-3">
-                                    {!! Form::fancyselect('extra_cond[]', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('extra_cond[]', $extra_option, (isset($offer_detail) && !empty($offer_detail) && count($offer_detail) > 0 ? $offer_detail->condition : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('extra_cond.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('extra_cond.0') }}</strong>
@@ -1190,17 +1195,53 @@ $urlId = Request::segment(2);
 
                                 </div>
 
-                                <div class="col-md-3">
-                                    {{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'file-styled', 'multiple' => false]) }}
-                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
-                                </div>
+                                <div class="col-md-2">
+                                        {{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                        @if ($errors->has('extra_img.0'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('extra_img.0') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="col-sm-10">
+                                        <div class="edit-prod-image-cls">
+                                            <span class="prod-img-span" style="position: relative;">
+                                                @if(!empty($offer_detail->offer_image) && file_exists(public_path('extra_images' . '/'. $offer_detail->id.'_'.$offer_detail->offer_image)))
+                                                <img src="{{ url('/')}}/extra_images/{{ $offer_detail->id }}_{{ $offer_detail->offer_image }}" height="140" width="140"/>
+                                                @else
+                                                <img src="{{ url('/')}}/assets/images/no-image.png" height="140" width="140"/>
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                            
+                                @if($a != 1)
+                                <a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" off_id="{{ $offer_detail->id }}" class="delete-offer  label label-danger">Remove</a>
+                                {{ Form::input('hidden', 'offer_id[]', (isset($offer_detail) && !empty($offer_detail) && count($offer_detail) > 0 ? $offer_detail->id : ''), ['readonly' => 'readonly']) }}
+
+                                @elseif($a==1)
+
+                                {{ Form::input('hidden', 'offer_id[]', (isset($offer_detail) && !empty($offer_detail) && count($offer_detail) > 0 ? $offer_detail->id : ''), ['readonly' => 'readonly']) }}
+
+                                @endif
+                                <?php $a++ ?>
+
                             </div>
 
+                            @endforeach
+                            @endif
+                            
+                            {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
+                            {{ Form::input('hidden', 'policy_id', (isset($arr_policy_detail) && !empty($arr_policy_detail) ? $arr_policy_detail->id : ''), ['readonly' => 'readonly']) }}
+                            {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+
                             <a href="javascript:void(0)" class='btn btn-success extra-add-more'>Add</a>
-                        </div>
+                        
 
                         <div class="text-right">
-                            <button type="submit" name="policy" value="room" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="policy" value="Update" class="btn btn-primary">Update</button>
+                        </div>
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -1573,6 +1614,7 @@ Add Accommodation
             '</div>'+
             
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="extra-remove label label-danger">Remove</a>'+
+            '{{ Form::input('hidden', 'offer_id[]', null, ['readonly' => 'readonly']) }}' +
             '</div>';
     
         $(".extra-add-more").on('click', function(e){

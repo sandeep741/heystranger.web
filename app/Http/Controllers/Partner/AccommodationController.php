@@ -274,8 +274,6 @@ class AccommodationController extends Controller {
                 }
 
 
-
-
                 ////////////////////updating venu detail////////////////////////////////
                 for ($j = 0; $j < $venu_cnt; $j++) {
 
@@ -443,7 +441,7 @@ class AccommodationController extends Controller {
                 /////////////Insert Record for Room Section/////////////////
 
                 for ($i = 0; $i < $cnt; $i++) {
-                    
+
                     $room_detail = new RoomDetail;
                     $room_detail->accom_venu_promos_id = $acco_id;
                     $room_detail->room_type_id = $request->room_type[$i];
@@ -464,11 +462,11 @@ class AccommodationController extends Controller {
                             'img_name' => 'room_img',
                             'id' => $room_detail->id,
                         );
-                        
-                        if(isset($request->room_img[$i]) && !empty($request->room_img[$i])){
+
+                        if (isset($request->room_img[$i]) && !empty($request->room_img[$i])) {
                             Helper::UploadImage($request, $arr_room_img, $i);
                         }
-                        
+
                         $flg = '1';
                     }
                 }
@@ -496,7 +494,7 @@ class AccommodationController extends Controller {
                                 'id' => $venu_detail->id,
                             );
 
-                            if(isset($request->venue_img[$j]) && !empty($request->venue_img[$j])){
+                            if (isset($request->venue_img[$j]) && !empty($request->venue_img[$j])) {
                                 Helper::UploadImage($request, $arr_venue_img, $j);
                             }
                             $flg = '1';
@@ -526,7 +524,7 @@ class AccommodationController extends Controller {
                                 'id' => $confer_detail->id,
                             );
 
-                            if(isset($request->confer_img[$k]) && !empty($request->confer_img[$k])){
+                            if (isset($request->confer_img[$k]) && !empty($request->confer_img[$k])) {
                                 Helper::UploadImage($request, $arr_confer_img, $k);
                             }
                             $flg = '1';
@@ -577,6 +575,7 @@ class AccommodationController extends Controller {
             ///////////////update here activity and amenity detail//////////
 
             if ($request->activity) {
+
                 $delAmniety = AmenityDetail::deleteAmenity($acco_id);
                 $delActivity = ActivityDetail::deleteActivity($acco_id);
 
@@ -724,72 +723,185 @@ class AccommodationController extends Controller {
 
             if (!empty(session()->get('accom_id'))) {
                 $acco_id = session()->get('accom_id');
+            } else {
+                $acco_id = $request->accommo_id;
             }
 
             $cnt = count($request->payment_type);
             $item_cnt = count($request->item);
 
-            $policy_detail = new PoliciyDetail;
+            /////////update policy detail///////////////////
+            if ($request->policy) {
 
-            $policy_detail->accom_venu_promos_id = $acco_id;
-            $policy_detail->policy_cancel = $request->cancel;
-            $policy_detail->time_in = $request->timein;
-            $policy_detail->time_out = $request->timeout;
-            $policy_detail->extra_child = $request->child_extra;
-            $policy_detail->pets = $request->pets;
-            $policy_detail->lang_spoken = $request->lang_spoken;
-            $policy_detail->acco_duration = $request->acco_duration;
-            $policy_detail->corpo_deals = $request->corpo_deals;
-            $policy_detail->contract_deal = $request->contract_deal;
-            $policy_detail->policy_terms = $request->policy_terms;
-            $policy_detail->type = $request->type;
-            $policy_detail->created_by = Auth::user()->id;
+                if ($request->policy_id) {
+                    $policy_detail = PoliciyDetail::find($request->policy_id);
+                    $policy_detail->accom_venu_promos_id = $acco_id;
+                    $policy_detail->policy_cancel = $request->cancel;
+                    $policy_detail->time_in = $request->timein;
+                    $policy_detail->time_out = $request->timeout;
+                    $policy_detail->extra_child = $request->child_extra;
+                    $policy_detail->pets = $request->pets;
+                    $policy_detail->lang_spoken = $request->lang_spoken;
+                    $policy_detail->acco_duration = $request->acco_duration;
+                    $policy_detail->corpo_deals = $request->corpo_deals;
+                    $policy_detail->contract_deal = $request->contract_deal;
+                    $policy_detail->policy_terms = $request->policy_terms;
+                    $policy_detail->type = $request->type;
+                    $policy_detail->updated_by = Auth::user()->id;
+                    $policy_detail->save();
 
+                    ///////////Deleting payment then insert again//////////////
+                    $delActivity = PaymentAccept::deletePaymentAccept($request->policy_id);
 
-            if ($policy_detail->save()) {
+                    for ($i = 0; $i < $cnt; $i++) {
+                        $payment_detail = new PaymentAccept;
+                        $payment_detail->policy_id = $request->policy_id;
+                        $payment_detail->payment_mode_id = $request->payment_type[$i];
+                        $payment_detail->save();
+                    }
 
-                $polic_id = $policy_detail->id;
-                for ($i = 0; $i < $cnt; $i++) {
-                    $payment_detail = new PaymentAccept;
-                    $payment_detail->policy_id = $polic_id;
-                    $payment_detail->payment_mode_id = $request->payment_type[$i];
-                    $payment_detail->save();
-                }
+                    ////////////////////updating Offer detail////////////////////////////////
+                    for ($j = 0; $j < $item_cnt; $j++) {
 
+                        if (!empty($request->offer_id[$j]) && isset($request->offer_id[$j])) {
 
+                            $offer_detail = OfferDetail::find($request->offer_id[$j]);
+                            $offer_img = (isset($offer_detail) && !empty($offer_detail) ? $offer_detail->offer_image : '');
 
-                for ($j = 0; $j < $item_cnt; $j++) {
-                    $offer_detail = new OfferDetail;
+                            $offer_detail->accom_venu_promos_id = $acco_id;
+                            $offer_detail->name = $request->item[$j];
+                            $offer_detail->price = $request->extra_price[$j];
+                            $offer_detail->condition = $request->extra_cond[$j];
+                            $offer_detail->offer_image = ( isset($request->extra_img[$j]) && !empty($request->extra_img[$j]) ? $request->extra_img[$j]->getClientOriginalName() : $offer_img);
+                            ;
+                            $offer_detail->updated_by = Auth::user()->id;
+                            $offer_detail->save();
 
-                    $offer_detail->accom_venu_promos_id = $acco_id;
-                    $offer_detail->name = $request->item[$j];
-                    $offer_detail->price = $request->extra_price[$j];
-                    $offer_detail->condition = $request->extra_cond[$j];
-                    $offer_detail->offer_image = ( isset($request->extra_img[$j]) && !empty($request->extra_img[$j]) ? $request->extra_img[$j]->getClientOriginalName() : '');
-                    ;
-                    $offer_detail->created_by = Auth::user()->id;
+                            if (isset($request->extra_img[$j]) && !empty($request->extra_img[$j])) {
 
-                    if ($offer_detail->save()) {
+                                $offer_path = 'extra_images/';
+                                $offer_pathT = 'extra_images/thumbnail/';
+                                $offer_pathR = 'extra_images/resize/';
 
-                        $arr_offer_img = array(
-                            'folder' => 'extra_images',
-                            'img_name' => 'extra_img',
-                            'id' => $offer_detail->id,
-                        );
+                                if ($offer_img != "") {
 
-                        if(isset($request->extra_img[$j]) && !empty($request->extra_img[$j])){
-                            Helper::UploadImage($request, $arr_offer_img, $j);
+                                    if (file_exists($offer_path . $offer_detail->id . '_' . $offer_img)) {
+                                        unlink($offer_path . $offer_detail->id . '_' . $offer_img);
+                                    }
+                                    if (file_exists($offer_pathT . $offer_detail->id . '_' . $offer_imgg)) {
+                                        unlink($offer_pathT . $offer_detail->id . '_' . $offer_imgg);
+                                    }
+                                    if (file_exists($offer_pathR . $venu_detail->id . '_' . $offer_imgg)) {
+                                        unlink($offer_pathR . $offer_detail->id . '_' . $offer_imgg);
+                                    }
+                                }
+
+                                $arr_offer_img = array(
+                                    'folder' => 'extra_images',
+                                    'img_name' => 'extra_img',
+                                    'id' => $offer_detail->id,
+                                );
+
+                                Helper::UploadImage($request, $arr_offer_img, $j);
+                            }
+                            $flg = '1';
+                        } else {
+
+                            $offer_detail = new OfferDetail();
+                            $offer_detail->accom_venu_promos_id = $acco_id;
+                            $offer_detail->name = $request->item[$j];
+                            $offer_detail->price = $request->extra_price[$j];
+                            $offer_detail->condition = $request->extra_cond[$j];
+                            $offer_detail->offer_image = ( isset($request->extra_img[$j]) && !empty($request->extra_img[$j]) ? $request->extra_img[$j]->getClientOriginalName() : '');
+                            ;
+                            $offer_detail->updated_by = Auth::user()->id;
+                            $offer_detail->save();
+
+                            if ($offer_detail->save()) {
+
+                                if (isset($request->extra_img[$j]) && !empty($request->extra_img[$j])) {
+
+                                    $arr_offer_img = array(
+                                        'folder' => 'extra_images',
+                                        'img_name' => 'extra_img',
+                                        'id' => $offer_detail->id,
+                                    );
+
+                                    Helper::UploadImage($request, $arr_offer_img, $j);
+                                }
+                                $flg = '1';
+                            }
                         }
-
-                        $flag = 'success';
-                        $msg = "Record Added Successfully";
                     }
                 }
-            }
 
-            $request->session()->flash($flag, $msg);
-            $request->session()->put('tab_type', 5);
-            return redirect(route('accomodation.create'));
+                $flag = 'success';
+                $msg = 'Record Updated Successfully';
+                $request->session()->flash($flag, $msg);
+                return redirect(route('accomodation.index'));
+            } else {
+
+                /////////Inser policy detail///////////////////
+                $policy_detail = new PoliciyDetail;
+
+                $policy_detail->accom_venu_promos_id = $acco_id;
+                $policy_detail->policy_cancel = $request->cancel;
+                $policy_detail->time_in = $request->timein;
+                $policy_detail->time_out = $request->timeout;
+                $policy_detail->extra_child = $request->child_extra;
+                $policy_detail->pets = $request->pets;
+                $policy_detail->lang_spoken = $request->lang_spoken;
+                $policy_detail->acco_duration = $request->acco_duration;
+                $policy_detail->corpo_deals = $request->corpo_deals;
+                $policy_detail->contract_deal = $request->contract_deal;
+                $policy_detail->policy_terms = $request->policy_terms;
+                $policy_detail->type = $request->type;
+                $policy_detail->created_by = Auth::user()->id;
+
+
+                if ($policy_detail->save()) {
+
+                    $polic_id = $policy_detail->id;
+                    for ($i = 0; $i < $cnt; $i++) {
+                        $payment_detail = new PaymentAccept;
+                        $payment_detail->policy_id = $polic_id;
+                        $payment_detail->payment_mode_id = $request->payment_type[$i];
+                        $payment_detail->save();
+                    }
+
+                    for ($j = 0; $j < $item_cnt; $j++) {
+
+                        $offer_detail = new OfferDetail;
+                        $offer_detail->accom_venu_promos_id = $acco_id;
+                        $offer_detail->name = $request->item[$j];
+                        $offer_detail->price = $request->extra_price[$j];
+                        $offer_detail->condition = $request->extra_cond[$j];
+                        $offer_detail->offer_image = ( isset($request->extra_img[$j]) && !empty($request->extra_img[$j]) ? $request->extra_img[$j]->getClientOriginalName() : '');
+                        ;
+                        $offer_detail->created_by = Auth::user()->id;
+
+                        if ($offer_detail->save()) {
+
+                            $arr_offer_img = array(
+                                'folder' => 'extra_images',
+                                'img_name' => 'extra_img',
+                                'id' => $offer_detail->id,
+                            );
+
+                            if (isset($request->extra_img[$j]) && !empty($request->extra_img[$j])) {
+                                Helper::UploadImage($request, $arr_offer_img, $j);
+                            }
+
+                            $flag = 'success';
+                            $msg = "Record Added Successfully";
+                        }
+                    }
+                }
+
+                $request->session()->flash($flag, $msg);
+                $request->session()->put('tab_type', 5);
+                return redirect(route('accomodation.create'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -917,6 +1029,8 @@ class AccommodationController extends Controller {
             $arr_activity_detail = ActivityDetail::getActivityById($id);
             $arr_amenity_detail = AmenityDetail::getAmenityById($id);
             $arr_surr_detail = SurroundingDetail::getSurrById($id);
+            $arr_policy_detail = PoliciyDetail::getPolicyById($id);
+            $arr_offer_detail = OfferDetail::getOfferById($id);
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
@@ -925,7 +1039,7 @@ class AccommodationController extends Controller {
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
 
-            return view('partner.accommodation.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            return view('partner.accommodation.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
