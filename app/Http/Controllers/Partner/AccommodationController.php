@@ -443,7 +443,7 @@ class AccommodationController extends Controller {
                 /////////////Insert Record for Room Section/////////////////
 
                 for ($i = 0; $i < $cnt; $i++) {
-
+                    
                     $room_detail = new RoomDetail;
                     $room_detail->accom_venu_promos_id = $acco_id;
                     $room_detail->room_type_id = $request->room_type[$i];
@@ -464,7 +464,11 @@ class AccommodationController extends Controller {
                             'img_name' => 'room_img',
                             'id' => $room_detail->id,
                         );
-                        Helper::UploadImage($request, $arr_room_img, $i);
+                        
+                        if(isset($request->room_img[$i]) && !empty($request->room_img[$i])){
+                            Helper::UploadImage($request, $arr_room_img, $i);
+                        }
+                        
                         $flg = '1';
                     }
                 }
@@ -492,7 +496,9 @@ class AccommodationController extends Controller {
                                 'id' => $venu_detail->id,
                             );
 
-                            Helper::UploadImage($request, $arr_venue_img, $j);
+                            if(isset($request->venue_img[$j]) && !empty($request->venue_img[$j])){
+                                Helper::UploadImage($request, $arr_venue_img, $j);
+                            }
                             $flg = '1';
                         }
                     }
@@ -520,7 +526,9 @@ class AccommodationController extends Controller {
                                 'id' => $confer_detail->id,
                             );
 
-                            Helper::UploadImage($request, $arr_confer_img, $k);
+                            if(isset($request->confer_img[$k]) && !empty($request->confer_img[$k])){
+                                Helper::UploadImage($request, $arr_confer_img, $k);
+                            }
                             $flg = '1';
                         }
                     }
@@ -769,7 +777,9 @@ class AccommodationController extends Controller {
                             'id' => $offer_detail->id,
                         );
 
-                        Helper::UploadImage($request, $arr_offer_img, $j);
+                        if(isset($request->extra_img[$j]) && !empty($request->extra_img[$j])){
+                            Helper::UploadImage($request, $arr_offer_img, $j);
+                        }
 
                         $flag = 'success';
                         $msg = "Record Added Successfully";
