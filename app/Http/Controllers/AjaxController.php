@@ -12,6 +12,7 @@ use App\Model\RoomList\RoomDetail;
 use App\Model\Conference\ConferenceDetail;
 use App\Model\Venu\VenuDetail;
 use App\Model\Offer\OfferDetail;
+use App\Model\SurroundingList\SurroundingDetail;
 use Auth;
 
 class AjaxController extends Controller {
@@ -195,6 +196,12 @@ class AjaxController extends Controller {
                         unlink($pathR . $data->id . '_' . $data->confer_image);
                     }
                 }
+                $result = $data->delete();
+                return ($result ? Response::json($result) : $result);
+                break;
+            case 'surr':
+
+                $data = SurroundingDetail::find($varID);
                 $result = $data->delete();
                 return ($result ? Response::json($result) : $result);
                 break;

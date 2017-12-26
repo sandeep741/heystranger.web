@@ -288,7 +288,7 @@
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <?php
                             $w = 1;
                             $room_type_option = [];
@@ -344,7 +344,7 @@
                             ?>
 
                             @if(isset($arr_room_detail) && !empty($arr_room_detail) && count($arr_room_detail) > 0)
-                            
+
                             @foreach($arr_room_detail as $room_detail)
 
                             <div class="form-group parentss">
@@ -411,7 +411,7 @@
                                         <strong>{{ $errors->first('room_img') }}</strong>
                                     </span>
                                     @endif
-                                    
+
 
                                 </div>
 
@@ -429,17 +429,17 @@
                                 @if($w != 1)
                                 <a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" id="{{ $room_detail->id }}" class="delete-room  label label-danger">Remove</a>
                                 {{ Form::input('hidden', 'room_id[]', (isset($room_detail) && !empty($room_detail) && count($room_detail) > 0 ? $room_detail->id : ''), ['readonly' => 'readonly']) }}
-                                
+
                                 @elseif($w==1)
-                                
+
                                 {{ Form::input('hidden', 'room_id[]', (isset($room_detail) && !empty($room_detail) && count($room_detail) > 0 ? $room_detail->id : ''), ['readonly' => 'readonly']) }}
-                                
+
                                 @endif
-                                
+
                             </div>
 
                             <?php $w++ ?>
-                            
+
                             {{ Form::input('hidden', 'accommo_id', (isset($room_detail) && !empty($room_detail) && count($room_detail) > 0 ? $room_detail->accom_venu_promos_id : ''), ['readonly' => 'readonly']) }}
 
                             @endforeach
@@ -711,18 +711,33 @@
 
 
                     $activity_option = [];
-                    if (!empty($arr_activity) && count($arr_activity) > 0) {
 
-                        if (!empty($arr_activity) && count($arr_activity) > 0) {
-                            foreach ($arr_activity as $actvity) {
-                                $activity_option[] = array(
-                                    'value' => $actvity->id,
-                                    'display' => $actvity->name,
-                                    'data-icon' => 'stumbleupon'
-                                );
-                            }
+                    if (!empty($arr_activity) && count($arr_activity) > 0) {
+                        foreach ($arr_activity as $actvity) {
+                            $activity_option[] = array(
+                                'value' => $actvity->id,
+                                'display' => $actvity->name,
+                                'data-icon' => 'stumbleupon'
+                            );
                         }
                     }
+
+
+                    $selecteds = [];
+                    if (!empty($arr_activity_detail) && count($arr_activity_detail) > 0) {
+                        foreach ($arr_activity_detail as $selcted) {
+                            $selecteds[] = $selcted->activity_id;
+                        }
+                    }
+
+
+                    $selected_ameity = [];
+                    if (!empty($arr_amenity_detail) && count($arr_amenity_detail) > 0) {
+                        foreach ($arr_amenity_detail as $selamenit) {
+                            $selected_ameity[] = $selamenit->amenity_id;
+                        }
+                    }
+
 
                     $surr = [];
                     $surr[] = array(
@@ -767,11 +782,10 @@
                         </div>
                         <div class="panel-body">
 
-
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('amenity_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->amenity : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
+                                    {!! Form::textarea('amenity_desc', (isset($arr_amenity_detail) && !empty($arr_amenity_detail) && count($arr_amenity_detail) > 0 ? $arr_amenity_detail->first()->desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
                                     @if ($errors->has('amenity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('amenity_desc') }}</strong>
@@ -779,11 +793,11 @@
                                     @endif
                                 </div>
                             </div>
-
+                            
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity on property:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('amenity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('amenity_property[]', $amenity_option, (isset($selected_ameity) && !empty($selected_ameity) && count($selected_ameity) > 0 ? $selected_ameity : '' ), ['class'=>'select-icons required', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property *", 'multiple' => 'multiple']) !!}
 
                                     @if ($errors->has('amenity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -796,7 +810,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('activity_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
+                                    {!! Form::textarea('activity_desc', (isset($arr_activity_detail) && !empty($arr_activity_detail) && count($arr_activity_detail) > 0 ? $arr_activity_detail->first()->desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
                                     @if ($errors->has('activity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_desc') }}</strong>
@@ -808,7 +822,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity on Property :</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('activity_property[]', $activity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('activity_property[]', $activity_option, (isset($selecteds) && !empty($selecteds) && count($selecteds) > 0 ? $selecteds : '' ), ['class'=>'select-icons required', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property *", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('activity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_property') }}</strong>
@@ -817,12 +831,18 @@
                                 </div>
                             </div>
 
-                            <div class="form-group attract-parents">
-                                <h5>Popular Attraction and surroundings: Please provide as many details as possible</h5>
 
+
+                            <h5>Popular Attraction and surroundings: Please provide as many details as possible</h5>
+
+                            @if(isset($arr_surr_detail) && !empty($arr_surr_detail) && count($arr_surr_detail) > 0)
+                            <?php $z = 1; ?>
+                            @foreach($arr_surr_detail as $surr_detail)
+
+                            <div class="form-group attract-parents">
                                 <div class="col-md-4">
 
-                                    {!! Form::text('attraction_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}
+                                    {!! Form::text('attraction_name[]', (isset($surr_detail) && !empty($surr_detail) ? $surr_detail->name : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}
 
                                     @if ($errors->has('attraction_name.0'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -834,7 +854,7 @@
 
                                 <div class="col-md-4">
 
-                                    {!! Form::fancyselect('surrounding[]', $surr, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('surrounding[]', $surr, (isset($surr_detail) && !empty($surr_detail) ? $surr_detail->surrounding_id : ''), ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('surrounding.0'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -846,7 +866,7 @@
 
                                 <div class="col-md-4">
 
-                                    {!! Form::text('approx_dist[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
+                                    {!! Form::text('approx_dist[]', (isset($surr_detail) && !empty($surr_detail) ? $surr_detail->distance : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
                                     @if ($errors->has('approx_dist.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('approx_dist.0') }}</strong>
@@ -854,8 +874,23 @@
                                     @endif
                                 </div>
 
+                                @if($z != 1)
+                                <a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" su_id="{{ $surr_detail->id }}" class="delete-surr  label label-danger">Remove</a>
+                                {{ Form::input('hidden', 'suur_id[]', (isset($surr_detail) && !empty($surr_detail) && count($surr_detail) > 0 ? $surr_detail->id : ''), ['readonly' => 'readonly']) }}
 
+                                @elseif($z==1)
+
+                                {{ Form::input('hidden', 'suur_id[]', (isset($surr_detail) && !empty($surr_detail) && count($surr_detail) > 0 ? $surr_detail->id : ''), ['readonly' => 'readonly']) }}
+
+                                @endif
+                                <?php $z++ ?>
+
+                                {{ Form::input('hidden', 'accommo_id', (isset($arr_activity_detail) && !empty($arr_activity_detail) && count($arr_activity_detail) > 0 ? $arr_activity_detail->first()->accom_venu_promos_id : ''), ['readonly' => 'readonly']) }}
                             </div>
+
+                            @endforeach
+                            @endif
+
                             <a href="javascript:void(0)" class="attract-add-more btn btn-success">Add More</a>
 
                             <div class="panel-heading">
@@ -865,7 +900,8 @@
                             <div class="form-group">
                                 <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
                                 <div class="col-lg-12">
-                                    {!! Form::fancyselect('shuttle', $shuttle_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    
+                                    {!! Form::fancyselect('shuttle', $shuttle_option, (isset($arr_surr_detail) && !empty($arr_surr_detail) ? $arr_surr_detail->first()->shuttle : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('shuttle'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('shuttle') }}</strong>
@@ -876,14 +912,12 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="acco" value="room" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="activity" value="Update" class="btn btn-primary">Update</button>
                             </div>
 
                         </div>
                     </div>
-
                     {!! Form::close() !!}
-
                 </div>
 
                 <!---policy form--->
@@ -1374,7 +1408,6 @@ Add Accommodation
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/delete-image.js')}}"></script>
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/delete-room.js')}}"></script>
 
-
 <script type="text/javascript">
             //////////////////////////room add more////////////////////////
             var room_temp = '<div class="form-group parentss">'+
@@ -1505,6 +1538,7 @@ Add Accommodation
             '{!! Form::text('approx_dist[]', null, ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}'+
             '</div>'+
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="attract-remove label label-danger">Remove</a>'+
+            '{{ Form::input('hidden', 'suur_id[]', null, ['readonly' => 'readonly']) }}' +
             '</div>';
     
         $(".attract-add-more").on('click', function(e){
@@ -1614,6 +1648,6 @@ Add Accommodation
 
         });
     });
-    </script>
+</script>
 
 @endsection

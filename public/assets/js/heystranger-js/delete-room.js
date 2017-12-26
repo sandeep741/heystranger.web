@@ -84,6 +84,34 @@ jQuery(document).ready(function () {
         });
     });
     
+    $(".delete-surr").click(function (e) {
+        e.preventDefault()
+        var id = $(this).attr('su_id');
+        var div = $(this).parents(".attract-parents");
+        var flag = 'surr';
+        $.confirm({
+            title: 'Deleting Confirmation',
+            content: 'Are you sure you want to Delete?',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            opacity: 0.5,
+            buttons: {
+                confirm: {
+                    text: 'Yes, sure!',
+                    btnClass: 'btn-orange',
+                    action: function () {
+                        e.preventDefault();
+                        $.removeAjax(id, div, flag);
+                        
+                    }
+                },
+                cancel: function () {
+                    //$.alert('you clicked on <strong>cancel</strong>');
+                },
+            }
+        });
+    });
+    
     $(".delete-offer").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('o_id');
