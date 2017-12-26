@@ -1,5 +1,8 @@
 @extends('admin.app')
 @section('content')
+<?php 
+$urlId = Request::segment(2);
+?>
 
 <div class="content">
     <!-- Horizontal form options -->
@@ -206,7 +209,7 @@
                                 <label class="col-lg-3 control-label">Establishment Detail:</label>
 
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    {!! Form::textarea('establish_details', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->establish_details : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment *']) !!}
+                                    {!! Form::textarea('establish_details', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->establish_details : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
                                     @if ($errors->has('establish_details'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('establish_details') }}</strong>
@@ -439,11 +442,9 @@
                             </div>
 
                             <?php $w++ ?>
-
-                            {{ Form::input('hidden', 'accommo_id', (isset($room_detail) && !empty($room_detail) && count($room_detail) > 0 ? $room_detail->accom_venu_promos_id : ''), ['readonly' => 'readonly']) }}
-
                             @endforeach
                             @endif
+                            {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
 
 
                             <a href="javascript:void(0)" class='btn btn-success btn-add-more' >Add More</a>
@@ -885,11 +886,12 @@
                                 @endif
                                 <?php $z++ ?>
 
-                                {{ Form::input('hidden', 'accommo_id', (isset($arr_activity_detail) && !empty($arr_activity_detail) && count($arr_activity_detail) > 0 ? $arr_activity_detail->first()->accom_venu_promos_id : ''), ['readonly' => 'readonly']) }}
                             </div>
 
                             @endforeach
                             @endif
+                            
+                            {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
 
                             <a href="javascript:void(0)" class="attract-add-more btn btn-success">Add More</a>
 
@@ -901,7 +903,7 @@
                                 <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
                                 <div class="col-lg-12">
                                     
-                                    {!! Form::fancyselect('shuttle', $shuttle_option, (isset($arr_surr_detail) && !empty($arr_surr_detail) ? $arr_surr_detail->first()->shuttle : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('shuttle', $shuttle_option, (isset($arr_surr_detail) && !empty($arr_surr_detail) && count($arr_surr_detail) > 0 ? $arr_surr_detail->first()->shuttle : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('shuttle'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('shuttle') }}</strong>

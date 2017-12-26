@@ -141,7 +141,7 @@ class AccommodationController extends Controller {
                 if (isset($files) && !empty($files) && count($files) > 0) {
                     foreach ($files as $k => $file) {
 
-                        $filename = $accommodation->id . '_' . $file->getClientOriginalName();
+                        $filename = $arr_accom_img['id'] . '_' . $arr_accom_img['time'] . '_' . $file->getClientOriginalName();
 
                         /* add image name in database */
                         $image = new AccomVenuPromosImage;
