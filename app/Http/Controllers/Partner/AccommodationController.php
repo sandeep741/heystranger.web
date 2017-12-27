@@ -921,31 +921,56 @@ class AccommodationController extends Controller {
 
             if (!empty(session()->get('accom_id'))) {
                 $acco_id = session()->get('accom_id');
-            }
-
-            $cnt = count($request->payment_type);
-            $item_cnt = count($request->item);
-
-            $meta_detail = new MetaTagDetail;
-
-            $meta_detail->accom_venu_promos_id = $acco_id;
-            $meta_detail->title = $request->title;
-            $meta_detail->keyword = $request->keyword;
-            $meta_detail->meta_desc = $request->meta_desc;
-            $meta_detail->type = $request->type;
-            $meta_detail->created_by = Auth::user()->id;
-
-            if ($meta_detail->save()) {
-                $flag = 'success';
-                $msg = "Record Added Successfully";
             } else {
-                $flag = 'danger';
-                $msg = "Record Not Added Successfully";
+                $acco_id = $request->accommo_id;
             }
 
-            $request->session()->flash($flag, $msg);
-            $request->session()->put('tab_type', 6);
-            return redirect(route('accomodation.create'));
+            if ($request->meta_tag) {
+
+                if (isset($request->meta_id) && !empty($request->meta_id)) {
+
+                    $meta_detail = MetaTagDetail::find($request->meta_id);
+
+                    $meta_detail->accom_venu_promos_id = $acco_id;
+                    $meta_detail->title = $request->title;
+                    $meta_detail->keyword = $request->keyword;
+                    $meta_detail->meta_desc = $request->meta_desc;
+                    $meta_detail->type = $request->type;
+                    $meta_detail->created_by = Auth::user()->id;
+
+                    if ($meta_detail->save()) {
+                        $flag = 'success';
+                        $msg = "Record Updated Successfully";
+                    } else {
+                        $flag = 'danger';
+                        $msg = "Record Not Updated Successfully";
+                    }
+
+                    $request->session()->flash($flag, $msg);
+                    return redirect(route('accomodation.index'));
+                }
+            } else {
+                $meta_detail = new MetaTagDetail;
+
+                $meta_detail->accom_venu_promos_id = $acco_id;
+                $meta_detail->title = $request->title;
+                $meta_detail->keyword = $request->keyword;
+                $meta_detail->meta_desc = $request->meta_desc;
+                $meta_detail->type = $request->type;
+                $meta_detail->created_by = Auth::user()->id;
+
+                if ($meta_detail->save()) {
+                    $flag = 'success';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flag = 'danger';
+                    $msg = "Record Not Added Successfully";
+                }
+
+                $request->session()->flash($flag, $msg);
+                $request->session()->put('tab_type', 6);
+                return redirect(route('accomodation.create'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -965,31 +990,60 @@ class AccommodationController extends Controller {
 
             if (!empty(session()->get('accom_id'))) {
                 $acco_id = session()->get('accom_id');
-            }
-
-            $cnt = count($request->payment_type);
-            $item_cnt = count($request->item);
-
-            $video_detail = new VideoMapDetail;
-
-            $video_detail->accom_venu_promos_id = $acco_id;
-            $video_detail->video_link = $request->video_link;
-            $video_detail->lat = $request->lat;
-            $video_detail->long = $request->long;
-            $video_detail->type = $request->type;
-            $video_detail->created_by = Auth::user()->id;
-            if ($video_detail->save()) {
-                $flag = 'success';
-                $msg = "Record Added Successfully";
             } else {
-                $flag = 'danger';
-                $msg = "Record Not Added Successfully";
+                $acco_id = $request->accommo_id;
             }
 
-            $request->session()->flash($flag, $msg);
-            $request->session()->forget('tab_type');
-            $request->session()->forget('accom_id');
-            return redirect(route('accomodation.index'));
+            if ($request->video_map) {
+
+                if ($request->video_id) {
+
+                    $video_detail = VideoMapDetail::find($request->video_id);
+
+                    $video_detail->accom_venu_promos_id = $acco_id;
+                    $video_detail->video_link = $request->video_link;
+                    $video_detail->lat = $request->lat;
+                    $video_detail->long = $request->long;
+                    $video_detail->type = $request->type;
+                    $video_detail->is_link = $request->video_cond;
+                    $video_detail->created_by = Auth::user()->id;
+                    if ($video_detail->save()) {
+                        $flag = 'success';
+                        $msg = "Record Updated Successfully";
+                    } else {
+                        $flag = 'danger';
+                        $msg = "Record Not Updated Successfully";
+                    }
+
+                    $request->session()->flash($flag, $msg);
+                    return redirect(route('accomodation.index'));
+                }
+            } else {
+
+
+
+                $video_detail = new VideoMapDetail;
+
+                $video_detail->accom_venu_promos_id = $acco_id;
+                $video_detail->video_link = $request->video_link;
+                $video_detail->lat = $request->lat;
+                $video_detail->long = $request->long;
+                $video_detail->type = $request->type;
+                $video_detail->is_link = $request->video_cond;
+                $video_detail->created_by = Auth::user()->id;
+                if ($video_detail->save()) {
+                    $flag = 'success';
+                    $msg = "Record Added Successfully";
+                } else {
+                    $flag = 'danger';
+                    $msg = "Record Not Added Successfully";
+                }
+
+                $request->session()->flash($flag, $msg);
+                $request->session()->forget('tab_type');
+                $request->session()->forget('accom_id');
+                return redirect(route('accomodation.index'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -1031,6 +1085,8 @@ class AccommodationController extends Controller {
             $arr_surr_detail = SurroundingDetail::getSurrById($id);
             $arr_policy_detail = PoliciyDetail::getPolicyById($id);
             $arr_offer_detail = OfferDetail::getOfferById($id);
+            $arr_meta_detail = MetaTagDetail::getMegaDetailById($id);
+            $arr_video_detail = VideoMapDetail::getVideoMapById($id);
             $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
@@ -1039,7 +1095,7 @@ class AccommodationController extends Controller {
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
 
-            return view('partner.accommodation.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            return view('partner.accommodation.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_meta_detail', 'arr_video_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }

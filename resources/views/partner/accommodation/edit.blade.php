@@ -1,6 +1,6 @@
 @extends('admin.app')
 @section('content')
-<?php 
+<?php
 $urlId = Request::segment(2);
 ?>
 
@@ -444,7 +444,7 @@ $urlId = Request::segment(2);
                             <?php $w++ ?>
                             @endforeach
                             @endif
-                            
+
                             <a href="javascript:void(0)" class='btn btn-success btn-add-more' >Add More</a>
 
                             <h5>Do you have Venue & Conference facilities at this property</h5>			
@@ -789,7 +789,7 @@ $urlId = Request::segment(2);
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity on property:</label>
                                 <div class="col-lg-10">
@@ -885,7 +885,7 @@ $urlId = Request::segment(2);
 
                             @endforeach
                             @endif
-                            
+
                             <a href="javascript:void(0)" class="attract-add-more btn btn-success">Add More</a>
 
                             <div class="panel-heading">
@@ -895,7 +895,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
                                 <div class="col-lg-12">
-                                    
+
                                     {!! Form::fancyselect('shuttle', $shuttle_option, (isset($arr_surr_detail) && !empty($arr_surr_detail) && count($arr_surr_detail) > 0 ? $arr_surr_detail->first()->shuttle : ''), ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('shuttle'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -1022,14 +1022,13 @@ $urlId = Request::segment(2);
                             'data-icon' => 'stumbleupon'
                         )
                     );
-                    
-                    if(isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0) {
-                     $pmt_accept = [];
-                        foreach($arr_policy_detail->paymentAccept as $val){
+
+                    if (isset($arr_policy_detail) && !empty($arr_policy_detail) && count($arr_policy_detail) > 0) {
+                        $pmt_accept = [];
+                        foreach ($arr_policy_detail->paymentAccept as $val) {
                             $pmt_accept[] = $val->payment_mode_id;
                         }
                     }
-                    
                     ?>
 
                     <div class="panel panel-flat">
@@ -1159,7 +1158,7 @@ $urlId = Request::segment(2);
                             </div>
 
                             <h5>Do you offer extra's ( Example:Flower )</h5>	
-                            
+
                             @if(isset($arr_offer_detail) && !empty($arr_offer_detail) && count($arr_offer_detail) > 0)
                             <?php $a = 1; ?>
                             @foreach($arr_offer_detail as $offer_detail)
@@ -1196,26 +1195,26 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-md-2">
-                                        {{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'file-styled', 'multiple' => false]) }}
-                                        @if ($errors->has('extra_img.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('extra_img.0') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                                    {{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                    @if ($errors->has('extra_img.0'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('extra_img.0') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
-                                    <div class="col-sm-10">
-                                        <div class="edit-prod-image-cls">
-                                            <span class="prod-img-span" style="position: relative;">
-                                                @if(!empty($offer_detail->offer_image) && file_exists(public_path('extra_images' . '/'. $offer_detail->id.'_'.$offer_detail->offer_image)))
-                                                <img src="{{ url('/')}}/extra_images/{{ $offer_detail->id }}_{{ $offer_detail->offer_image }}" height="140" width="140"/>
-                                                @else
-                                                <img src="{{ url('/')}}/assets/images/no-image.png" height="140" width="140"/>
-                                                @endif
-                                            </span>
-                                        </div>
+                                <div class="col-sm-10">
+                                    <div class="edit-prod-image-cls">
+                                        <span class="prod-img-span" style="position: relative;">
+                                            @if(!empty($offer_detail->offer_image) && file_exists(public_path('extra_images' . '/'. $offer_detail->id.'_'.$offer_detail->offer_image)))
+                                            <img src="{{ url('/')}}/extra_images/{{ $offer_detail->id }}_{{ $offer_detail->offer_image }}" height="140" width="140"/>
+                                            @else
+                                            <img src="{{ url('/')}}/assets/images/no-image.png" height="140" width="140"/>
+                                            @endif
+                                        </span>
                                     </div>
-                            
+                                </div>
+
                                 @if($a != 1)
                                 <a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" off_id="{{ $offer_detail->id }}" class="delete-offer  label label-danger">Remove</a>
                                 {{ Form::input('hidden', 'offer_id[]', (isset($offer_detail) && !empty($offer_detail) && count($offer_detail) > 0 ? $offer_detail->id : ''), ['readonly' => 'readonly']) }}
@@ -1231,17 +1230,17 @@ $urlId = Request::segment(2);
 
                             @endforeach
                             @endif
-                            
+
                             {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
                             {{ Form::input('hidden', 'policy_id', (isset($arr_policy_detail) && !empty($arr_policy_detail) ? $arr_policy_detail->id : ''), ['readonly' => 'readonly']) }}
                             {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
 
                             <a href="javascript:void(0)" class='btn btn-success extra-add-more'>Add</a>
-                        
 
-                        <div class="text-right">
-                            <button type="submit" name="policy" value="Update" class="btn btn-primary">Update</button>
-                        </div>
+
+                            <div class="text-right">
+                                <button type="submit" name="policy" value="Update" class="btn btn-primary">Update</button>
+                            </div>
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -1271,7 +1270,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Title:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::text('title', null, ['class' => 'form-control required', 'placeholder' => 'Enter Your Title *']) !!}
+                                    {!! Form::text('title', ( isset($arr_meta_detail) && !empty($arr_meta_detail) && count($arr_meta_detail) > 0 ? $arr_meta_detail->title : ''), ['class' => 'form-control required', 'placeholder' => 'Enter Your Title *']) !!}
                                     @if ($errors->has('title'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('title') }}</strong>
@@ -1283,7 +1282,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Keywords:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('keyword', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Keywords here *']) !!}
+                                    {!! Form::textarea('keyword', ( isset($arr_meta_detail) && !empty($arr_meta_detail) && count($arr_meta_detail) > 0 ? $arr_meta_detail->keyword : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Keywords here *']) !!}
                                     @if ($errors->has('keyword'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('keyword') }}</strong>
@@ -1295,18 +1294,20 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Meta Tags:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('meta_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Meta Tags here *']) !!}
+                                    {!! Form::textarea('meta_desc', ( isset($arr_meta_detail) && !empty($arr_meta_detail) && count($arr_meta_detail) > 0 ? $arr_meta_detail->meta_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Meta Tags here *']) !!}
                                     @if ($errors->has('meta_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('meta_desc') }}</strong>
                                     </span>
                                     @endif
                                 </div>
+                                {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
+                                {{ Form::input('hidden', 'meta_id', (isset($arr_meta_detail) && !empty($arr_meta_detail) ? $arr_meta_detail->id : ''), ['readonly' => 'readonly']) }}
                                 {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit </button>
+                                <button type="submit" name="meta_tag" value="meta" class="btn btn-primary">Update</button>
                             </div>
                         </div>
                     </div>
@@ -1327,7 +1328,6 @@ $urlId = Request::segment(2);
                     )
                     )
                     !!}
-
 
                     <?php
                     $video_option = [];
@@ -1357,7 +1357,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-6 control-label">Do you have any video link :</label>
                                 <div class="col-lg-12">
-                                    {!! Form::fancyselect('video_cond', $video_option, null, ['id'=>'vid_con', 'class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('video_cond', $video_option, ( isset($arr_video_detail) && !empty($arr_video_detail) && count($arr_video_detail) > 0 ? $arr_video_detail->is_link : ''), ['id'=>'vid_con', 'class'=>'select-icons required']) !!}
                                 </div>
                             </div>
 
@@ -1365,7 +1365,7 @@ $urlId = Request::segment(2);
                             <div class="form-group" id="viddiv" style='display:none;'>
                                 <label class="col-lg-3 control-label">Accommodation Video </label>
                                 <div class="col-lg-9">
-                                    {!! Form::text('video_link', null, ['class' => 'form-control required url', 'placeholder' => 'Paste Your Accommodation Link here *']) !!}
+                                    {!! Form::text('video_link', ( isset($arr_video_detail) && !empty($arr_video_detail) && count($arr_video_detail) > 0 ? $arr_video_detail->video_link : ''), ['class' => 'form-control required url', 'placeholder' => 'Paste Your Accommodation Link here *']) !!}
                                     @if ($errors->has('video_link'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('video_link') }}</strong>
@@ -1378,7 +1378,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Latitude:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::text('lat', null, ['class' => 'form-control required latCoord', 'placeholder' => 'Enter Latitude *']) !!}
+                                    {!! Form::text('lat', ( isset($arr_video_detail) && !empty($arr_video_detail) && count($arr_video_detail) > 0 ? $arr_video_detail->lat : ''), ['class' => 'form-control required latCoord', 'placeholder' => 'Enter Latitude *']) !!}
                                     @if ($errors->has('lat'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('lat') }}</strong>
@@ -1389,19 +1389,20 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Longitude:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::text('long', null, ['class' => 'form-control required longCoord', 'placeholder' => 'Enter Longitude *']) !!}
+                                    {!! Form::text('long', ( isset($arr_video_detail) && !empty($arr_video_detail) && count($arr_video_detail) > 0 ? $arr_video_detail->long : ''), ['class' => 'form-control required longCoord', 'placeholder' => 'Enter Longitude *']) !!}
                                     @if ($errors->has('long'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('long') }}</strong>
                                     </span>
                                     @endif
                                 </div>
+                                {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
+                                {{ Form::input('hidden', 'video_id', (isset($arr_video_detail) && !empty($arr_video_detail) ? $arr_video_detail->id : ''), ['readonly' => 'readonly']) }}
                                 {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                             </div>
 
-
                             <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit </button>
+                                <button type="submit" name="video_map" value="video" class="btn btn-primary">Update</button>
                             </div>
                         </div>
                     </div>
@@ -1452,7 +1453,8 @@ Add Accommodation
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/delete-room.js')}}"></script>
 
 <script type="text/javascript">
-            //////////////////////////room add more////////////////////////
+
+//////////////////////////room add more////////////////////////
             var room_temp = '<div class="form-group parentss">'+
             
             '<div class="col-md-2">'+
@@ -1621,77 +1623,61 @@ Add Accommodation
             e.preventDefault();
             $(this).before(extra_temp)
         });
-        
+
         $(document).on('click','.extra-remove',function(e){    
                 e.preventDefault();
                 $(this).parents(".extra-parents").remove();
         });
-        
-    
-    $(document).ready(function () {
-        
-        $('#cv').css("display", "none");
 
-        var befco = $('#condit').val();
-        
+        $(document).ready(function () {
 
-        if (befco == 'Y')
-        {
-            $('#cv').css("display", "block");
-            $('.both').css("display", "block");
-        } else
-        {
             $('#cv').css("display", "none");
-            $('.both').css("display", "none");
-        }
 
+            var befco = $('#condit').val();
 
-        $('#condit').change(function ()
-        {
-            var co = $('#condit').val();
+            if (befco == 'Y') {
 
-            if (co == 'Y')
-            {
                 $('#cv').css("display", "block");
                 $('.both').css("display", "block");
-            } else
-            {
+            } else {
+
                 $('#cv').css("display", "none");
                 $('.both').css("display", "none");
-
             }
 
 
-        });
-        
-        var bm = $('#vid_con').val();
-        
+            $('#condit').change(function () {
 
-        if (bm == 'Yes')
-        {
-            $('#viddiv').css("display", "block");
-        }
+                var co = $('#condit').val();
 
-        $('#vid_con').change(function ()
-        {
-            var conn2 = $('#vid_con').val();
+                if (co == 'Y') {
+                    $('#cv').css("display", "block");
+                    $('.both').css("display", "block");
+                } else {
+                    $('#cv').css("display", "none");
+                    $('.both').css("display", "none");
 
-            if (conn2 == 'Y')
-            {
-                //$('#viddiv').css("display", "block");
-                $('#viddiv').show();
-                
-            } else
-            {
-                //$('#vidtext').val('');
+                }
+            });
 
-                //$('#viddiv').css("display", "none");
-                $('#viddiv').hide();
+            var bm = $('#vid_con').val();
+            if (bm == 'Y') {
+                $('#viddiv').css("display", "block");
             }
 
+            $('#vid_con').change(function () {
+                var conn2 = $('#vid_con').val();
 
+                if (conn2 == 'Y') {
+                    $('#viddiv').show();
+
+                } else {
+                    $('#viddiv').hide();
+                }
+
+
+            });
         });
-    });
 </script>
 
 @endsection
