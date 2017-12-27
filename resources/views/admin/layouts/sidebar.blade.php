@@ -35,16 +35,33 @@ if (isset($active) && !empty($active)) {
                 <ul class="navigation navigation-main navigation-accordion">
                     <!-- Main -->
                     <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                    <li class="{{ $current }}"><a href="{{ route('admin.login') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                    <li class="{{ ($parent_route == 'partner' ? 'active' : '') }}"><a href="{{ route('admin.login') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 
                     @if(isset($user) && $user->role[0]->name == 'partner')
-                    <li >
+                    <li class="{{ ($parent_route == 'accomodation' ? 'active' : '') }}">
                         <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Accommodation</span></a>
                         <ul style="{{ (($parent_route == 'accomodation') ? 'display:block' : '') }}">
-                            <li><a href="{{ route("accomodation.index") }}" style="{{ ($parent_route == 'accomodation') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}">My Accommodation</a></li>
-                            <li><a href="{{ route("accommlist.index") }}" style="{{ ($parent_route == 'accommlist') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '' }}">My Venue Details</a></li>
+                            <li><a href="{{ route("accomodation.index") }}" style="{{ ( ( Request::segment(1) == 'accomodation' && empty(Request::segment(2)) ) ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Accommodation Listing</a></li>
+                            <li><a href="{{ route('accomodation.create') }}" style="{{ ( (Request::segment(2) == 'create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Accommodation</a></li>
                         </ul>
                     </li>
+
+                    <li class="{{ ($parent_route == 'venu' ? 'active' : '') }}">
+                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Venue & Conference</span></a>
+                        <ul style="{{ (($parent_route == 'promo') ? 'display:block' : '') }}">
+                            <li><a href="{{ route("accomodation.index") }}" style="{{ ( ( Request::segment(1) == 'venu' && empty(Request::segment(2)) ) ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Venue & Conference Listing</a></li>
+                            <li><a href="{{ route('accomodation.create') }}" style="{{ ( (Request::segment(2) == 'create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Venue & Conference</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="{{ ($parent_route == 'promo' ? 'active' : '') }}">
+                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Promotion</span></a>
+                        <ul style="{{ (($parent_route == 'promo') ? 'display:block' : '') }}">
+                            <li><a href="{{ route("accomodation.index") }}" style="{{ ( ( Request::segment(1) == 'promo' && empty(Request::segment(2)) ) ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Promotion Listing</a></li>
+                            <li><a href="{{ route('accomodation.create') }}" style="{{ ( (Request::segment(2) == 'create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Promotion</a></li>
+                        </ul>
+                    </li>
+
                     @endif
 
                     @if(isset($user) && $user->role[0]->name == 'admin')

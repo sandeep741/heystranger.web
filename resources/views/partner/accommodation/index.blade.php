@@ -1,12 +1,12 @@
 @extends('admin.app')
 @section('content')
 
-<div class="heading-btn-group">
+<!--<div class="heading-btn-group">
     <a href="{{ route('accomodation.create') }}" class="btn btn-success"><i class="icon-comment-discussion position-left"></i> Add Accommodation</a>
 </div>  
-<br>
+<br>-->
 
-<div class="panel panel-white">
+<div class="panel panel-white" style="{{ (Session::has('success') ? 'margin:52px 0px 20px 0px' : '') }}">
     <div class="panel-heading">
         <h6 class="panel-title text-semibold">My Accommodation</h6>
         <div class="heading-elements">
