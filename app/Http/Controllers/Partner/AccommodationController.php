@@ -1108,7 +1108,6 @@ class AccommodationController extends Controller {
             $request->session()->flash($flag, $msg);
             return redirect(route('accomodation.index'));
         }
-dd('df');
 
         $accommodation->title = $request->name;
         $accommodation->slug = str_slug($request->name, '-');
