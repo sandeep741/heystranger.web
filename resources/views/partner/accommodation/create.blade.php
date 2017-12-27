@@ -1159,7 +1159,7 @@
                                 <div class="form-group" id="viddiv" style='display:none;'>
                                     <label class="col-lg-3 control-label">Accommodation Video </label>
                                     <div class="col-lg-9">
-                                        {!! Form::text('video_link', null, ['class' => 'form-control required url', 'placeholder' => 'Paste Your Accommodation Link here *']) !!}
+                                        {!! Form::text('video_link', null, ['class' => 'form-control required url', 'placeholder' => 'Paste Your Accommodation Link here Eg-: http://example.com *']) !!}
                                         @if ($errors->has('video_link'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('video_link') }}</strong>

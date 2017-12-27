@@ -13,6 +13,7 @@ use App\Model\Conference\ConferenceDetail;
 use App\Model\Venu\VenuDetail;
 use App\Model\Offer\OfferDetail;
 use App\Model\SurroundingList\SurroundingDetail;
+use App\Helpers\Helper;
 use Auth;
 
 class AjaxController extends Controller {
@@ -107,19 +108,17 @@ class AjaxController extends Controller {
 
         $data = AccomVenuPromosImage::find($varID);
 
-        $path = 'accom_venu_promo_images/';
-        $pathT = 'accom_venu_promo_images/thumbnail/';
-        $pathR = 'accom_venu_promo_images/resize/';
+
+        $imgArr = [];
+        $imgArr['path'] = 'accom_venu_promo_images/';
+        $imgArr['pathT'] = 'accom_venu_promo_images/thumbnail/';
+        $imgArr['pathR'] = 'accom_venu_promo_images/resize/';
+        $imgArr['id'] = '';
+        $imgArr['image_name'] = $data->image_name;
+
         if ($data->image_name != "") {
-            if (file_exists($path . $data->image_name)) {
-                unlink($path . $data->image_name);
-            }
-            if (file_exists($pathT . $data->image_name)) {
-                unlink($pathT . $data->image_name);
-            }
-            if (file_exists($pathR . $data->image_name)) {
-                unlink($pathR . $data->image_name);
-            }
+
+            Helper::unLinkImage($imgArr);
         }
 
         $result = $data->delete();
@@ -141,38 +140,34 @@ class AjaxController extends Controller {
         switch ($flg) {
             case 'room':
                 $data = RoomDetail::find($varID);
-                $path = 'room_images/';
-                $pathT = 'room_images/thumbnail/';
-                $pathR = 'room_images/resize/';
+                $imgArr = [];
+                $imgArr['path'] = 'room_images/';
+                $imgArr['pathT'] = 'room_images/thumbnail/';
+                $imgArr['pathR'] = 'room_images/resize/';
+                $imgArr['id'] = $data->id;
+                $imgArr['image_name'] = $data->room_image;
+
                 if ($data->room_image != "") {
-                    if (file_exists($path . $data->id . '_' . $data->room_image)) {
-                        unlink($path . $data->id . '_' . $data->room_image);
-                    }
-                    if (file_exists($pathT . $data->id . '_' . $data->room_image)) {
-                        unlink($pathT . $data->id . '_' . $data->room_image);
-                    }
-                    if (file_exists($pathR . $data->id . '_' . $data->room_image)) {
-                        unlink($pathR . $data->id . '_' . $data->room_image);
-                    }
+
+                    Helper::unLinkImage($imgArr);
                 }
+
                 $result = $data->delete();
                 return ($result ? Response::json($result) : $result);
                 break;
             case 'venu';
                 $data = VenuDetail::find($varID);
-                $path = 'venue_images/';
-                $pathT = 'venue_images/thumbnail/';
-                $pathR = 'venue_images/resize/';
+
+                $venuImgArr = [];
+                $venuImgArr['path'] = 'venue_images/';
+                $venuImgArr['pathT'] = 'venue_images/thumbnail/';
+                $venuImgArr['pathR'] = 'venue_images/resize/';
+                $venuImgArr['id'] = $data->id;
+                $venuImgArr['image_name'] = $data->venu_image;
+
                 if ($data->venu_image) {
-                    if (file_exists($path . $data->id . '_' . $data->venu_image)) {
-                        unlink($path . $data->id . '_' . $data->venu_image);
-                    }
-                    if (file_exists($pathT . $data->id . '_' . $data->venu_image)) {
-                        unlink($pathT . $data->id . '_' . $data->venu_image);
-                    }
-                    if (file_exists($pathR . $data->id . '_' . $data->venu_image)) {
-                        unlink($pathR . $data->id . '_' . $data->venu_image);
-                    }
+
+                    Helper::unLinkImage($venuImgArr);
                 }
                 $result = $data->delete();
                 return ($result ? Response::json($result) : $result);
@@ -181,20 +176,18 @@ class AjaxController extends Controller {
             case 'confer':
 
                 $data = ConferenceDetail::find($varID);
-                $path = 'confer_images/';
-                $pathT = 'confer_images/thumbnail/';
-                $pathR = 'confer_images/resize/';
+
+                $conferImgArr = [];
+                $conferImgArr['path'] = 'confer_images/';
+                $conferImgArr['pathT'] = 'confer_images/thumbnail/';
+                $conferImgArr['pathR'] = 'confer_images/resize/';
+                $conferImgArr['id'] = $data->id;
+                $conferImgArr['image_name'] = $data->confer_image;
+
 
                 if ($data->confer_image) {
-                    if (file_exists($path . $data->id . '_' . $data->confer_image)) {
-                        unlink($path . $data->id . '_' . $data->confer_image);
-                    }
-                    if (file_exists($pathT . $data->id . '_' . $data->confer_image)) {
-                        unlink($pathT . $data->id . '_' . $data->confer_image);
-                    }
-                    if (file_exists($pathR . $data->id . '_' . $data->confer_image)) {
-                        unlink($pathR . $data->id . '_' . $data->confer_image);
-                    }
+
+                    Helper::unLinkImage($conferImgArr);
                 }
                 $result = $data->delete();
                 return ($result ? Response::json($result) : $result);
@@ -208,20 +201,18 @@ class AjaxController extends Controller {
             case 'offer':
 
                 $data = OfferDetail::find($varID);
-                $path = 'extra_images/';
-                $pathT = 'extra_images/thumbnail/';
-                $pathR = 'extra_images/resize/';
+
+                $offerImgArr = [];
+                $offerImgArr['path'] = 'extra_images/';
+                $offerImgArr['pathT'] = 'extra_images/thumbnail/';
+                $offerImgArr['pathR'] = 'extra_images/resize/';
+                $offerImgArr['id'] = $data->id;
+                $offerImgArr['image_name'] = $data->offer_image;
+
 
                 if ($data->offer_image) {
-                    if (file_exists($path . $data->id . '_' . $data->offer_image)) {
-                        unlink($path . $data->id . '_' . $data->offer_image);
-                    }
-                    if (file_exists($pathT . $data->id . '_' . $data->offer_image)) {
-                        unlink($pathT . $data->id . '_' . $data->offer_image);
-                    }
-                    if (file_exists($pathR . $data->id . '_' . $data->offer_image)) {
-                        unlink($pathR . $data->id . '_' . $data->offer_image);
-                    }
+
+                    Helper::unLinkImage($offerImgArr);
                 }
                 $result = $data->delete();
                 return ($result ? Response::json($result) : $result);

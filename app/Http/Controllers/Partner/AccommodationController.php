@@ -216,21 +216,16 @@ class AccommodationController extends Controller {
 
                         if (isset($request->room_img[$i]) && !empty($request->room_img[$i])) {
 
-                            $path = 'room_images/';
-                            $pathT = 'room_images/thumbnail/';
-                            $pathR = 'room_images/resize/';
+                            $imgArr = [];
+                            $imgArr['path'] = 'room_images/';
+                            $imgArr['pathT'] = 'room_images/thumbnail/';
+                            $imgArr['pathR'] = 'room_images/resize/';
+                            $imgArr['id'] = $room_detail->id;
+                            $imgArr['image_name'] = $room_img;
 
                             if ($room_img != "") {
 
-                                if (file_exists($path . $room_detail->id . '_' . $room_img)) {
-                                    unlink($path . $room_detail->id . '_' . $room_img);
-                                }
-                                if (file_exists($pathT . $room_detail->id . '_' . $room_img)) {
-                                    unlink($pathT . $room_detail->id . '_' . $room_img);
-                                }
-                                if (file_exists($pathR . $room_detail->id . '_' . $room_img)) {
-                                    unlink($pathR . $room_detail->id . '_' . $room_img);
-                                }
+                                Helper::unLinkImage($imgArr);
                             }
 
                             $arr_room_img = array(
@@ -296,21 +291,16 @@ class AccommodationController extends Controller {
 
                             if (isset($request->venu_img[$j]) && !empty($request->venu_img[$j])) {
 
-                                $venu_path = 'venue_images/';
-                                $venu_pathT = 'venue_images/thumbnail/';
-                                $venu_pathR = 'venue_images/resize/';
+                                $venuImgArr = [];
+                                $venuImgArr['path'] = 'venue_images/';
+                                $venuImgArr['pathT'] = 'venue_images/thumbnail/';
+                                $venuImgArr['pathR'] = 'venue_images/resize/';
+                                $venuImgArr['id'] = $venu_detail->id;
+                                $venuImgArr['image_name'] = $venu_img;
 
                                 if ($venu_img != "") {
 
-                                    if (file_exists($venu_path . $venu_detail->id . '_' . $venu_img)) {
-                                        unlink($venu_path . $venu_detail->id . '_' . $venu_img);
-                                    }
-                                    if (file_exists($venu_pathT . $venu_detail->id . '_' . $venu_img)) {
-                                        unlink($venu_pathT . $venu_detail->id . '_' . $venu_img);
-                                    }
-                                    if (file_exists($venu_pathR . $venu_detail->id . '_' . $venu_img)) {
-                                        unlink($venu_pathR . $venu_detail->id . '_' . $venu_img);
-                                    }
+                                    Helper::unLinkImage($venuImgArr);
                                 }
 
                                 $arr_venu_img = array(
@@ -374,21 +364,16 @@ class AccommodationController extends Controller {
 
                             if (isset($request->confer_img[$k]) && !empty($request->confer_img[$k])) {
 
-                                $confer_path = 'confer_images/';
-                                $confer_pathT = 'confer_images/thumbnail/';
-                                $confer_pathR = 'confer_images/resize/';
+                                $conferImgArr = [];
+                                $conferImgArr['path'] = 'confer_images/';
+                                $conferImgArr['pathT'] = 'confer_images/thumbnail/';
+                                $conferImgArr['pathR'] = 'confer_images/resize/';
+                                $conferImgArr['id'] = $confer_detail->id;
+                                $conferImgArr['image_name'] = $confer_img;
 
                                 if ($confer_img != "") {
 
-                                    if (file_exists($confer_path . $confer_detail->id . '_' . $confer_img)) {
-                                        unlink($confer_path . $confer_detail->id . '_' . $confer_img);
-                                    }
-                                    if (file_exists($confer_pathT . $confer_detail->id . '_' . $confer_img)) {
-                                        unlink($confer_pathT . $confer_detail->id . '_' . $confer_img);
-                                    }
-                                    if (file_exists($confer_pathR . $confer_detail->id . '_' . $confer_img)) {
-                                        unlink($confer_pathR . $confer_detail->id . '_' . $confer_img);
-                                    }
+                                    Helper::unLinkImage($conferImgArr);
                                 }
 
                                 $arr_confer_img = array(
@@ -784,21 +769,15 @@ class AccommodationController extends Controller {
 
                             if (isset($request->extra_img[$j]) && !empty($request->extra_img[$j])) {
 
-                                $offer_path = 'extra_images/';
-                                $offer_pathT = 'extra_images/thumbnail/';
-                                $offer_pathR = 'extra_images/resize/';
+                                $offerImgArr['path'] = 'extra_images/';
+                                $offerImgArr['pathT'] = 'extra_images/thumbnail/';
+                                $offerImgArr['pathR'] = 'extra_images/resize/';
+                                $offerImgArr['id'] = $offer_detail->id;
+                                $offerImgArr['image_name'] = $offer_img;
 
                                 if ($offer_img != "") {
 
-                                    if (file_exists($offer_path . $offer_detail->id . '_' . $offer_img)) {
-                                        unlink($offer_path . $offer_detail->id . '_' . $offer_img);
-                                    }
-                                    if (file_exists($offer_pathT . $offer_detail->id . '_' . $offer_imgg)) {
-                                        unlink($offer_pathT . $offer_detail->id . '_' . $offer_imgg);
-                                    }
-                                    if (file_exists($offer_pathR . $venu_detail->id . '_' . $offer_imgg)) {
-                                        unlink($offer_pathR . $offer_detail->id . '_' . $offer_imgg);
-                                    }
+                                    Helper::unLinkImage($offerImgArr);
                                 }
 
                                 $arr_offer_img = array(
@@ -1200,8 +1179,119 @@ class AccommodationController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        //
+    public function destroy(Request $request, $id) {
+
+        if (isset($id) && !empty($id)) {
+
+            $getAllImages = AccomVenuPromosImage::getImagesById($id);
+            $getRoomImages = RoomDetail::getRoomById($id);
+            $getVenuImages = VenuDetail::getVenuById($id);
+            $getConferImages = ConferenceDetail::getConferById($id);
+            $getOfferImages = OfferDetail::getOfferById($id);
+
+            if (isset($getAllImages) && !empty($getAllImages) && count($getAllImages) > 0) {
+
+                foreach ($getAllImages as $images) {
+                    $accommoImgArr = [];
+
+                    $accommoImgArr['path'] = 'accom_venu_promo_images/';
+                    $accommoImgArr['pathT'] = 'accom_venu_promo_images/thumbnail/';
+                    $accommoImgArr['pathR'] = 'accom_venu_promo_images/resize/';
+                    $accommoImgArr['id'] = '';
+                    $accommoImgArr['image_name'] = $images->image_name;
+
+                    if ($images->image_name != '') {
+
+                        Helper::unLinkImage($accommoImgArr);
+                    }
+                }
+            }
+
+            if (isset($getRoomImages) && !empty($getRoomImages) && count($getRoomImages) > 0) {
+
+                foreach ($getRoomImages as $room) {
+
+                    $roomImgArr = [];
+                    $roomImgArr['path'] = 'room_images/';
+                    $roomImgArr['pathT'] = 'room_images/thumbnail/';
+                    $roomImgArr['pathR'] = 'room_images/resize/';
+                    $roomImgArr['id'] = $room->id;
+                    $roomImgArr['image_name'] = $room->room_image;
+
+                    if ($room->room_image != '') {
+
+                        Helper::unLinkImage($roomImgArr);
+                    }
+                }
+            }
+
+            if (isset($getVenuImages) && !empty($getVenuImages) && count($getVenuImages) > 0) {
+
+                foreach ($getVenuImages as $venu) {
+
+
+                    $venuImgArr = [];
+                    $venuImgArr['path'] = 'venue_images/';
+                    $venuImgArr['pathT'] = 'venue_images/thumbnail/';
+                    $venuImgArr['pathR'] = 'venue_images/resize/';
+                    $venuImgArr['id'] = $venu->id;
+                    $venuImgArr['image_name'] = $venu->venu_image;
+
+                    if ($venu->venu_image != '') {
+
+                        Helper::unLinkImage($venuImgArr);
+                    }
+                }
+            }
+
+
+            if (isset($getConferImages) && !empty($getConferImages) && count($getConferImages) > 0) {
+
+                foreach ($getConferImages as $confer) {
+
+                    $conferImgArr = [];
+                    $conferImgArr['path'] = 'confer_images/';
+                    $conferImgArr['pathT'] = 'confer_images/thumbnail/';
+                    $conferImgArr['pathR'] = 'confer_images/resize/';
+                    $conferImgArr['id'] = $confer->id;
+                    $conferImgArr['image_name'] = $confer->confer_image;
+
+                    if ($confer->confer_image != '') {
+
+                        Helper::unLinkImage($conferImgArr);
+                    }
+                }
+            }
+
+            if (isset($getOfferImages) && !empty($getOfferImages) && count($getOfferImages) > 0) {
+
+                foreach ($getOfferImages as $offer) {
+
+                    $offerImgArr = [];
+                    $offerImgArr['path'] = 'extra_images/';
+                    $offerImgArr['pathT'] = 'extra_images/thumbnail/';
+                    $offerImgArr['pathR'] = 'extra_images/resize/';
+                    $offerImgArr['id'] = $offer->id;
+                    $offerImgArr['image_name'] = $offer->offer_image;
+
+                    if ($offer->offer_image != '') {
+
+                        Helper::unLinkImage($offerImgArr);
+                    }
+                }
+            }
+
+            $record = AccomVenuPromo::find($id);
+            if ($record->delete()) {
+                $flag = 'success';
+                $msg = 'Record Deleted Successfully';
+            } else {
+                $flag = 'danger';
+                $msg = 'Record Not Deleted Successfully';
+            }
+            $request->session()->flash($flag, $msg);
+            return redirect()->back();
+        }
     }
 
 }

@@ -267,4 +267,35 @@ class Helper {
         }
     }
 
+    /* unLinkImage
+     * @paran
+     * @return array
+     * @author Sandeep Kumar
+     */
+
+    public static function unLinkImage($img_detail = array()) {
+
+        if (isset($img_detail['id']) && !empty($img_detail['id'])) {
+
+            $img_path = $img_detail['path'] . $img_detail['id'] . '_' . $img_detail['image_name'];
+            $img_pathT = $img_detail['pathT'] . $img_detail['id'] . '_' . $img_detail['image_name'];
+            $img_pathR = $img_detail['pathR'] . $img_detail['id'] . '_' . $img_detail['image_name'];
+        } else {
+            $img_path = $img_detail['path'] . $img_detail['image_name'];
+            $img_pathT = $img_detail['pathT'] . $img_detail['image_name'];
+            $img_pathR = $img_detail['pathR'] . $img_detail['image_name'];
+        }
+
+
+        if (file_exists($img_path)) {
+            unlink($img_path);
+        }
+        if (file_exists($img_pathT)) {
+            unlink($img_pathT);
+        }
+        if (file_exists($img_pathR)) {
+            unlink($img_pathR);
+        }
+    }
+
 }

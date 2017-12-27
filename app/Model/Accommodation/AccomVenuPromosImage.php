@@ -32,4 +32,19 @@ class AccomVenuPromosImage extends Model
         $data = self::where(['id' => (int) $image_id])->update($input);
         return $data;
     }
+    
+    /**
+     * updateData
+     * @param
+     * @return array arrEmployer
+     * @since 0.1
+     * @author Meghendra S Yadav
+     */
+    public static function getImagesById($id) {
+
+        $arrCond = array('accom_venu_promos_id' => $id, 'status' => '1');
+        $sqlQuery = self::select('*');
+        $datas = $sqlQuery->where($arrCond)->get();
+        return ($datas ? $datas : []);
+    }
 }

@@ -62,7 +62,7 @@
                     array(
                     'name' => 'delete-form',
                     'id' => 'delete-form-'.$data->id,
-                    'url' => 'accommlist/'.(isset($data) && !empty($data) ? $data->id : ''),
+                    'url' => 'accomodation/'.(isset($data) && !empty($data) ? $data->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'style' => 'display:none',
@@ -79,7 +79,7 @@
                     array(
                     'name' => 'update-form',
                     'id' => 'update-form-'.$data->id,
-                    'url' => 'accommlist/'.(isset($data) && !empty($data) ? $data->id : ''),
+                    'url' => 'accomodation/'.(isset($data) && !empty($data) ? $data->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'style' => 'display:none',
