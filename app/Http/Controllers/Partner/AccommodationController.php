@@ -275,67 +275,43 @@ class AccommodationController extends Controller {
 
 
                 ////////////////////updating venu detail////////////////////////////////
-                for ($j = 0; $j < $venu_cnt; $j++) {
+                if ($venu_cnt > 0) {
 
-                    if (!empty($request->venue_id[$j]) && isset($request->venue_id[$j])) {
+                    for ($j = 0; $j < $venu_cnt; $j++) {
 
-                        $venu_detail = VenuDetail::find($request->venue_id[$j]);
-                        $venu_img = (isset($venu_detail) && !empty($venu_detail) ? $venu_detail->venu_image : '');
+                        if (!empty($request->venue_id[$j]) && isset($request->venue_id[$j])) {
 
-                        $venu_detail->name = $request->venue_name[$j];
-                        $venu_detail->capacity = $request->venue_capacity[$j];
-                        $venu_detail->price = $request->venue_price[$j];
-                        $venu_detail->desc = $request->venue_desc;
-                        $venu_detail->short_desc = $request->venue_short_descr[$j];
-                        $venu_detail->venu_image = ( isset($request->venu_img[$j]) && !empty($request->venu_img[$j]) ? $request->venu_img[$j]->getClientOriginalName() : $venu_img);
-                        $venu_detail->type = $request->type;
-                        $venu_detail->updated_by = Auth::user()->id;
-                        $venu_detail->save();
+                            $venu_detail = VenuDetail::find($request->venue_id[$j]);
+                            $venu_img = (isset($venu_detail) && !empty($venu_detail) ? $venu_detail->venu_image : '');
 
-                        if (isset($request->venu_img[$j]) && !empty($request->venu_img[$j])) {
-
-                            $venu_path = 'venue_images/';
-                            $venu_pathT = 'venue_images/thumbnail/';
-                            $venu_pathR = 'venue_images/resize/';
-
-                            if ($venu_img != "") {
-
-                                if (file_exists($venu_path . $venu_detail->id . '_' . $venu_img)) {
-                                    unlink($venu_path . $venu_detail->id . '_' . $venu_img);
-                                }
-                                if (file_exists($venu_pathT . $venu_detail->id . '_' . $venu_img)) {
-                                    unlink($venu_pathT . $venu_detail->id . '_' . $venu_img);
-                                }
-                                if (file_exists($venu_pathR . $venu_detail->id . '_' . $venu_img)) {
-                                    unlink($venu_pathR . $venu_detail->id . '_' . $venu_img);
-                                }
-                            }
-
-                            $arr_venu_img = array(
-                                'folder' => 'venue_images',
-                                'img_name' => 'venu_img',
-                                'id' => $venu_detail->id,
-                            );
-
-                            Helper::UploadImage($request, $arr_venu_img, $j);
-                        }
-                        $flg = '1';
-                    } else {
-
-                        $venu_detail = new VenuDetail();
-                        $venu_detail->accom_venu_promos_id = $acco_id;
-                        $venu_detail->name = $request->venue_name[$j];
-                        $venu_detail->capacity = $request->venue_capacity[$j];
-                        $venu_detail->price = $request->venue_price[$j];
-                        $venu_detail->desc = $request->venue_desc;
-                        $venu_detail->short_desc = $request->venue_short_descr[$j];
-                        $venu_detail->venu_image = ( isset($request->venu_img[$j]) && !empty($request->venu_img[$j]) ? $request->venu_img[$j]->getClientOriginalName() : '');
-                        $venu_detail->type = $request->type;
-                        $venu_detail->updated_by = Auth::user()->id;
-
-                        if ($venu_detail->save()) {
+                            $venu_detail->name = $request->venue_name[$j];
+                            $venu_detail->capacity = $request->venue_capacity[$j];
+                            $venu_detail->price = $request->venue_price[$j];
+                            $venu_detail->desc = $request->venue_desc;
+                            $venu_detail->short_desc = $request->venue_short_descr[$j];
+                            $venu_detail->venu_image = ( isset($request->venu_img[$j]) && !empty($request->venu_img[$j]) ? $request->venu_img[$j]->getClientOriginalName() : $venu_img);
+                            $venu_detail->type = $request->type;
+                            $venu_detail->updated_by = Auth::user()->id;
+                            $venu_detail->save();
 
                             if (isset($request->venu_img[$j]) && !empty($request->venu_img[$j])) {
+
+                                $venu_path = 'venue_images/';
+                                $venu_pathT = 'venue_images/thumbnail/';
+                                $venu_pathR = 'venue_images/resize/';
+
+                                if ($venu_img != "") {
+
+                                    if (file_exists($venu_path . $venu_detail->id . '_' . $venu_img)) {
+                                        unlink($venu_path . $venu_detail->id . '_' . $venu_img);
+                                    }
+                                    if (file_exists($venu_pathT . $venu_detail->id . '_' . $venu_img)) {
+                                        unlink($venu_pathT . $venu_detail->id . '_' . $venu_img);
+                                    }
+                                    if (file_exists($venu_pathR . $venu_detail->id . '_' . $venu_img)) {
+                                        unlink($venu_pathR . $venu_detail->id . '_' . $venu_img);
+                                    }
+                                }
 
                                 $arr_venu_img = array(
                                     'folder' => 'venue_images',
@@ -346,72 +322,74 @@ class AccommodationController extends Controller {
                                 Helper::UploadImage($request, $arr_venu_img, $j);
                             }
                             $flg = '1';
+                        } else {
+
+                            $venu_detail = new VenuDetail();
+                            $venu_detail->accom_venu_promos_id = $acco_id;
+                            $venu_detail->name = $request->venue_name[$j];
+                            $venu_detail->capacity = $request->venue_capacity[$j];
+                            $venu_detail->price = $request->venue_price[$j];
+                            $venu_detail->desc = $request->venue_desc;
+                            $venu_detail->short_desc = $request->venue_short_descr[$j];
+                            $venu_detail->venu_image = ( isset($request->venu_img[$j]) && !empty($request->venu_img[$j]) ? $request->venu_img[$j]->getClientOriginalName() : '');
+                            $venu_detail->type = $request->type;
+                            $venu_detail->updated_by = Auth::user()->id;
+
+                            if ($venu_detail->save()) {
+
+                                if (isset($request->venu_img[$j]) && !empty($request->venu_img[$j])) {
+
+                                    $arr_venu_img = array(
+                                        'folder' => 'venue_images',
+                                        'img_name' => 'venu_img',
+                                        'id' => $venu_detail->id,
+                                    );
+
+                                    Helper::UploadImage($request, $arr_venu_img, $j);
+                                }
+                                $flg = '1';
+                            }
                         }
                     }
                 }
 
                 ////////////////////updating Conference detail////////////////////////////////
-                for ($k = 0; $k < $confer_cnt; $k++) {
+                if ($venu_cnt > 0) {
+                    for ($k = 0; $k < $confer_cnt; $k++) {
 
-                    if (!empty($request->confer_id[$k]) && isset($request->confer_id[$k])) {
+                        if (!empty($request->confer_id[$k]) && isset($request->confer_id[$k])) {
 
-                        $confer_detail = ConferenceDetail::find($request->confer_id[$k]);
-                        $confer_img = (isset($confer_detail) && !empty($confer_detail) ? $confer_detail->confer_image : '');
+                            $confer_detail = ConferenceDetail::find($request->confer_id[$k]);
+                            $confer_img = (isset($confer_detail) && !empty($confer_detail) ? $confer_detail->confer_image : '');
 
-                        $confer_detail->name = $request->confer_name[$k];
-                        $confer_detail->capacity = $request->confer_avail[$k];
-                        $confer_detail->price = $request->confer_price[$k];
-                        $confer_detail->desc = $request->confer_desc;
-                        $confer_detail->short_desc = $request->confer_short_descr[$k];
-                        $confer_detail->confer_image = ( isset($request->confer_img[$k]) && !empty($request->confer_img[$k]) ? $request->confer_img[$k]->getClientOriginalName() : $confer_img);
-                        $confer_detail->type = $request->type;
-                        $confer_detail->updated_by = Auth::user()->id;
-                        $confer_detail->save();
-
-                        if (isset($request->confer_img[$k]) && !empty($request->confer_img[$k])) {
-
-                            $confer_path = 'confer_images/';
-                            $confer_pathT = 'confer_images/thumbnail/';
-                            $confer_pathR = 'confer_images/resize/';
-
-                            if ($confer_img != "") {
-
-                                if (file_exists($confer_path . $confer_detail->id . '_' . $confer_img)) {
-                                    unlink($confer_path . $confer_detail->id . '_' . $confer_img);
-                                }
-                                if (file_exists($confer_pathT . $confer_detail->id . '_' . $confer_img)) {
-                                    unlink($confer_pathT . $confer_detail->id . '_' . $confer_img);
-                                }
-                                if (file_exists($confer_pathR . $confer_detail->id . '_' . $confer_img)) {
-                                    unlink($confer_pathR . $confer_detail->id . '_' . $confer_img);
-                                }
-                            }
-
-                            $arr_confer_img = array(
-                                'folder' => 'confer_images',
-                                'img_name' => 'confer_img',
-                                'id' => $confer_detail->id,
-                            );
-
-                            Helper::UploadImage($request, $arr_confer_img, $k);
-                        }
-                        $flg = '1';
-                    } else {
-
-                        $confer_detail = new ConferenceDetail();
-                        $confer_detail->accom_venu_promos_id = $acco_id;
-                        $confer_detail->name = $request->confer_name[$k];
-                        $confer_detail->capacity = $request->confer_avail[$k];
-                        $confer_detail->price = $request->confer_price[$k];
-                        $confer_detail->desc = $request->confer_desc;
-                        $confer_detail->short_desc = $request->confer_short_descr[$k];
-                        $confer_detail->confer_image = ( isset($request->confer_img[$k]) && !empty($request->confer_img[$k]) ? $request->confer_img[$k]->getClientOriginalName() : '');
-                        $confer_detail->type = $request->type;
-                        $confer_detail->updated_by = Auth::user()->id;
-
-                        if ($confer_detail->save()) {
+                            $confer_detail->name = $request->confer_name[$k];
+                            $confer_detail->capacity = $request->confer_avail[$k];
+                            $confer_detail->price = $request->confer_price[$k];
+                            $confer_detail->desc = $request->confer_desc;
+                            $confer_detail->short_desc = $request->confer_short_descr[$k];
+                            $confer_detail->confer_image = ( isset($request->confer_img[$k]) && !empty($request->confer_img[$k]) ? $request->confer_img[$k]->getClientOriginalName() : $confer_img);
+                            $confer_detail->type = $request->type;
+                            $confer_detail->updated_by = Auth::user()->id;
+                            $confer_detail->save();
 
                             if (isset($request->confer_img[$k]) && !empty($request->confer_img[$k])) {
+
+                                $confer_path = 'confer_images/';
+                                $confer_pathT = 'confer_images/thumbnail/';
+                                $confer_pathR = 'confer_images/resize/';
+
+                                if ($confer_img != "") {
+
+                                    if (file_exists($confer_path . $confer_detail->id . '_' . $confer_img)) {
+                                        unlink($confer_path . $confer_detail->id . '_' . $confer_img);
+                                    }
+                                    if (file_exists($confer_pathT . $confer_detail->id . '_' . $confer_img)) {
+                                        unlink($confer_pathT . $confer_detail->id . '_' . $confer_img);
+                                    }
+                                    if (file_exists($confer_pathR . $confer_detail->id . '_' . $confer_img)) {
+                                        unlink($confer_pathR . $confer_detail->id . '_' . $confer_img);
+                                    }
+                                }
 
                                 $arr_confer_img = array(
                                     'folder' => 'confer_images',
@@ -422,6 +400,33 @@ class AccommodationController extends Controller {
                                 Helper::UploadImage($request, $arr_confer_img, $k);
                             }
                             $flg = '1';
+                        } else {
+
+                            $confer_detail = new ConferenceDetail();
+                            $confer_detail->accom_venu_promos_id = $acco_id;
+                            $confer_detail->name = $request->confer_name[$k];
+                            $confer_detail->capacity = $request->confer_avail[$k];
+                            $confer_detail->price = $request->confer_price[$k];
+                            $confer_detail->desc = $request->confer_desc;
+                            $confer_detail->short_desc = $request->confer_short_descr[$k];
+                            $confer_detail->confer_image = ( isset($request->confer_img[$k]) && !empty($request->confer_img[$k]) ? $request->confer_img[$k]->getClientOriginalName() : '');
+                            $confer_detail->type = $request->type;
+                            $confer_detail->updated_by = Auth::user()->id;
+
+                            if ($confer_detail->save()) {
+
+                                if (isset($request->confer_img[$k]) && !empty($request->confer_img[$k])) {
+
+                                    $arr_confer_img = array(
+                                        'folder' => 'confer_images',
+                                        'img_name' => 'confer_img',
+                                        'id' => $confer_detail->id,
+                                    );
+
+                                    Helper::UploadImage($request, $arr_confer_img, $k);
+                                }
+                                $flg = '1';
+                            }
                         }
                     }
                 }

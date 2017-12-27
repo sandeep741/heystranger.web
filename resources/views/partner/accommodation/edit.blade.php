@@ -389,7 +389,7 @@ $urlId = Request::segment(2);
 
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_price[]', (isset($room_detail) && !empty($room_detail) ? $room_detail->price : ''), ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}
+                                    {!! Form::text('room_price[]', (isset($room_detail) && !empty($room_detail) ? $room_detail->price : ''), ['class' => 'form-control required number', 'placeholder' => 'Room Price *']) !!}
                                     @if ($errors->has('room_price.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_price.0') }}</strong>
@@ -502,7 +502,7 @@ $urlId = Request::segment(2);
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_price[]', (isset($venu_data) && !empty($venu_data) ? $venu_data->price : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Price *']) !!}
+                                        {!! Form::text('venue_price[]', (isset($venu_data) && !empty($venu_data) ? $venu_data->price : ''), ['class' => 'form-control required number', 'placeholder' => 'Venue Price *']) !!}
                                         @if ($errors->has('venue_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_price.0') }}</strong>
@@ -603,7 +603,7 @@ $urlId = Request::segment(2);
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('confer_price[]', (isset($confer_data) && !empty($confer_data) ? $confer_data->price : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Price *']) !!}
+                                        {!! Form::text('confer_price[]', (isset($confer_data) && !empty($confer_data) ? $confer_data->price : ''), ['class' => 'form-control required number', 'placeholder' => 'Conference Price *']) !!}
                                         @if ($errors->has('confer_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_price.0') }}</strong>
@@ -1469,7 +1469,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_price[]', null, ['class' => 'form-control', 'placeholder' => 'Room Price *']) !!}'+
+            '{!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Room Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
@@ -1507,7 +1507,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Price *']) !!}'+
+            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Venue Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
@@ -1543,7 +1543,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Price *']) !!}'+
+            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Conference Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+

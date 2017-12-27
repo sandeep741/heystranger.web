@@ -27,7 +27,9 @@ jQuery(document).ready(function () {
             "room_type[]": "required",
             "guest[]": "required",
             "room_avail[]": "required",
-            "room_price[]": "required",
+            "room_price[]": "number",
+            "venue_price[]": "number",
+            "confer_price[]": "number",
             "room_short_desc[]": "required"
         },
         submitHandler: function (form) {
@@ -40,11 +42,7 @@ jQuery(document).ready(function () {
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
-            "room_type[]": "required",
-            "guest[]": "required",
-            "room_avail[]": "required",
-            "room_price[]": "required",
-            "room_short_desc[]": "required"
+            
         },
         submitHandler: function (form) {
             form.submit();
@@ -56,11 +54,7 @@ jQuery(document).ready(function () {
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
-            "room_type[]": "required",
-            "guest[]": "required",
-            "room_avail[]": "required",
-            "room_price[]": "required",
-            "room_short_desc[]": "required"
+            
         },
         submitHandler: function (form) {
             form.submit();

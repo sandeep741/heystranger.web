@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('accom_type',[''=>'Select type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
+                                    {{Form::select('accom_type',[''=>'Select type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), null,['class'=>'form-control'])}}
 
                                     @if ($errors->has('accom_type'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -88,7 +88,7 @@
 
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('rating',[''=>'Start Ratings']+@config('constants.star_rating'), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'form-control'])}}
+                                    {{Form::select('rating',[''=>'Start Ratings']+@config('constants.star_rating'), null,['class'=>'form-control'])}}
                                     @if ($errors->has('rating'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('rating') }}</strong>
@@ -159,7 +159,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('area', (isset($edit_data) && !empty($edit_data) ? $edit_data->area : ''), ['class' => 'form-control', 'placeholder' => 'Enter suburb Area']) !!}
+                                    {!! Form::text('area', null, ['class' => 'form-control', 'placeholder' => 'Enter suburb Area']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('area') }}</strong>
@@ -169,7 +169,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('contact_no', (isset($edit_data) && !empty($edit_data) ? $edit_data->contact_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Contact Number']) !!}
+                                    {!! Form::text('contact_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Contact Number']) !!}
                                     @if ($errors->has('contact_no'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('contact_no') }}</strong>
@@ -183,7 +183,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('alternate_no', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Alternate no']) !!}
+                                    {!! Form::text('alternate_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Alternate no']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('alternate_no') }}</strong>
@@ -207,7 +207,7 @@
                                 <label class="col-lg-3 control-label">Establishment Detail:</label>
 
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    {!! Form::textarea('establish_details', (isset($edit_data) && !empty($edit_data) ? $edit_data->establish_details : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
+                                    {!! Form::textarea('establish_details', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
                                     @if ($errors->has('establish_details'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('establish_details') }}</strong>
@@ -252,7 +252,7 @@
                             <div class="form-group">
                                 <label class="col-lg-1 control-label">Description:</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('room_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
+                                    {!! Form::textarea('room_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
                                     @if ($errors->has('room_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_desc') }}</strong>
@@ -265,7 +265,7 @@
 
                                 <div class="col-md-2">
 
-                                    {{-- Form::select('room_type[]',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''),['class'=>'select-icons']) --}}
+                                    {{-- Form::select('room_type[]',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), null,['class'=>'select-icons']) --}}
 
                                     <?php
                                     $room_type = [];
@@ -302,7 +302,7 @@
                                         );
                                     }
                                     ?>
-                                    {!! Form::fancyselect('room_type[]', $room_type, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('room_type[]', $room_type, null, ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('room_type.0'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -314,7 +314,7 @@
 
                                 <div class="col-md-2">
 
-                                    {!! Form::fancyselect('guest[]', $room_cap, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('guest[]', $room_cap, null, ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('guest.0'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -326,7 +326,7 @@
 
                                 <div class="col-md-2">
 
-                                    {!! Form::text('room_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}
+                                    {!! Form::text('room_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}
                                     @if ($errors->has('room_avail.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_avail.0') }}</strong>
@@ -337,7 +337,7 @@
 
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}
+                                    {!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Room Price *']) !!}
                                     @if ($errors->has('room_price.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_price.0') }}</strong>
@@ -346,7 +346,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    {!! Form::text('room_short_desc[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
+                                    {!! Form::text('room_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
                                     @if ($errors->has('room_short_desc.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('room_short_desc.0') }}</strong>
@@ -394,7 +394,7 @@
                                     <div class="col-lg-9">
 
 
-                                        {!! Form::textarea('venue_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venue_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Venue facility *']) !!}
+                                        {!! Form::textarea('venue_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Venue facility *']) !!}
                                         @if ($errors->has('venue_desc'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_desc') }}</strong>
@@ -408,7 +408,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('venue_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Name *']) !!}
+                                        {!! Form::text('venue_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Name *']) !!}
                                         @if ($errors->has('venue_name'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_name') }}</strong>
@@ -418,7 +418,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('venue_capacity[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
+                                        {!! Form::text('venue_capacity[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
                                         @if ($errors->has('capacity.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('capacity.0') }}</strong>
@@ -431,7 +431,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Price *']) !!}
+                                        {!! Form::text('venue_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Venue Price *']) !!}
                                         @if ($errors->has('venue_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_price.0') }}</strong>
@@ -442,7 +442,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
+                                        {!! Form::text('venue_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
                                         @if ($errors->has('venue_short_descr.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_short_descr.0') }}</strong>
@@ -468,7 +468,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-1 control-label">Description:</label>
                                     <div class="col-lg-9">
-                                        {!! Form::textarea('confer_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->venu_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Conference facility *']) !!}
+                                        {!! Form::textarea('confer_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Conference facility *']) !!}
                                         @if ($errors->has('confer_desc'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_desc') }}</strong>
@@ -481,7 +481,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('confer_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Name *']) !!}
+                                        {!! Form::text('confer_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Name *']) !!}
                                         @if ($errors->has('confer_name.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_name.0') }}</strong>
@@ -491,7 +491,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('confer_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
+                                        {!! Form::text('confer_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
                                         @if ($errors->has('confer_avail.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_avail.0') }}</strong>
@@ -501,7 +501,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('confer_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Price *']) !!}
+                                        {!! Form::text('confer_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Conference Price *']) !!}
                                         @if ($errors->has('confer_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_price.0') }}</strong>
@@ -637,7 +637,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('amenity_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->amenity : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
+                                    {!! Form::textarea('amenity_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
                                     @if ($errors->has('amenity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('amenity_desc') }}</strong>
@@ -649,7 +649,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity on property:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('amenity_property[]', $amenity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('amenity_property[]', $amenity_option, null, ['class'=>'select-icons required', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property *", 'multiple' => 'multiple']) !!}
 
                                     @if ($errors->has('amenity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -662,7 +662,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('activity_desc', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
+                                    {!! Form::textarea('activity_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
                                     @if ($errors->has('activity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_desc') }}</strong>
@@ -674,7 +674,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity on Property :</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('activity_property[]', $activity_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('activity_property[]', $activity_option, null, ['class'=>'select-icons required', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property *", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('activity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_property') }}</strong>
@@ -688,7 +688,7 @@
 
                                 <div class="col-md-4">
 
-                                    {!! Form::text('attraction_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}
+                                    {!! Form::text('attraction_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}
 
                                     @if ($errors->has('attraction_name.0'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -700,7 +700,7 @@
 
                                 <div class="col-md-4">
 
-                                    {!! Form::fancyselect('surrounding[]', $surr, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('surrounding[]', $surr, null, ['class'=>'select-icons required']) !!}
 
                                     @if ($errors->has('surrounding.0'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -712,7 +712,7 @@
 
                                 <div class="col-md-4">
 
-                                    {!! Form::text('approx_dist[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
+                                    {!! Form::text('approx_dist[]', null, ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
                                     @if ($errors->has('approx_dist.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('approx_dist.0') }}</strong>
@@ -731,7 +731,7 @@
                             <div class="form-group">
                                 <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
                                 <div class="col-lg-12">
-                                    {!! Form::fancyselect('shuttle', $shuttle_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('shuttle', $shuttle_option, null, ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('shuttle'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('shuttle') }}</strong>
@@ -928,7 +928,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::multiselect('payment_type[]', $payment_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('payment_type[]', $payment_option, null, ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('payment_type'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('payment_type') }}</strong>
@@ -946,7 +946,7 @@
                             <div class="form-group">
                                 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('acco_duration', $acco_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('acco_duration', $acco_option, null, ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('acco_duration'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('acco_duration') }}</strong>
@@ -955,7 +955,7 @@
                                 </div>
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('corpo_deals', $corporate_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('corpo_deals', $corporate_option, null, ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('corpo_deals'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('corpo_deals') }}</strong>
@@ -965,7 +965,7 @@
                                 </div>
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('contract_deal', $contractor_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('contract_deal', $contractor_option, null, ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('contract_deal'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('contract_deal') }}</strong>
@@ -978,7 +978,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Your  Terms</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('policy_terms', (isset($edit_data) && !empty($edit_data) ? $edit_data->room_desc : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Terms *']) !!}
+                                    {!! Form::textarea('policy_terms', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Terms *']) !!}
                                     @if ($errors->has('policy_terms'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('policy_terms') }}</strong>
@@ -1004,7 +1004,7 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    {!! Form::text('extra_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Enter Price *']) !!}
+                                    {!! Form::text('extra_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Enter Price *']) !!}
                                     @if ($errors->has('extra_price.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('extra_price.0') }}</strong>
@@ -1013,7 +1013,7 @@
                                 </div>
                                 
                                 <div class="col-md-3">
-                                    {!! Form::fancyselect('extra_cond[]', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('extra_cond[]', $extra_option, null, ['class'=>'select-icons required']) !!}
                                     @if ($errors->has('extra_cond.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('extra_cond.0') }}</strong>
@@ -1246,7 +1246,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}'+
+            '{!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Room Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
@@ -1282,7 +1282,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Price *']) !!}'+
+            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Venue Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
@@ -1317,7 +1317,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Price *']) !!}'+
+            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Conference Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
@@ -1349,7 +1349,7 @@ Add Accommodation
             '</div>'+    
             
             '<div class="col-md-4">'+
-            '{!! Form::fancyselect('surrounding[]', $surr, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'form-control select-icons required']) !!}'+
+            '{!! Form::fancyselect('surrounding[]', $surr, null, ['class'=>'form-control select-icons required']) !!}'+
             '</div>'+
     
             '<div class="col-md-4">'+
@@ -1376,7 +1376,7 @@ Add Accommodation
             '</div>'+    
             
             '<div class="col-md-3">'+
-            '{!! Form::text('extra_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Enter Price *']) !!}'+
+            '{!! Form::text('extra_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Enter Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-3">'+
