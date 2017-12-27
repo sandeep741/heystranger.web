@@ -67,12 +67,18 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 /////////////routes for Partner////////////
 Route::get('partner', 'PartnerController@index')->name('partner');
 Route::get('accommodations', 'PartnerController@index');
+
 Route::resource('accomodation', 'Partner\AccommodationController');
 Route::post('room-detail', 'Partner\AccommodationController@roomDetail')->name('room_detail');
 Route::post('activity-detail', 'Partner\AccommodationController@activityDetail')->name('activity_detail');
 Route::post('policy-detail', 'Partner\AccommodationController@policyDetail')->name('policy_detail');
 Route::post('meta-detail', 'Partner\AccommodationController@metaDescription')->name('metatag_detail');
 Route::post('video-map-detail', 'Partner\AccommodationController@videoMapDetail')->name('video_map_detail');
+
+Route::get('add-venue-conference', 'Partner\AccommodationController@create')->name('add_venue_confer');
+Route::get('venue-conference-list', 'Partner\AccommodationController@index')->name('venue_confer_list');
+Route::get('edit-venue-conference', 'Partner\AccommodationController@editDetail')->name('edit_venue_conference');
+
 Route::get('remove-accommodation-image', 'Partner\AccommodationController@removeProductImage')->name('remove_accommodation_image');
 
 

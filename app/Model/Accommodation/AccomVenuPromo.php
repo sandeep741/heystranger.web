@@ -8,9 +8,9 @@ class AccomVenuPromo extends Model
 {
     
     
-    public static function getAccommodationList(){
+    public static function getAccommodationList($type){
         
-        $arrCond = array('type' => 'A');
+        $arrCond = array('type' => $type);
         $sqlQuery = self::with('accomType');
         $datas = $sqlQuery->where($arrCond)->orderBy('id', 'DESC')->paginate(10);
         return ($datas ? $datas : []);

@@ -140,6 +140,20 @@ Breadcrumbs::register('accomodation.edit', function($breadcrumbs, $accommodation
     $breadcrumbs->push('Update Accommodation', route('accomodation.edit', $accommodation));
 });
 
+Breadcrumbs::register('venue_confer_list', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Venue & Conference Listing', route('venue_confer_list'));
+});
+
+Breadcrumbs::register('add_venue_confer', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Add Venue & Conference', route('add_venue_confer'));
+});
+
+Breadcrumbs::register('edit_venue_conference', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Edit Venue & Conference', route('edit_venue_conference'));
+});
 // Home > About
 /*Breadcrumbs::register('about', function($breadcrumbs)
 {

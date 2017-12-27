@@ -4,6 +4,7 @@ namespace App\Http\Requests\Partner;
 
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rule;
 
 class AccommodationRequest extends Request {
 
@@ -22,45 +23,101 @@ class AccommodationRequest extends Request {
      * @return array
      */
     public function rules() {
-        
-        
-        switch($this->method())
-    {
-        case 'GET':
-        case 'DELETE':
-        {
-            return [];
+
+
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE': {
+                    return [];
+                }
+            case 'POST': {
+                    $type = Input::get('type');
+
+                    if ($type == 'A') {
+                        return [
+                            'name' => 'required|unique:accom_venu_promos,title,NULL,id,type,'.$type,
+                            /*'name' => [
+                                'required',
+                                        Rule::exists('accom_venu_promos', 'title')
+                                        ->where(function ($query) use ($type) {
+                                                    $query->where('type', '<>', $type);
+                                                }),
+                            ],*/
+                            'country' => 'required',
+                            'state' => 'required',
+                            'city' => 'required',
+                            'reserving_email' => 'nullable|email',
+                        ];
+                    }
+
+                    if ($type == 'V') {
+                        return [
+                            /*'name' => [
+                                'required',
+                                        Rule::exists('accom_venu_promos', 'title')
+                                        ->where(function ($query) use ($type) {
+                                                    $query->where('type', '=', $type);
+                                                    $query->where('title', '=', Input::get('name'));
+                                                }),
+                            ],*/
+                            'name' => 'required|unique:accom_venu_promos,title,NULL,id,type,'.$type,
+                            'country' => 'required',
+                            'state' => 'required',
+                            'city' => 'required',
+                            'reserving_email' => 'nullable|email',
+                        ];
+                    }
+                }
+            case 'PUT':
+            case 'PATCH': {
+                $type = Input::get('type');
+                
+                    /*if (Input::get('id')) {
+                        return [
+                            'name' => 'required|unique:accom_venu_promos,title,' . Input::get('id') . ',id',
+                            'country' => 'required',
+                            'state' => 'required',
+                            'city' => 'required',
+                            'reserving_email' => 'nullable|email',
+                        ];
+                    }*/
+                
+                if ($type == 'V') {
+                        return [
+                            'name' => 'required|unique:accom_venu_promos,title,'. Input::get('id') .',id,type,'.$type,
+                            /*'name' => [
+                                'required',
+                                        Rule::exists('accom_venu_promos', 'title')
+                                        ->where(function ($query) use ($type) {
+                                                    $query->where('type', '<>', $type);
+                                                    $query->where('id', '<>', Input::get('id'));
+                                                }),
+                            ],*/
+                            'country' => 'required',
+                            'state' => 'required',
+                            'city' => 'required',
+                            'reserving_email' => 'nullable|email',
+                        ];
+                    } else if($type == 'A'){
+                        
+                        return [
+                            'name' => 'required|unique:accom_venu_promos,title,'. Input::get('id') .',id,type,'.$type,
+                            'country' => 'required',
+                            'state' => 'required',
+                            'city' => 'required',
+                            'reserving_email' => 'nullable|email',
+                        ];
+                        
+                    } else if(Input::get('update_status')) {
+                    return [];
+                    }
+                    return [];
+                }
+            default:break;
+
+                return [
+                ];
         }
-        case 'POST':
-        {
-            return [
-                'name' => 'required|unique:accom_venu_promos,title',
-                'country' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'reserving_email' => 'nullable|email',
-            ];
-        }
-        case 'PUT':
-        case 'PATCH':
-        {
-            if(Input::get('id')){
-            return [
-                'name' => 'required|unique:accom_venu_promos,title,'.Input::get('id').',id',
-                'country' => 'required',
-                'state' => 'required',
-                'city' => 'required',
-                'reserving_email' => 'nullable|email',
-            ];
-            }
-            return [];
-        }
-        default:break;
-        
-        return [
-            
-        ];
-    }
     }
 
     /**

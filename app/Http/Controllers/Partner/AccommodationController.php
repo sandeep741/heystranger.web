@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use Image;
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Input;
 
 class AccommodationController extends Controller {
 
@@ -61,9 +62,16 @@ class AccommodationController extends Controller {
     public function index() {
         try {
 
-            $datas = AccomVenuPromo::getAccommodationList();
+
             $user = Auth::guard('admin')->user();
-            return view('partner.accommodation.index')->with(compact('user', 'datas'));
+
+            if (\Request::segment(1) == 'accomodation') {
+                $datas = AccomVenuPromo::getAccommodationList('A');
+                return view('partner.accommodation.index')->with(compact('user', 'datas'));
+            } else if (\Request::segment(1) == 'venue-conference-list') {
+                $datas = AccomVenuPromo::getAccommodationList('V');
+                return view('partner.venue-conference.index')->with(compact('user', 'datas'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -76,6 +84,7 @@ class AccommodationController extends Controller {
      */
     public function create() {
         try {
+
             $user = Auth::guard('admin')->user();
             $accomm_data = new AccommodationList;
             $room_data = new RoomList;
@@ -93,7 +102,11 @@ class AccommodationController extends Controller {
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
 
-            return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            if (\Request::segment(1) == 'accomodation') {
+                return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            } else if (\Request::segment(1) == 'add-venue-conference') {
+                return view('partner.venue-conference.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -164,7 +177,12 @@ class AccommodationController extends Controller {
             $request->session()->flash($flag, $msg);
             $request->session()->put('accom_id', $accommodation->id);
             $request->session()->put('tab_type', 2);
-            return redirect(route('accomodation.create'));
+
+            if ($request->type == 'A') {
+                return redirect(route('accomodation.create'));
+            } else if ($request->type == 'V') {
+                return redirect(route('add_venue_confer'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -425,7 +443,13 @@ class AccommodationController extends Controller {
                 }
 
                 $request->session()->flash($flag, $msg);
-                return redirect(route('accomodation.index'));
+
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.index'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('venue_confer_list'));
+                }
             } else {
 
                 /////////////Insert Record for Room Section/////////////////
@@ -532,7 +556,13 @@ class AccommodationController extends Controller {
 
                 $request->session()->flash($flag, $msg);
                 $request->session()->put('tab_type', 3);
-                return redirect(route('accomodation.create'));
+
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.create'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('add_venue_confer'));
+                }
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -625,7 +655,12 @@ class AccommodationController extends Controller {
                 $flag = 'success';
                 $msg = 'Record Updated Successfully';
                 $request->session()->flash($flag, $msg);
-                return redirect(route('accomodation.index'));
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.index'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('venue_confer_list'));
+                }
             } else {
 
                 ///////////////insert here activity and amenity detail//////////
@@ -692,7 +727,12 @@ class AccommodationController extends Controller {
 
                 $request->session()->flash($flag, $msg);
                 $request->session()->put('tab_type', 4);
-                return redirect(route('accomodation.create'));
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.create'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('add_venue_confer'));
+                }
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -822,7 +862,12 @@ class AccommodationController extends Controller {
                 $flag = 'success';
                 $msg = 'Record Updated Successfully';
                 $request->session()->flash($flag, $msg);
-                return redirect(route('accomodation.index'));
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.index'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('venue_confer_list'));
+                }
             } else {
 
                 /////////Inser policy detail///////////////////
@@ -884,7 +929,12 @@ class AccommodationController extends Controller {
 
                 $request->session()->flash($flag, $msg);
                 $request->session()->put('tab_type', 5);
-                return redirect(route('accomodation.create'));
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.create'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('add_venue_confer'));
+                }
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -931,9 +981,14 @@ class AccommodationController extends Controller {
                     }
 
                     $request->session()->flash($flag, $msg);
-                    return redirect(route('accomodation.index'));
+                    if ($request->type == 'A') {
+                        return redirect(route('accomodation.index'));
+                    } else if ($request->type == 'V') {
+                        return redirect(route('venue_confer_list'));
+                    }
                 }
             } else {
+                
                 $meta_detail = new MetaTagDetail;
 
                 $meta_detail->accom_venu_promos_id = $acco_id;
@@ -953,7 +1008,12 @@ class AccommodationController extends Controller {
 
                 $request->session()->flash($flag, $msg);
                 $request->session()->put('tab_type', 6);
-                return redirect(route('accomodation.create'));
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.create'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('add_venue_confer'));
+                }
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -1000,12 +1060,15 @@ class AccommodationController extends Controller {
                     }
 
                     $request->session()->flash($flag, $msg);
-                    return redirect(route('accomodation.index'));
+
+                    if ($request->type == 'A') {
+                        return redirect(route('accomodation.index'));
+                    } else if ($request->type == 'V') {
+                        return redirect(route('venue_confer_list'));
+                    }
                 }
             } else {
-
-
-
+                
                 $video_detail = new VideoMapDetail;
 
                 $video_detail->accom_venu_promos_id = $acco_id;
@@ -1021,12 +1084,17 @@ class AccommodationController extends Controller {
                 } else {
                     $flag = 'danger';
                     $msg = "Record Not Added Successfully";
-                }
-
+                } 
+                
                 $request->session()->flash($flag, $msg);
                 $request->session()->forget('tab_type');
                 $request->session()->forget('accom_id');
-                return redirect(route('accomodation.index'));
+
+                if ($request->type == 'A') {
+                    return redirect(route('accomodation.index'));
+                } else if ($request->type == 'V') {
+                    return redirect(route('venue_confer_list'));
+                }
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -1041,6 +1109,44 @@ class AccommodationController extends Controller {
      */
     public function show($id) {
         //
+    }
+
+    public function editDetail() {
+
+        try {
+
+            $id = Input::get('id');
+            $user = Auth::guard('admin')->user();
+            $accomm_data = new AccommodationList;
+            $room_data = new RoomList;
+            $surr_data = new SurroundingList;
+            $country = new Country;
+            $amenity = new AmenityList;
+            $activity = new ActivityList;
+            $payment_list = new PaymentModeList;
+            $arr_accommo_detail = AccomVenuPromo::getAccommodationById($id);
+            $arr_room_detail = RoomDetail::getRoomById($id);
+            $arr_venu_detail = VenuDetail::getVenuById($id);
+            $arr_confer_detail = ConferenceDetail::getConferById($id);
+            $arr_activity_detail = ActivityDetail::getActivityById($id);
+            $arr_amenity_detail = AmenityDetail::getAmenityById($id);
+            $arr_surr_detail = SurroundingDetail::getSurrById($id);
+            $arr_policy_detail = PoliciyDetail::getPolicyById($id);
+            $arr_offer_detail = OfferDetail::getOfferById($id);
+            $arr_meta_detail = MetaTagDetail::getMegaDetailById($id);
+            $arr_video_detail = VideoMapDetail::getVideoMapById($id);
+            $arr_accomm = $accomm_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_room = $room_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_surr = $surr_data->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_amenity = $amenity->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
+            $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
+
+            return view('partner.venue-conference.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_meta_detail', 'arr_video_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
     }
 
     /**
@@ -1097,6 +1203,7 @@ class AccommodationController extends Controller {
         $accommodation = AccomVenuPromo::find($id);
 
         if (isset($request->status)) {
+
             $accommodation->status = $request->status;
             if ($accommodation->save()) {
                 $flag = 'success';
@@ -1106,7 +1213,12 @@ class AccommodationController extends Controller {
                 $msg = "Record Not Updated Successfully";
             }
             $request->session()->flash($flag, $msg);
-            return redirect(route('accomodation.index'));
+
+            if ($request->update_status) {
+                return redirect(route('venue_confer_list'));
+            } else {
+                return redirect(route('accomodation.index'));
+            }
         }
 
         $accommodation->title = $request->name;
@@ -1162,7 +1274,12 @@ class AccommodationController extends Controller {
             $msg = "Record Not Updated Successfully";
         }
         $request->session()->flash($flag, $msg);
-        return redirect(route('accomodation.index'));
+
+        if ($request->type == 'A') {
+            return redirect(route('accomodation.index'));
+        } else if ($request->type == 'V') {
+            return redirect(route('venue_confer_list'));
+        }
     }
 
     /**
