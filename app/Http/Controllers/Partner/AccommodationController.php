@@ -1095,6 +1095,21 @@ class AccommodationController extends Controller {
     public function update(AccommodationRequest $request, $id) {
 
         $accommodation = AccomVenuPromo::find($id);
+
+        if (isset($request->status)) {
+            $accommodation->status = $request->status;
+            if ($accommodation->save()) {
+                $flag = 'success';
+                $msg = "Record Updated Successfully";
+            } else {
+                $flag = 'danger';
+                $msg = "Record Not Updated Successfully";
+            }
+            $request->session()->flash($flag, $msg);
+            return redirect(route('accomodation.index'));
+        }
+dd('df');
+
         $accommodation->title = $request->name;
         $accommodation->slug = str_slug($request->name, '-');
         $accommodation->accom_type_id = $request->accom_type;
