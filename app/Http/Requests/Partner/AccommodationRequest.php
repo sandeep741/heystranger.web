@@ -38,7 +38,7 @@ class AccommodationRequest extends Request {
                 'country' => 'required',
                 'state' => 'required',
                 'city' => 'required',
-                'reserving_email' => 'email',
+                'reserving_email' => 'nullable|email',
             ];
         }
         case 'PUT':
@@ -50,7 +50,7 @@ class AccommodationRequest extends Request {
                 'country' => 'required',
                 'state' => 'required',
                 'city' => 'required',
-                'reserving_email' => 'email',
+                'reserving_email' => 'nullable|email',
             ];
             }
             return [];

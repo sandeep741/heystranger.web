@@ -38,7 +38,7 @@ class RoomDetailRequest extends Request {
                 'room_type.0' => 'required',
                 'guest.0' => 'required',
                 'room_avail.0' => 'required',
-                'room_price.0' => 'required',
+                'room_price.0' => 'required|regex:/^\d*(\.\d{2})?$/',
                 'room_short_desc.0' => 'required',
             ];
         }
@@ -50,7 +50,7 @@ class RoomDetailRequest extends Request {
                 'room_type.0' => 'required',
                 'guest.0' => 'required',
                 'room_avail.0' => 'required',
-                'room_price.0' => 'required',
+                'room_price.0' => 'required|regex:/^\d*(\.\d{2})?$/',
                 'room_short_desc.0' => 'required',
             ];
         }
@@ -73,6 +73,7 @@ class RoomDetailRequest extends Request {
             'guest.0.required' => 'Max Guest is required.',
             'room_avail.0.required' => 'Room Avail is required.',
             'room_price.0.required' => 'Room Price is required.',
+            'room_price.0.regex' => 'Room Price format is invalid.',
             'room_short_desc.0.required' => 'Room short desc is required.',
         ];
     }

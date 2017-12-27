@@ -271,7 +271,7 @@
                                     $room_type = [];
                                     $room_type[] = array(
                                         'value' => '',
-                                        'display' => 'Select Type of Room *',
+                                        'display' => 'Type of Room *',
                                         'data-icon' => 'stumbleupon'
                                     );
 
@@ -408,7 +408,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('venue_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Name']) !!}
+                                        {!! Form::text('venue_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Name *']) !!}
                                         @if ($errors->has('venue_name'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_name') }}</strong>
@@ -418,7 +418,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('venue_capacity[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}
+                                        {!! Form::text('venue_capacity[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
                                         @if ($errors->has('capacity.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('capacity.0') }}</strong>
@@ -431,7 +431,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Price']) !!}
+                                        {!! Form::text('venue_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Price *']) !!}
                                         @if ($errors->has('venue_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_price.0') }}</strong>
@@ -442,7 +442,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('venue_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Venue Short Description']) !!}
+                                        {!! Form::text('venue_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
                                         @if ($errors->has('venue_short_descr.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_short_descr.0') }}</strong>
@@ -481,7 +481,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('confer_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Name']) !!}
+                                        {!! Form::text('confer_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Name *']) !!}
                                         @if ($errors->has('confer_name.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_name.0') }}</strong>
@@ -491,7 +491,7 @@
 
                                     <div class="col-md-2">
 
-                                        {!! Form::text('confer_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}
+                                        {!! Form::text('confer_avail[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
                                         @if ($errors->has('confer_avail.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_avail.0') }}</strong>
@@ -501,7 +501,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('confer_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Price']) !!}
+                                        {!! Form::text('confer_price[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Price *']) !!}
                                         @if ($errors->has('confer_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_price.0') }}</strong>
@@ -512,7 +512,7 @@
 
 
                                     <div class="col-md-2">
-                                        {!! Form::text('confer_short_descr[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Conference Short Description']) !!}
+                                        {!! Form::text('confer_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
                                         @if ($errors->has('confer_short_descr.0'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_short_descr.0') }}</strong>
@@ -1242,15 +1242,15 @@ Add Accommodation
             '</div>'+
             
             '<div class="col-md-2">'+
-            '{!! Form::text('room_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Available']) !!}'+
+            '{!! Form::text('room_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Price']) !!}'+
+            '{!! Form::text('room_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description']) !!}'+
+            '{!! Form::text('room_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
@@ -1274,19 +1274,19 @@ Add Accommodation
         var venu_temp = '<div class="form-group venu-parents">'+
                 
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Name']) !!}'+
+            '{!! Form::text('venue_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Name *']) !!}'+
             '</div>'+    
             
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_capacity[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}'+
+            '{!! Form::text('venue_capacity[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Price']) !!}'+
+            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Venu Short Description']) !!}'+
+            '{!! Form::text('venue_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
@@ -1309,19 +1309,19 @@ Add Accommodation
         var confer_temp = '<div class="form-group confer-parents">'+
                 
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Name']) !!}'+
+            '{!! Form::text('confer_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Name *']) !!}'+
             '</div>'+    
             
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity']) !!}'+
+            '{!! Form::text('confer_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Price']) !!}'+
+            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Price *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Short Description']) !!}'+
+            '{!! Form::text('confer_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
@@ -1345,7 +1345,7 @@ Add Accommodation
         var attract_temp = '<div class="form-group attract-parents">'+
                 
             '<div class="col-md-4">'+
-            '{!! Form::text('attraction_name[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}'+
+            '{!! Form::text('attraction_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Name of Attraction *']) !!}'+
             '</div>'+    
             
             '<div class="col-md-4">'+
@@ -1353,7 +1353,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-4">'+
-            '{!! Form::text('approx_dist[]', (isset($edit_data) && !empty($edit_data) ? $edit_data->alternate_no : ''), ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}'+
+            '{!! Form::text('approx_dist[]', null, ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}'+
             '</div>'+
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="attract-remove label label-danger">Remove</a>'+
             '</div>';
@@ -1372,7 +1372,7 @@ Add Accommodation
         var extra_temp = '<div class="form-group extra-parents">'+
                 
             '<div class="col-md-3">'+
-            '{!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item']) !!}'+
+            '{!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item *']) !!}'+
             '</div>'+    
             
             '<div class="col-md-3">'+
@@ -1380,7 +1380,7 @@ Add Accommodation
             '</div>'+
     
             '<div class="col-md-3">'+
-            '{!! Form::fancyselect('extra_cond[]', $extra_option, (isset($edit_data) && !empty($edit_data) ? @$edit_data->id : ''), ['class'=>'form-control select-icons required']) !!}'+
+            '{!! Form::fancyselect('extra_cond[]', $extra_option, null, ['class'=>'form-control select-icons required']) !!}'+
             '</div>'+
             
             '<div class="col-md-3">'+
@@ -1401,67 +1401,55 @@ Add Accommodation
         });
         
     
-    $(document).ready(function () {
-        
-        $('#cv').css("display", "none");
+        $(document).ready(function () {
 
-        var befco = $('#condit').val();
+            $('#cv').css("display", "none");
 
-        if (befco == 'Yes')
-        {
-            $('.both').css("display", "block");
-        } else
-        {
-            $('.both').css("display", "none");
-        }
+            var befco = $('#condit').val();
 
+            if (befco == 'Y') {
 
-        $('#condit').change(function ()
-        {
-            var co = $('#condit').val();
-
-            if (co == 'Y')
-            {
                 $('#cv').css("display", "block");
                 $('.both').css("display", "block");
-            } else
-            {
+            } else {
+
                 $('#cv').css("display", "none");
                 $('.both').css("display", "none");
-
             }
 
 
-        });
-        
-        var bm = $('#vid_con').val();
-        
+            $('#condit').change(function () {
 
-        if (bm == 'Y')
-        {
-            $('#viddiv').css("display", "block");
-        }
+                var co = $('#condit').val();
 
-        $('#vid_con').change(function ()
-        {
-            var conn2 = $('#vid_con').val();
+                if (co == 'Y') {
+                    $('#cv').css("display", "block");
+                    $('.both').css("display", "block");
+                } else {
+                    $('#cv').css("display", "none");
+                    $('.both').css("display", "none");
 
-            if (conn2 == 'Y')
-            {
-                //$('#viddiv').css("display", "block");
-                $('#viddiv').show();
-                
-            } else
-            {
-                //$('#vidtext').val('');
+                }
+            });
 
-                //$('#viddiv').css("display", "none");
-                $('#viddiv').hide();
+            var bm = $('#vid_con').val();
+            if (bm == 'Y') {
+                $('#viddiv').css("display", "block");
             }
 
+            $('#vid_con').change(function () {
+                var conn2 = $('#vid_con').val();
 
+                if (conn2 == 'Y') {
+                    $('#viddiv').show();
+
+                } else {
+                    $('#viddiv').hide();
+                }
+
+
+            });
         });
-    });
     </script>
     
 @endsection
