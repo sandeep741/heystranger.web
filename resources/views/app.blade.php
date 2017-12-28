@@ -12,17 +12,17 @@
                      <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12 text-left left_topbar'>
                         <!--     -->
                         <ul class="top-user-area-list list list-horizontal list-border clearfix">
-                           <li><a href="#" target=""> <i class="fa fa-facebook mr5"></i></a></li>
-                           <li><a href="#" target=""> <i class="fa fa-twitter mr5"></i></a></li>
-                           <li><a href="#" target=""> <i class="fa fa-linkedin mr5"></i></a></li>
-                           <li><a href="#" target=""> <i class="fa fa-google-plus mr5"></i></a></li>
+                           <li><a href="{{ config('constants.social')['facebook'] }}" target="_blank"> <i class="fa fa-facebook mr5"></i></a></li>
+                           <li><a href="{{ config('constants.social')['twitter'] }}" target="_blank"> <i class="fa fa-twitter mr5"></i></a></li>
+                           <li><a href="{{ config('constants.social')['linked_in'] }}" target="_blank"> <i class="fa fa-linkedin mr5"></i></a></li>
+                           <li><a href="{{ config('constants.social')['google_plus'] }}" target="_blank"> <i class="fa fa-google-plus mr5"></i></a></li>
                         </ul>
                      </div>
                      <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right right_topbar top-user-area'>
                         <!--    -->
                         <ul class="top-user-area-list list list-horizontal list-border clearfix">
-                           <li><a href="" target=""> <i class="fa  mr5"></i>Call us: +27 81 740 0107</a></li>
-                           <li><a href="#" target=""> <i class="fa fa-envelope-o mr5"></i>info@heystranger.co.za</a></li>
+                           <li><a href="" target=""> <i class="fa  mr5"></i>Call us: + {{ config('constants.info')['contact_no'] }}</a></li>
+                           <li><a href="#" target=""> <i class="fa fa-envelope-o mr5"></i>{{ config('constants.info')['email_id'] }}</a></li>
                         </ul>
                      </div>
                   </div>

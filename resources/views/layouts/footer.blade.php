@@ -7,26 +7,26 @@
                         <div class="wpb_text_column wpb_content_element ">
                             <div class="wpb_wrapper">
                                 <p><img class="alignnone size-full wp-image-11123" src="{{ asset('/assets/images/logo-white.png') }}" alt="logo-white" width="110" height="40" /></p>
-                                <p>Booking, reviews and advices on hotels, resorts, flights, vacation rentals, travel packages, and lots more!</p>
+                                <p>{{ config('constants.footer_about') }}</p>
                             </div>
                         </div>
                         <div class="wpb_raw_code wpb_content_element wpb_raw_html">
                             <div class="wpb_wrapper">
                                 <ul class="list list-horizontal list-space">
                                     <li>
-                                        <a href="#" class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top"></a>
+                                        <a href="{{ config('constants.social')['facebook'] }}" target="_blank" class="fa fa-facebook box-icon-normal round animate-icon-bottom-to-top"></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="fa fa-twitter box-icon-normal round animate-icon-bottom-to-top"></a>
+                                        <a href="{{ config('constants.social')['twitter'] }}" target="_blank" class="fa fa-twitter box-icon-normal round animate-icon-bottom-to-top"></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="fa fa-google-plus box-icon-normal round animate-icon-bottom-to-top"></a>
+                                        <a href="{{ config('constants.social')['linked_in'] }}" target="_blank" class="fa fa-linkedin box-icon-normal round animate-icon-bottom-to-top"></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="fa fa-linkedin box-icon-normal round animate-icon-bottom-to-top"></a>
+                                        <a href="{{ config('constants.social')['google_plus'] }}" target="_blank" class="fa fa-google-plus box-icon-normal round animate-icon-bottom-to-top"></a>
                                     </li>
                                     <li>
-                                        <a href="#" class="fa fa-pinterest box-icon-normal round animate-icon-bottom-to-top"></a>
+                                        <a href="{{ config('constants.social')['pinterest'] }}" target="_blank" class="fa fa-pinterest box-icon-normal round animate-icon-bottom-to-top"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -76,9 +76,9 @@
                                     </li>
                                     <li><a href="#">Feedback</a>
                                     </li>
-                                    <li><a href="./how-it-works/">How it words ?</a>
+                                    <li><a href="#">How it words ?</a>
                                     </li>
-                                    <li><a href="./become-a-partner/">Become a Partner</a>
+                                    <li><a href="#">Become a Partner</a>
                                     </li>
                                 </ul>
                             </div>
@@ -90,8 +90,8 @@
                         <div class="wpb_raw_code wpb_content_element wpb_raw_html">
                             <div class="wpb_wrapper">
                                 <h4>Have Questions?</h4>
-                                <h4 class="text-color">+1-202-555-0173</h4>
-                                <h4><a class="text-color" href="#">support@traveler.com</a></h4>
+                                <h4 class="text-color">+{{ config('constants.info')['contact_no'] }}</h4>
+                                <h4><a class="text-color" href="#">{{ config('constants.info')['email_id'] }}</a></h4>
                                 <p>24/7 Dedicated Customer Support</p>
                             </div>
                         </div>

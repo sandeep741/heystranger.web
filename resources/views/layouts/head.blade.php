@@ -9,7 +9,6 @@
 <link href="{{ asset('/assets/css/js_composer.min.css') }}" rel="stylesheet" type="text/css" media="all"/> 
 <link href="{{ asset('/assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css" media="all"/> 
 <link href="{{ asset('/assets/css/styles2.css') }}" rel="stylesheet" type="text/css" media="all"/> 
-<link href="{{ asset('/assets/css/mystyles.css') }}" rel="stylesheet" type="text/css" media="all"/> 
 <link href="{{ asset('/assets/css/custom.css') }}" rel="stylesheet" type="text/css" media="all"/> 
 <link href="{{ asset('/assets/css/custom2.css') }}" rel="stylesheet" type="text/css" media="all"/> 
 <link rel='stylesheet' id='roboto-font-css'  href='{{ asset('/assets/css/Roboto-family.css') }}' type='text/css' media='all' />

@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <a class="logo" href="#">
-                        <img  width='110px' height ='40px'  src="{{ asset('/assets/images/logo-white.png') }}" alt="logo" title="Traveler">
+                    <a class="logo" href="{{ route('home') }}">
+                        <img  width='110px' height ='40px'  src="{{ asset('/assets/images/logo-white.png') }}" alt="logo">
                     </a>
                 </div>
                 <div class="col-md-9">
