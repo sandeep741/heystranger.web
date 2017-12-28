@@ -111,7 +111,7 @@
 @endsection
 
 @section('pageTitle')
-Add Accommodation
+Accommodation Listing
 @endsection
 
 @section('addtional_css')

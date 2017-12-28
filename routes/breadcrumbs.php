@@ -154,6 +154,22 @@ Breadcrumbs::register('edit_venue_conference', function($breadcrumbs) {
     $breadcrumbs->parent('partner');
     $breadcrumbs->push('Edit Venue & Conference', route('edit_venue_conference'));
 });
+
+/////////////////promotion//////////////////
+Breadcrumbs::register('promotion_list', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Promotion Listing', route('promotion_list'));
+});
+
+Breadcrumbs::register('add_promotion', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Add Promotion', route('add_promotion'));
+});
+
+Breadcrumbs::register('edit_promotion', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Edit Promotion', route('edit_promotion'));
+});
 // Home > About
 /*Breadcrumbs::register('about', function($breadcrumbs)
 {

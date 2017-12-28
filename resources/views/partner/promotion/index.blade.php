@@ -8,7 +8,7 @@
 
 <div class="panel panel-white" style="{{ (Session::has('success') ? 'margin:52px 0px 20px 0px' : '') }}">
     <div class="panel-heading">
-        <h6 class="panel-title text-semibold">My Venue & Conference</h6>
+        <h6 class="panel-title text-semibold">My Promotion</h6>
         <div class="heading-elements">
             <ul class="icons-list">
                 <li><a data-action="collapse"></a></li>
@@ -21,7 +21,7 @@
         <thead>
             <tr>
                 <th>S.no</th>
-                <th>Venue & Conference Name</th>
+                <th>Promotion</th>
                 <th>Type</th>
                 <th>Status</th>
                 <!--<th>Description</th>-->
@@ -48,7 +48,7 @@
                                 <i class="icon-menu9"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="{{ route('edit_venue_conference', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
+                                <li><a href="{{ route('edit_promotion', ['id' => $data->id, 'type' => 'P']) }}"><i class="icon-pencil7"></i> Edit file</a></li>
                                 <li><a href="" onclick="event.preventDefault();
                                             document.getElementById('update-form-{{ $data->id }}').submit();"><i class="icon-eye{{ (($data->status == 1) ? "-blocked" : '') }}"></i> {{ (($data->status == 1) ? "Unpublish" : "publish") }}</a></li>
                                 <li class="divider"></li>
@@ -89,7 +89,7 @@
                     !!}
                     {{ method_field('PUT') }}
                     {{ Form::input('hidden', 'status', (isset($data) && !empty($data) && $data->status == 1 ? '0' : '1'), ['readonly' => 'readonly']) }}
-                    {{ Form::input('hidden', 'update_status', 'V', ['readonly' => 'readonly']) }}
+                    {{ Form::input('hidden', 'update_status', 'P', ['readonly' => 'readonly']) }}
 
                     {!! Form::close() !!}
                 </td>
@@ -112,7 +112,7 @@
 @endsection
 
 @section('pageTitle')
-Venue & Conference Listing
+Promotion Listing
 @endsection
 
 @section('addtional_css')

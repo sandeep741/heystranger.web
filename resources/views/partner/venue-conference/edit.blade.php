@@ -69,7 +69,7 @@ $urlId = app('request')->input('id');
                     {{ method_field('PUT') }}
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h5 class="panel-title">Accommodation Detail</h5>
+                            <h5 class="panel-title">Venue & Conference Detail</h5>
                         </div>
                         <div class="panel-body">
 
@@ -1451,7 +1451,7 @@ $urlId = app('request')->input('id');
 @endsection
 
 @section('pageTitle')
-Add Venue & Conference
+Edit Venue & Conference
 @endsection
 
 @section('addtional_css')

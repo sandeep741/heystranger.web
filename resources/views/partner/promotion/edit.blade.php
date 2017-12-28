@@ -1,7 +1,7 @@
 @extends('admin.app')
 @section('content')
 <?php
-$urlId = Request::segment(2);
+$urlId = app('request')->input('id');
 ?>
 
 <div class="content">
@@ -12,7 +12,7 @@ $urlId = Request::segment(2);
 
                 <li class="active">
                     <a href="#accommodation" data-toggle="tab">
-                        Accommodation Detail <span class="status-mark position-right border-danger"></span>
+                        Promotion <span class="status-mark position-right border-danger"></span>
                     </a>
                 </li>
 
@@ -58,7 +58,7 @@ $urlId = Request::segment(2);
                     array(
                     'name' => 'frm_accommodation',
                     'id' => 'frm_accommodation',
-                    'url' => 'accomodation/'.(isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->id : ''),
+                    'url' => 'accomodation/'.(isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->id : ''),
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
                     'files' => true
@@ -69,14 +69,14 @@ $urlId = Request::segment(2);
                     {{ method_field('PUT') }}
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h5 class="panel-title">Accommodation Detail</h5>
+                            <h5 class="panel-title">Promotion Detail</h5>
                         </div>
                         <div class="panel-body">
 
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('name', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->title : ''), ['class' => 'form-control', 'placeholder' => 'Enter Accommodation Name*']) !!}
+                                    {!! Form::text('name', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->title : ''), ['class' => 'form-control', 'placeholder' => 'Enter Accommodation Name*']) !!}
                                     @if ($errors->has('name'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -86,7 +86,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('accom_type',[''=>'Select type of Accommodation']+@$arr_accomm->pluck('name','id')->toArray(), (isset($arr_accommo_detail->accomType) && !empty($arr_accommo_detail->accomType) ? $arr_accommo_detail->accomType->id : ''),['class'=>'form-control'])}}
+                                    {{Form::select('accom_type',[''=>'Select type of Venue & Conference']+@$arr_accomm->pluck('name','id')->toArray(), (isset($arr_accommo_detail->accomType) && !empty($arr_accommo_detail->accomType) ? $arr_accommo_detail->accomType->id : ''),['class'=>'form-control'])}}
 
                                     @if ($errors->has('accom_type'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -99,7 +99,7 @@ $urlId = Request::segment(2);
 
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('rating',[''=>'Start Ratings']+@config('constants.star_rating'), (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->rating : ''),['class'=>'form-control'])}}
+                                    {{Form::select('rating',[''=>'Start Ratings']+@config('constants.star_rating'), (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->rating : ''),['class'=>'form-control'])}}
                                     @if ($errors->has('rating'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('rating') }}</strong>
@@ -111,7 +111,7 @@ $urlId = Request::segment(2);
 
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('reserving_email', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->reserve_email : ''), ['class' => 'form-control email', 'placeholder' => 'Enter Reserving Email']) !!}
+                                    {!! Form::text('reserving_email', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->reserve_email : ''), ['class' => 'form-control email', 'placeholder' => 'Enter Reserving Email']) !!}
                                     @if ($errors->has('reserving_email'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('reserving_email') }}</strong>
@@ -134,7 +134,39 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{Form::select('state',[''=>'Select State *', $arr_accommo_detail->stateName->id => $arr_accommo_detail->stateName->name], (isset($arr_accommo_detail->stateName) && !empty($arr_accommo_detail->stateName) && count($arr_accommo_detail->stateName) > 0 ? $arr_accommo_detail->stateName->id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
+                                    <?php 
+                                    $state = [
+                                        '' => 'Select State *'
+                                        
+                                    ];
+                                    $city = [
+                                        '' => 'Select City *'
+                                        
+                                    ];
+                                    if(isset($arr_accommo_detail->stateName) && !empty($arr_accommo_detail->stateName) && count($arr_accommo_detail->stateName)){
+                                        $state[] = array(
+                                            $arr_accommo_detail->stateName->id => $arr_accommo_detail->stateName->name
+                                            
+                                        );
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    if(isset($arr_accommo_detail->cityName) && !empty($arr_accommo_detail->cityName) && count($arr_accommo_detail->cityName)){
+                                        $city[] = array(
+                                            $arr_accommo_detail->cityName->id => $arr_accommo_detail->cityName->name
+                                            
+                                        );
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    ?>
+                                   
+                                    {{Form::select('state', $state, (isset($arr_accommo_detail->stateName) && !empty($arr_accommo_detail->stateName) && count($arr_accommo_detail->stateName) > 0 ? $arr_accommo_detail->stateName->id : ''),['id'=> 'state_id', 'class'=>'form-control state_id'])}}
 
                                     @if ($errors->has('state'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -147,7 +179,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
 
-                                    {{Form::select('city',[''=>'Select city *', $arr_accommo_detail->cityName->id => $arr_accommo_detail->cityName->name], (isset($arr_accommo_detail->cityName) && !empty($arr_accommo_detail->cityName) && count($arr_accommo_detail->cityName) > 0 ? $arr_accommo_detail->cityName->id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
+                                    {{Form::select('city', $city, (isset($arr_accommo_detail->cityName) && !empty($arr_accommo_detail->cityName) && count($arr_accommo_detail->cityName) > 0 ? $arr_accommo_detail->cityName->id : ''),['id'=> 'address_city_id', 'class'=>'form-control address_city_id'])}}
 
                                     @if ($errors->has('city'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -158,7 +190,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('street_address', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->street_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address']) !!}
+                                    {!! Form::text('street_address', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->street_address : ''), ['class' => 'form-control', 'placeholder' => 'Enter Street Address']) !!}
                                     @if ($errors->has('street_address'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('street_address') }}</strong>
@@ -171,7 +203,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('area', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->area : ''), ['class' => 'form-control', 'placeholder' => 'Enter suburb Area']) !!}
+                                    {!! Form::text('area', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->area : ''), ['class' => 'form-control', 'placeholder' => 'Enter suburb Area']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('area') }}</strong>
@@ -181,7 +213,7 @@ $urlId = Request::segment(2);
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('contact_no', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->contact_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Contact Number']) !!}
+                                    {!! Form::text('contact_no', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->contact_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Contact Number']) !!}
                                     @if ($errors->has('contact_no'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('contact_no') }}</strong>
@@ -195,7 +227,7 @@ $urlId = Request::segment(2);
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('alternate_no', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Alternate no']) !!}
+                                    {!! Form::text('alternate_no', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->alternate_no : ''), ['class' => 'form-control', 'placeholder' => 'Enter Alternate no']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('alternate_no') }}</strong>
@@ -209,14 +241,14 @@ $urlId = Request::segment(2);
                                 <label class="col-lg-3 control-label">Establishment Detail:</label>
 
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    {!! Form::textarea('establish_details', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) ? $arr_accommo_detail->establish_details : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
+                                    {!! Form::textarea('establish_details', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail->establish_details : ''), ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
                                     @if ($errors->has('establish_details'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('establish_details') }}</strong>
                                     </span>
                                     @endif
-                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
-                                    {{ Form::input('hidden', 'id', $arr_accommo_detail->id, ['readonly' => 'readonly']) }}
+                                    {{ Form::input('hidden', 'type', 'P', ['readonly' => 'readonly']) }}
+                                    {{ Form::input('hidden', 'id', (isset($arr_accommo_detail) && !empty($arr_accommo_detail) && count($arr_accommo_detail) > 0 ? $arr_accommo_detail : ''), ['readonly' => 'readonly']) }}
 
                                 </div>
                             </div>
@@ -661,7 +693,7 @@ $urlId = Request::segment(2);
 
                                 <a href="javascript:void(0)" class="confer-add-more btn btn-success">Add More</a>
                                 {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
-                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                                {{ Form::input('hidden', 'type', 'P', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
@@ -904,7 +936,7 @@ $urlId = Request::segment(2);
                                     @endif
                                 </div>
                                 {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
-                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                                {{ Form::input('hidden', 'type', 'P', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
@@ -1233,7 +1265,7 @@ $urlId = Request::segment(2);
 
                             {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
                             {{ Form::input('hidden', 'policy_id', (isset($arr_policy_detail) && !empty($arr_policy_detail) ? $arr_policy_detail->id : ''), ['readonly' => 'readonly']) }}
-                            {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                            {{ Form::input('hidden', 'type', 'P', ['readonly' => 'readonly']) }}
 
                             <a href="javascript:void(0)" class='btn btn-success extra-add-more'>Add</a>
 
@@ -1303,7 +1335,7 @@ $urlId = Request::segment(2);
                                 </div>
                                 {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
                                 {{ Form::input('hidden', 'meta_id', (isset($arr_meta_detail) && !empty($arr_meta_detail) ? $arr_meta_detail->id : ''), ['readonly' => 'readonly']) }}
-                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                                {{ Form::input('hidden', 'type', 'P', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
@@ -1398,7 +1430,7 @@ $urlId = Request::segment(2);
                                 </div>
                                 {{ Form::input('hidden', 'accommo_id', (isset($urlId) && !empty($urlId) ? $urlId : ''), ['readonly' => 'readonly']) }}
                                 {{ Form::input('hidden', 'video_id', (isset($arr_video_detail) && !empty($arr_video_detail) ? $arr_video_detail->id : ''), ['readonly' => 'readonly']) }}
-                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                                {{ Form::input('hidden', 'type', 'P', ['readonly' => 'readonly']) }}
                             </div>
 
                             <div class="text-right">
@@ -1419,7 +1451,7 @@ $urlId = Request::segment(2);
 @endsection
 
 @section('pageTitle')
-Edit Accommodation
+Edit Promotion
 @endsection
 
 @section('addtional_css')

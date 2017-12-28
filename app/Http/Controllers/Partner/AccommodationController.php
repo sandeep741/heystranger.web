@@ -71,6 +71,9 @@ class AccommodationController extends Controller {
             } else if (\Request::segment(1) == 'venue-conference-list') {
                 $datas = AccomVenuPromo::getAccommodationList('V');
                 return view('partner.venue-conference.index')->with(compact('user', 'datas'));
+            } else if (\Request::segment(1) == 'promotion-list') {
+                $datas = AccomVenuPromo::getAccommodationList('P');
+                return view('partner.promotion.index')->with(compact('user', 'datas'));
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -106,6 +109,8 @@ class AccommodationController extends Controller {
                 return view('partner.accommodation.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
             } else if (\Request::segment(1) == 'add-venue-conference') {
                 return view('partner.venue-conference.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            } else if (\Request::segment(1) == 'add-promotion') {
+                return view('partner.promotion.create')->with(compact('user', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -182,6 +187,8 @@ class AccommodationController extends Controller {
                 return redirect(route('accomodation.create'));
             } else if ($request->type == 'V') {
                 return redirect(route('add_venue_confer'));
+            } else if ($request->type == 'P') {
+                return redirect(route('add_promotion'));
             }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -449,6 +456,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.index'));
                 } else if ($request->type == 'V') {
                     return redirect(route('venue_confer_list'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('promotion_list'));
                 }
             } else {
 
@@ -562,6 +571,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.create'));
                 } else if ($request->type == 'V') {
                     return redirect(route('add_venue_confer'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('add_promotion'));
                 }
             }
         } catch (Exception $ex) {
@@ -660,6 +671,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.index'));
                 } else if ($request->type == 'V') {
                     return redirect(route('venue_confer_list'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('promotion_list'));
                 }
             } else {
 
@@ -732,6 +745,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.create'));
                 } else if ($request->type == 'V') {
                     return redirect(route('add_venue_confer'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('add_promotion'));
                 }
             }
         } catch (Exception $ex) {
@@ -867,6 +882,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.index'));
                 } else if ($request->type == 'V') {
                     return redirect(route('venue_confer_list'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('promotion_list'));
                 }
             } else {
 
@@ -934,6 +951,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.create'));
                 } else if ($request->type == 'V') {
                     return redirect(route('add_venue_confer'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('add_promotion'));
                 }
             }
         } catch (Exception $ex) {
@@ -985,10 +1004,12 @@ class AccommodationController extends Controller {
                         return redirect(route('accomodation.index'));
                     } else if ($request->type == 'V') {
                         return redirect(route('venue_confer_list'));
+                    } else if ($request->type == 'P') {
+                        return redirect(route('promotion_list'));
                     }
                 }
             } else {
-                
+
                 $meta_detail = new MetaTagDetail;
 
                 $meta_detail->accom_venu_promos_id = $acco_id;
@@ -1013,6 +1034,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.create'));
                 } else if ($request->type == 'V') {
                     return redirect(route('add_venue_confer'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('add_promotion'));
                 }
             }
         } catch (Exception $ex) {
@@ -1065,10 +1088,12 @@ class AccommodationController extends Controller {
                         return redirect(route('accomodation.index'));
                     } else if ($request->type == 'V') {
                         return redirect(route('venue_confer_list'));
+                    } else if ($request->type == 'P') {
+                        return redirect(route('promotion_list'));
                     }
                 }
             } else {
-                
+
                 $video_detail = new VideoMapDetail;
 
                 $video_detail->accom_venu_promos_id = $acco_id;
@@ -1084,8 +1109,8 @@ class AccommodationController extends Controller {
                 } else {
                     $flag = 'danger';
                     $msg = "Record Not Added Successfully";
-                } 
-                
+                }
+
                 $request->session()->flash($flag, $msg);
                 $request->session()->forget('tab_type');
                 $request->session()->forget('accom_id');
@@ -1094,6 +1119,8 @@ class AccommodationController extends Controller {
                     return redirect(route('accomodation.index'));
                 } else if ($request->type == 'V') {
                     return redirect(route('venue_confer_list'));
+                } else if ($request->type == 'P') {
+                    return redirect(route('promotion_list'));
                 }
             }
         } catch (Exception $ex) {
@@ -1143,7 +1170,11 @@ class AccommodationController extends Controller {
             $arr_activity = $activity->select('id', 'name')->orderBy('id', 'ASC')->get();
             $arr_payment = $payment_list->select('id', 'name')->orderBy('id', 'ASC')->get();
 
-            return view('partner.venue-conference.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_meta_detail', 'arr_video_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            if (Input::get('type') == 'P') {
+                return view('partner.promotion.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_meta_detail', 'arr_video_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            } else {
+                return view('partner.venue-conference.edit')->with(compact('user', 'arr_accommo_detail', 'arr_room_detail', 'arr_venu_detail', 'arr_confer_detail', 'arr_activity_detail', 'arr_amenity_detail', 'arr_surr_detail', 'arr_policy_detail', 'arr_offer_detail', 'arr_meta_detail', 'arr_video_detail', 'arr_accomm', 'arr_country', 'arr_room', 'arr_surr', 'arr_amenity', 'arr_activity', 'arr_payment'));
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
@@ -1158,6 +1189,7 @@ class AccommodationController extends Controller {
     public function edit($id) {
 
         try {
+
             $user = Auth::guard('admin')->user();
             $accomm_data = new AccommodationList;
             $room_data = new RoomList;
@@ -1214,8 +1246,10 @@ class AccommodationController extends Controller {
             }
             $request->session()->flash($flag, $msg);
 
-            if ($request->update_status) {
+            if (isset($request->update_status) && $request->update_status == 'V') {
                 return redirect(route('venue_confer_list'));
+            } else if (isset($request->update_status) && $request->update_status == 'P') {
+                return redirect(route('promotion_list'));
             } else {
                 return redirect(route('accomodation.index'));
             }
@@ -1279,6 +1313,8 @@ class AccommodationController extends Controller {
             return redirect(route('accomodation.index'));
         } else if ($request->type == 'V') {
             return redirect(route('venue_confer_list'));
+        } else if ($request->type == 'P') {
+            return redirect(route('promotion_list'));
         }
     }
 

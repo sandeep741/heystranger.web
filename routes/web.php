@@ -79,6 +79,10 @@ Route::get('add-venue-conference', 'Partner\AccommodationController@create')->na
 Route::get('venue-conference-list', 'Partner\AccommodationController@index')->name('venue_confer_list');
 Route::get('edit-venue-conference', 'Partner\AccommodationController@editDetail')->name('edit_venue_conference');
 
+Route::get('add-promotion', 'Partner\AccommodationController@create')->name('add_promotion');
+Route::get('promotion-list', 'Partner\AccommodationController@index')->name('promotion_list');
+Route::get('edit-promotion', 'Partner\AccommodationController@editDetail')->name('edit_promotion');
+
 Route::get('remove-accommodation-image', 'Partner\AccommodationController@removeProductImage')->name('remove_accommodation_image');
 
 

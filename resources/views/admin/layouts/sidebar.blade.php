@@ -41,24 +41,24 @@ if (isset($active) && !empty($active)) {
                     <li class="{{ ($parent_route == 'accomodation' ? 'active' : '') }}">
                         <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Accommodation</span></a>
                         <ul style="{{ (($parent_route == 'accomodation') ? 'display:block' : '') }}">
-                            <li><a href="{{ route("accomodation.index") }}" style="{{ ( ( Request::segment(1) == 'accomodation' && empty(Request::segment(2)) ) ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Accommodation Listing</a></li>
+                            <li><a href="{{ route("accomodation.index") }}" style="{{ ( ( Request::segment(1) == 'accomodation' && empty(Request::segment(2)) ||  Request::segment(3) == 'edit') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Accommodation Listing</a></li>
                             <li><a href="{{ route('accomodation.create') }}" style="{{ ( (Request::segment(2) == 'create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Accommodation</a></li>
                         </ul>
                     </li>
 
                     <li class="{{ ( ($parent_route == 'add-venue-conference' || $parent_route == 'venue-conference-list' || Request::segment(1) == 'edit-venue-conference')  ? 'active' : '') }}">
                         <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Venue & Conference</span></a>
-                        <ul style="{{ ( Request::segment(1) == 'edit-venue-conference' ? 'display:block' : '') }}">
+                        <ul style="{{ ( ($parent_route == 'add-promotion' || $parent_route == 'promotion-list' || Request::segment(1) == 'edit-promotion')  ? 'active' : '') }}">
                             <li><a href="{{ route("venue_confer_list") }}" style="{{ ( (Request::segment(1) == 'venue-conference-list') || (Request::segment(1) == 'edit-venue-conference') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Venue & Conference Listing</a></li>
                             <li><a href="{{ route('add_venue_confer') }}" style="{{ ( (Request::segment(1) == 'add-venue-conference') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Venue & Conference</a></li>
                         </ul>
                     </li>
 
-                    <li class="{{ ($parent_route == 'promo' ? 'active' : '') }}">
+                    <li class="{{ ( ($parent_route == 'add-promotion' || $parent_route == 'promotion-list' || Request::segment(1) == 'edit-promotion')  ? 'active' : '') }}">
                         <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Promotion</span></a>
-                        <ul style="{{ (($parent_route == 'promo') ? 'display:block' : '') }}">
-                            <li><a href="{{ route("accomodation.index") }}" style="{{ ( ( Request::segment(1) == 'promo' && empty(Request::segment(2)) ) ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Promotion Listing</a></li>
-                            <li><a href="{{ route('accomodation.create') }}" style="{{ ( (Request::segment(2) == 'create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Promotion</a></li>
+                        <ul style="{{ ( Request::segment(1) == 'edit-promotion' ? 'display:block' : '') }}">
+                            <li><a href="{{ route("promotion_list") }}" style="{{ ( (Request::segment(1) == 'promotion-list') || (Request::segment(1) == 'edit-promotion') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Promotion Listing</a></li>
+                            <li><a href="{{ route('add_promotion') }}" style="{{ ( (Request::segment(1) == 'add-promotion') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Promotion</a></li>
                         </ul>
                     </li>
 
