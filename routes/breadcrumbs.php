@@ -115,6 +115,24 @@ Breadcrumbs::register('surroundinglist.edit', function($breadcrumbs, $accommolis
     $breadcrumbs->push('Update Surrounding', route('surroundinglist.edit', $accommolist));
 });
 
+////////////////////////Package list//////////////////
+Breadcrumbs::register('packagelist.index', function($breadcrumbs) {
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Package List', route('packagelist.index'));
+});
+
+Breadcrumbs::register('packagelist.create', function($breadcrumbs) {
+    $breadcrumbs->parent('packagelist.index');
+    $breadcrumbs->push('Add Package', route('packagelist.create'));
+});
+
+Breadcrumbs::register('packagelist.edit', function($breadcrumbs, $accommolist) {
+
+    $breadcrumbs->parent('packagelist.index');
+    $breadcrumbs->push('Update Package', route('packagelist.edit', $accommolist));
+});
+
 /////////////////////////////////////////////////////////
 /////////////for partner dashboard breadcrum//////////////
 //////////////////////////////////////////////////////////

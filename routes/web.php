@@ -19,6 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/accommodation', function () {
+    return view('accommodation.accommodation');
+})->name('accommodation');
+
 /* Route::get('admin', [
   'as' => 'admin',
   'uses' => 'Admin\LoginController@index'
@@ -60,6 +64,7 @@ Route::resource('activitylist', 'Admin\ActivityListController');
 Route::resource('roomlist', 'Admin\RoomListController');
 Route::resource('paymentmodelist', 'Admin\PaymentModeListController');
 Route::resource('surroundinglist', 'Admin\SurroundingListController');
+Route::resource('packagelist', 'Admin\PackageListController');
 
 /////////////routes for user////////////
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');

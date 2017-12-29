@@ -39,7 +39,7 @@
                             <div class="wpb_wrapper">
                                 <!-- MailChimp for WordPress v2.3.16 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
                                 <div id="mc4wp-form-2" class="form mc4wp-form">
-                                    <form method="post" >
+                                    <form method="get" action="{{ route('home') }}">
                                         <h4>Newsletter</h4>
                                         <label>Enter your E-mail Address</label>
                                         <input type="email" name="EMAIL" class="form-control">
@@ -198,33 +198,33 @@ var st_demo_css = {
 };
     /* ]]> */
 </script>
-<script src="{{ asset('/assets/js/jquery.js') }}"></script>
-<script src="{{ asset('/assets/js/switcher.js') }}"></script>
-<script src="{{ asset('/assets/js/icheck.js') }}"></script>
-<script src="{{ asset('/assets/js/jquery.slimmenu.min.js') }}"></script>
-<script src="{{ asset('/assets/js/bootstrap.js') }}"></script>
-<script src="{{ asset('/assets/js/custom-iconpicker.js') }}"></script>
-<script src="{{ asset('/assets/js/fontawesome-iconpicker.min.js') }}"></script>
-<script src="{{ asset('/assets/js/tour_version.js') }}"></script>
-<script src="{{ asset('/assets/js/sticky.js') }}"></script>
-<script src="{{ asset('/assets/js/custom2.js') }}"></script>
-<script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="{{ asset('/assets/js/jquery.form.min.js') }}"></script>
-<script src="{{ asset('/assets/js/jquery.scrollTo.min.js') }}"></script>
-<script src="{{ asset('/assets/js/hover_effect.js') }}"></script>
-<script src="{{ asset('/assets/js/underscore.min.js') }}"></script>
-<script src="{{ asset('/assets/js/shortcode.min.js') }}"></script>
-<script src="{{ asset('/assets/js/backbone.min.js') }}"></script>
-<script src="{{ asset('/assets/js/wp-util.min.js') }}"></script>
-<script src="{{ asset('/assets/js/wp-backbone.min.js') }}"></script>
-<script src="{{ asset('/assets/js/media-models.min.js') }}"></script>
-<script src="{{ asset('/assets/js/wp-plupload.min.js') }}"></script>
-<script src="{{ asset('/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('/assets/js/handlebars-v2.0.0.js') }}"></script>
-<script src="{{ asset('/assets/js/typeahead.js') }}"></script>
-<script src="{{ asset('/assets/js/owl-carousel.js') }}"></script>
-<script type='text/javascript' src='{{ asset('/assets/js/st-select.js') }}'></script>
-<script src="{{ asset('/assets/js/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('/assets/js/ionrangeslider.js') }}"></script>
-<script src="{{ asset('/assets/js/bootstrap-timepicker.js') }}"></script>
-<script src="{{ asset('/assets/js/select-flight-location.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/switcher.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/icheck.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/jquery.slimmenu.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/custom-iconpicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/fontawesome-iconpicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/tour_version.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/sticky.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/custom2.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/custom.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/jquery.form.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/jquery.scrollTo.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/hover_effect.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/underscore.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/shortcode.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/backbone.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/wp-util.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/wp-backbone.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/media-models.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/wp-plupload.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/core.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/handlebars-v2.0.0.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/typeahead.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/owl-carousel.js') }}"></script>
+<script type="text/javascript" src='{{ asset('/assets/js/st-select.js') }}'></script>
+<script type="text/javascript" src="{{ asset('/assets/js/bootstrap-datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/ionrangeslider.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/bootstrap-timepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/select-flight-location.js') }}"></script>

@@ -1,12 +1,12 @@
 <div class="nav">
     <ul id="slimmenu" data-title="<a href='{{ route('home') }}'><img width=auto height=40px class=st_logo_mobile src={{ asset('/assets/images/logo-white.png') }} /></a>" class="menu slimmenu">
-        <li id="menu-item-1285" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-1285">
-            <a href="#">Home</a>
+        <li id="menu-item-1285" class="menu-item menu-item-type-post_type menu-item-object-page {{ Request::is( '/') ? 'current-menu-ancestor' : '' }} current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-1285">
+            <a href="{{ route('home') }}">Home</a>
 
         </li>
 
-        <li id="menu-item-1296" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1296">
-            <a href="#">Accommodations</a>
+        <li id="menu-item-1296" class="menu-item {{ Request::is( 'accommodation') ? 'current-menu-ancestor' : '' }} menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1296">
+            <a href="{{ route('accommodation') }}">Accommodations</a>
 
         </li>
         <li id="menu-item-1286" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1286">

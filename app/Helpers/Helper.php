@@ -135,43 +135,6 @@ class Helper {
         }
     }
 
-    public static function getParentRouteName() {
-        try {
-
-            $data = [];
-            $data['parent'] = Request::segment(1);
-            switch ($data['parent']) {
-                case 'accommlist':
-                    $data['active'] = 'active';
-                    break;
-                case 'amenitylist':
-                    $data['active'] = 'active';
-                    break;
-                case 'activitylist':
-                    $data['active'] = 'active';
-                    break;
-                case 'roomlist':
-                    $data['active'] = 'active';
-                    break;
-                case 'paymentmodelist':
-                    $data['active'] = 'active';
-                    break;
-                case 'surroundinglist':
-                    $data['active'] = 'active';
-                    break;
-                case 'accomodation':
-                    $data['active'] = 'active';
-                    break;
-                default:
-                    $data['active'] = '';
-            }
-
-            return $data;
-        } catch (Exception $ex) {
-            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
-        }
-    }
-
     /* UploadImage
      * @paran
      * @return array

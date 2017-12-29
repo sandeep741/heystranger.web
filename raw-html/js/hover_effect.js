@@ -1,0 +1,1 @@
+jQuery(function(){jQuery(window).load(function(){jQuery(".effect-layla img").each(function(){var a=jQuery(this).height();console.log(a),a>0&&jQuery(this).parent(".effect-layla").height(a-30)})})});

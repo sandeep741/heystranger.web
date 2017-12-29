@@ -3,3 +3,7 @@
 @section('editMethod')
 {{ method_field('PUT') }}
 @endsection
+
+@section('pageTitle')
+Edit Surrounding
+@endsection
