@@ -82,6 +82,20 @@ jQuery(document).ready(function () {
             form.submit();
         }
     });
+    
+    $('#frm_package').validate({// initialize the plugin
+        debug: true,
+        errorClass: 'text-danger',
+        errorElement: 'span',
+        rules: {
+            commision: {required: true, number: true, min:1, max:100},
+            vat: {number: true, min:1, max:100},
+            price: {required: true, number: true}
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
 
     ///////////////for laravel login form validation//////////////
 

@@ -47,7 +47,7 @@
                                 <i class="icon-menu9"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="{{ route('packagelist.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
+                                <li><a href="{{ route('packagelist.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit Package</a></li>
                                 <li><a href="" onclick="event.preventDefault();
                                             document.getElementById('update-form-{{ $data->id }}').submit();"><i class="icon-eye{{ (($data->status == 1) ? "-blocked" : '') }}"></i> {{ (($data->status == 1) ? "Unpublish" : "publish") }}</a></li>
                                 <li class="divider"></li>

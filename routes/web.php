@@ -23,6 +23,11 @@ Route::get('/accommodation', function () {
     return view('accommodation.accommodation');
 })->name('accommodation');
 
+
+Route::get('/my-package', 'Package\PackageController@index')->name('my_package');
+Route::get('/listing-detail', 'Package\PackageController@listDetail')->name('listing_detail');
+Route::post('/final-register', 'Package\PackageController@partnerRegister')->name('final_register');
+
 /* Route::get('admin', [
   'as' => 'admin',
   'uses' => 'Admin\LoginController@index'

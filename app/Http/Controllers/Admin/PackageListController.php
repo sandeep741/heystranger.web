@@ -8,9 +8,8 @@ use App\Http\Requests\Admin\PackageListRequest;
 use App\Model\Package\PackageList;
 use Auth;
 
-class PackageListController extends Controller
-{
-    
+class PackageListController extends Controller {
+
     /**
      * Create a new controller instance.
      *
@@ -24,14 +23,13 @@ class PackageListController extends Controller
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
     }
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         try {
 
             $user = Auth::guard('admin')->user();
@@ -48,8 +46,7 @@ class PackageListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         try {
             $user = Auth::guard('admin')->user();
 
@@ -67,7 +64,7 @@ class PackageListController extends Controller
      */
     public function store(PackageListRequest $request) {
         try {
-
+            
             $package_list = new PackageList;
             $package_list->name = $request->name;
             $package_list->is_listing1 = $request->is_listing1;
@@ -79,6 +76,8 @@ class PackageListController extends Controller
             $package_list->is_additional = $request->is_additional;
             $package_list->price = $request->price;
             $package_list->vat = $request->vat;
+            $package_list->package_type = $request->package_type;
+            $package_list->commision = $request->commision;
             $package_list->created_by = Auth::user()->id;
             if ($package_list->save()) {
                 $flag = 'success';
@@ -139,7 +138,7 @@ class PackageListController extends Controller
         try {
 
             $edit_data = PackageList::find($id);
-
+            
             if ($request->name) {
                 $edit_data->name = $request->name;
                 $edit_data->is_listing1 = $request->is_listing1;
@@ -151,6 +150,9 @@ class PackageListController extends Controller
                 $edit_data->is_additional = $request->is_additional;
                 $edit_data->price = $request->price;
                 $edit_data->vat = $request->vat;
+                $edit_data->package_type = $request->package_type;
+                $edit_data->commision = $request->commision;
+                $edit_data->updated_by = Auth::user()->id;
             } else {
                 $edit_data->status = $request->status;
             }
@@ -192,4 +194,5 @@ class PackageListController extends Controller
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
     }
+
 }

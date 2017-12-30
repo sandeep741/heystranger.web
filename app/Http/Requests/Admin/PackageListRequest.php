@@ -31,7 +31,7 @@ class PackageListRequest extends Request {
                 }
             case 'POST': {
                     return [
-                        'name' => 'required|unique:accommodation_lists,name',
+                        'name' => 'required|unique:package_lists,name',
                         'is_listing1' => 'required',
                         'is_listing2' => 'required',
                         'is_listing3' => 'required',
@@ -39,14 +39,17 @@ class PackageListRequest extends Request {
                         'is_acco_venu_conf' => 'required',
                         'is_transport' => 'required',
                         'is_additional' => 'required',
-                        'vat' => 'nullable|integer|between:1,100'
+                        //'vat' => 'nullable|integer|between:1,100',
+                        'package_type' => 'required',
+                        //'price' => 'required',
+                        //'commision' => 'required|integer|between:1,100',
                     ];
                 }
             case 'PUT':
             case 'PATCH': {
                     if (Input::get('id')) {
                         return [
-                            'name' => 'required|unique:accommodation_lists,name,' . Input::get('id') . ',id',
+                            'name' => 'required|unique:package_lists,name,' . Input::get('id') . ',id',
                             'is_listing1' => 'required',
                             'is_listing2' => 'required',
                             'is_listing3' => 'required',
@@ -54,7 +57,10 @@ class PackageListRequest extends Request {
                             'is_acco_venu_conf' => 'required',
                             'is_transport' => 'required',
                             'is_additional' => 'required',
-                            'vat' => 'nullable|integer|between:1,100'
+                            //'vat' => 'nullable|integer|between:1,100',
+                            'package_type' => 'required',
+                            //'price' => 'required',
+                            //'commision' => 'required|integer|between:1,100',
                         ];
                     }
                     return [];
@@ -74,7 +80,7 @@ class PackageListRequest extends Request {
     public function messages() {
         return [
             'name.required' => 'Name is required.',
-            'name.unique' => 'Accommodation name not available',
+            'name.unique' => 'Pacakage name not available',
         ];
     }
 

@@ -22,6 +22,6 @@ return [
         'is_referal' => 'On All Successful Referral',
         'is_acco_venu_conf' => 'Accommodation / Venues / Conference',
         'is_transport' => 'Transport',
-        'is_additional' => 'R120.00 Once-Off Setup Fee 8-15 Listings (Per Listing)'
+        'is_additional' => 'Additional Services'
     ]
 ];

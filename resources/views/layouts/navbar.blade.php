@@ -9,8 +9,8 @@
             <a href="{{ route('accommodation') }}">Accommodations</a>
 
         </li>
-        <li id="menu-item-1286" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1286">
-            <a href="#">Media</a>
+        <li id="menu-item-1286" class="menu-item {{ Request::is( 'my-package') ? 'current-menu-ancestor' : '' }} menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1286">
+            <a href="{{ route('my_package') }}">Package</a>
 
         </li>
         <li id="menu-item-1349" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1349">
