@@ -1179,4 +1179,9 @@ Welcome to Hey Stranger
 @endsection
 
 @section('jscript')
+<script type="text/javascript" src="{{ asset('/assets/js/select-flight-location.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/assets/js/ionrangeslider.js') }}"></script>
+<script type="text/javascript" src='{{ asset('/assets/js/st-select.js') }}'></script>
+<!-----------------owl crousel js file----------------------->
+<script type="text/javascript" src="{{ asset('/assets/js/owl-carousel.js') }}"></script>
 @endsection

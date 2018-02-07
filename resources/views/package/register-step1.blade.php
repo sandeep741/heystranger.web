@@ -37,7 +37,7 @@
                             array(
                             'name' => 'frm_package',
                             'id' => 'frm_package',
-                            'url' => route('final_register'),
+                            'url' => 'register-step2',
                             'autocomplete' => 'off',
                             'class' => 'register_form',
                             'files' => false
@@ -58,8 +58,10 @@
                                             'display' => 'Please Select *',
                                             'data-icon' => 'stumbleupon'
                                         );
-
-                                        for ($i = 1; $i <= $accommo_listing; $i++) {
+                                        
+                                        $accmlist = Session::get('accommolist');
+                                        
+                                        for ($i = 1; $i <= $accmlist; $i++) {
 
                                             $acco_list[] = array(
                                                 'value' => $i,
@@ -87,10 +89,10 @@
                                         );
                                         ?>
 
-                                        {!! Form::fancyselect('accommo_list', $acco_list, null, ['class'=>'form-control select-icons']) !!}
-                                        @if ($errors->has('accommo_list'))
+                                        {!! Form::fancyselect('accommo_no', $acco_list, null, ['class'=>'form-control select-icons']) !!}
+                                        @if ($errors->has('accommo_no'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('accommo_list') }}</strong>
+                                            <strong>{{ $errors->first('accommo_no') }}</strong>
                                         </span>
                                         @endif
 
@@ -101,10 +103,10 @@
                                     <div class="form-group  form-group-icon-left">
                                         <label for="field-password">Do you have Venue & Conference facilities on some of these property<span class="color-red"> (*)</span></label>
                                         <i class="fa fa-lock input-icon input-icon-show"></i>
-                                        {!! Form::fancyselect('shuttle', $yes_no, null, ['class'=>'form-control select-icons required']) !!}
-                                        @if ($errors->has('shuttle'))
+                                        {!! Form::fancyselect('is_acco_venu_conf', $yes_no, null, ['class'=>'form-control select-icons required']) !!}
+                                        @if ($errors->has('is_acco_venu_conf'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('shuttle') }}</strong>
+                                            <strong>{{ $errors->first('is_acco_venu_conf') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -116,10 +118,10 @@
                                     <div class="form-group  form-group-icon-left">
                                         <label for="field-user_name">Do you have your own Transport Service<span class="color-red"> (*)</span></label>
                                         <i class="fa fa-user input-icon input-icon-show"></i>
-                                        {!! Form::fancyselect('transport', $yes_no, null, ['class'=>'form-control select-icons']) !!}
-                                        @if ($errors->has('transport'))
+                                        {!! Form::fancyselect('is_transport', $yes_no, null, ['class'=>'form-control select-icons']) !!}
+                                        @if ($errors->has('is_transport'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('transport') }}</strong>
+                                            <strong>{{ $errors->first('is_transport') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -130,10 +132,10 @@
                                         <label for="field-password">Would you like to advertise 
                                             Additional Service <span class="color-red"> (*)</span></label>
                                         <i class="fa fa-lock input-icon input-icon-show"></i>
-                                        {!! Form::fancyselect('additional', $yes_no, null, ['class'=>'form-control select-icons']) !!}
-                                        @if ($errors->has('additional'))
+                                        {!! Form::fancyselect('is_additional', $yes_no, null, ['class'=>'form-control select-icons']) !!}
+                                        @if ($errors->has('is_additional'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('additional') }}</strong>
+                                            <strong>{{ $errors->first('is_additional') }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -151,7 +153,6 @@
                             </div>
                             <div class="text-center mt20">
 
-                                {{ Form::input('hidden', 'pkg_id', (isset($pkg_id_ecrypt) && !empty($pkg_id_ecrypt) ? $pkg_id_ecrypt : ''), ['readonly' => 'readonly']) }}
                                 <button class="btn btn-primary btn-lg" type="submit" name='sub_detail'>Submit</button>
                             </div>
                             <br>

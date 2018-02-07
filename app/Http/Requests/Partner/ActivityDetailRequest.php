@@ -34,14 +34,13 @@ class ActivityDetailRequest extends Request {
         case 'POST':
         {
             return [
-                'amenity_desc' => 'required',
-                'amenity_property' => 'required',
-                'activity_desc' => 'required',
-                'activity_property' => 'required',
+                //'amenity_desc' => 'required',
+                //'amenity_property' => 'required',
+                //'activity_desc' => 'required',
+                //'activity_property' => 'required',
                 'attraction_name.0' => 'required',
                 'surrounding.0' => 'required',
                 'approx_dist.0' => 'required',
-                'shuttle' => 'required',
             ];
         }
         case 'PUT':

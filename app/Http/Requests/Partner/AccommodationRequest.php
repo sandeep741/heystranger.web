@@ -35,7 +35,8 @@ class AccommodationRequest extends Request {
                     //$type = Input::get('type');
 
                     return [
-                        'name' => 'required|unique:accom_venu_promos,title,NULL,id,type,' . Input::get('type'),
+                        //'name' => 'required|unique:accom_venu_promos,title,NULL,id,type,' . Input::get('type'),
+						'name' => 'required',
                         'country' => 'required',
                         'state' => 'required',
                         'city' => 'required',
@@ -95,7 +96,8 @@ class AccommodationRequest extends Request {
 
                     if (Input::get('id')) {
                         return [
-                            'name' => 'required|unique:accom_venu_promos,title,' . Input::get('id') . ',id,type,' . Input::get('type'),
+                            //'name' => 'required|unique:accom_venu_promos,title,' . Input::get('id') . ',id,type,' . Input::get('type'),
+							'name' => 'required',
                             'country' => 'required',
                             'state' => 'required',
                             'city' => 'required',

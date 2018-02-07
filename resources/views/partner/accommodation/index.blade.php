@@ -8,7 +8,7 @@
 
 <div class="panel panel-white" style="{{ (Session::has('success') ? 'margin:52px 0px 20px 0px' : '') }}">
     <div class="panel-heading">
-        <h6 class="panel-title text-semibold">My Accommodation</h6>
+        <h6 class="panel-title text-semibold">Listing details</h6>
         <div class="heading-elements">
             <ul class="icons-list">
                 <li><a data-action="collapse"></a></li>
@@ -24,7 +24,6 @@
                 <th>Accommodation Name</th>
                 <th>Type</th>
                 <th>Status</th>
-                <!--<th>Description</th>-->
                 <th>Date</th>
                 <th class="text-center">Actions</th>
             </tr>
@@ -38,7 +37,6 @@
                 <td>{{ (isset($data) && !empty($data)) ? $data->title : '' }}</td>
                 <td>{{ (isset($data->accomType) && !empty($data->accomType)) ? $data->accomType->name : '' }}</td>
                 <td>{{ (isset($data) && !empty($data) && ($data->status == '1')) ? 'Active' : 'Inactive' }}</td>
-                <!--<td>{{ $data ? $data->establish_details : '' }}</td>-->
                 <td>{{ $data ? $data->updated_at->diffForHumans() : '' }}</td>
 
                 <td class="text-center">
@@ -49,6 +47,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="{{ route('accomodation.edit', ['id' => $data->id]) }}"><i class="icon-pencil7"></i> Edit file</a></li>
+                                <li><a href="{{ route('accomodation.edit', ['id' => $data->id, 'type' => 'P']) }}"><i class="icon-pencil7"></i>Promotion</a></li>
                                 <li><a href="" onclick="event.preventDefault();
                                             document.getElementById('update-form-{{ $data->id }}').submit();"><i class="icon-eye{{ (($data->status == 1) ? "-blocked" : '') }}"></i> {{ (($data->status == 1) ? "Unpublish" : "publish") }}</a></li>
                                 <li class="divider"></li>
@@ -111,7 +110,7 @@
 @endsection
 
 @section('pageTitle')
-Accommodation Listing
+Listings Panel
 @endsection
 
 @section('addtional_css')

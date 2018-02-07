@@ -58,7 +58,7 @@ use AuthenticatesUsers;
                 if ($role->name == 'admin') {
                     return redirect('dashboard');
                 } else if ($role->name == 'partner') {
-                    return redirect('partner');
+                    return redirect('welcome-page');
                 }
             }
         } catch (Exception $ex) {

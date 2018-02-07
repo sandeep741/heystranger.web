@@ -10,10 +10,10 @@
              z-index: 99999">
             <div class="bg-holder full">
                 <div class="bg-mask"></div>
-                <div class="bg-img" style="background-image:url(http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/2014/11/upper_lake_in_new_york_central_park_800x6001.jpg)"></div>
+                <div class="bg-img" style="background-image:url({{ asset('/assets/images/upper_lake_in_new_york_central_park_800x6001.jpg') }})"></div>
                 <div class="bg-holder-content full text-white text-center">
                     <a class="logo-holder" href="#">
-                        <img src="http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/st_uploadfont/logo-white.png" alt="logo" title="logo" />
+                        <img src="{{ asset('/assets/images/logo-white.png') }}" alt="logo" title="logo" />
                     </a>
                     <div class="full-center">
                         <div class="container">
@@ -455,7 +455,7 @@
                                                     <img width="360" height="270" src="#" class="attachment-360x270 size-360x270 wp-post-image" alt="" srcset="{{ asset('/assets/images/613-1024x1024.jpg') }}" sizes="(max-width: 360px) 100vw, 360px" />
                                                     <h5 class="hover-title-center">fdsfsdfdsa</h5>
                                                 </a>
-                                                <img alt="avatar" width=45 height=45 src="http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/bfi_thumb/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg" class="avatar avatar-96 photo origin round" >
+                                                <img alt="avatar" width=45 height=45 src="{{ asset('/assets/images/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg') }}" class="avatar avatar-96 photo origin round" >
                                             </header>
                                             <div class="thumb-caption">
                                                 <ul class="icon-list icon-group booking-item-rating-stars">
@@ -487,7 +487,7 @@
                                                     <img width="360" height="270" src="#" class="attachment-360x270 size-360x270 wp-post-image" alt="" srcset="{{ asset('/assets/images/613-1024x1024.jpg') }}" sizes="(max-width: 360px) 100vw, 360px" />
                                                     <h5 class="hover-title-center">fdsfsdfdsa</h5>
                                                 </a>
-                                                <img alt="avatar" width=45 height=45 src="http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/bfi_thumb/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg" class="avatar avatar-96 photo origin round" >
+                                                <img alt="avatar" width=45 height=45 src="{{ asset('/assets/images/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg') }}" class="avatar avatar-96 photo origin round" >
                                             </header>
                                             <div class="thumb-caption">
                                                 <ul class="icon-list icon-group booking-item-rating-stars">
@@ -519,7 +519,7 @@
                                                     <img width="360" height="270" src="#" class="attachment-360x270 size-360x270 wp-post-image" alt="" srcset="{{ asset('/assets/images/613-1024x1024.jpg') }}" sizes="(max-width: 360px) 100vw, 360px" />
                                                     <h5 class="hover-title-center">fdsfsdfdsa</h5>
                                                 </a>
-                                                <img alt="avatar" width=45 height=45 src="http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/bfi_thumb/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg" class="avatar avatar-96 photo origin round" >
+                                                <img alt="avatar" width=45 height=45 src="{{ asset('/assets/images/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg') }}" class="avatar avatar-96 photo origin round" >
                                             </header>
                                             <div class="thumb-caption">
                                                 <ul class="icon-list icon-group booking-item-rating-stars">
@@ -551,7 +551,7 @@
                                                     <img width="360" height="270" src="#" class="attachment-360x270 size-360x270 wp-post-image" alt="" srcset="{{ asset('/assets/images/613-1024x1024.jpg') }}" sizes="(max-width: 360px) 100vw, 360px" />
                                                     <h5 class="hover-title-center">fdsfsdfdsa</h5>
                                                 </a>
-                                                <img alt="avatar" width=45 height=45 src="http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/bfi_thumb/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg" class="avatar avatar-96 photo origin round" >
+                                                <img alt="avatar" width=45 height=45 src="{{ asset('/assets/images/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg') }}" class="avatar avatar-96 photo origin round" >
                                             </header>
                                             <div class="thumb-caption">
                                                 <ul class="icon-list icon-group booking-item-rating-stars">
@@ -583,7 +583,7 @@
                                                     <img width="360" height="270" src="#" class="attachment-360x270 size-360x270 wp-post-image" alt="" srcset="{{ asset('/assets/images/613-1024x1024.jpg') }}" sizes="(max-width: 360px) 100vw, 360px" />
                                                     <h5 class="hover-title-center">fdsfsdfdsa</h5>
                                                 </a>
-                                                <img alt="avatar" width=45 height=45 src="http://z8e0944c0fq469vst36jkhqn.wpengine.netdna-cdn.com/wp-content/uploads/bfi_thumb/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg" class="avatar avatar-96 photo origin round" >
+                                                <img alt="avatar" width=45 height=45 src="{{ asset('/assets/images/amaze_300x300-3260j5oo2yc3tktwqq29s0.jpg') }}" class="avatar avatar-96 photo origin round" >
                                             </header>
                                             <div class="thumb-caption">
                                                 <ul class="icon-list icon-group booking-item-rating-stars">
@@ -661,4 +661,5 @@ Accommodation Listing
 @endsection
 
 @section('jscript')
+<script type="text/javascript" src="{{ asset('/assets/js/ionrangeslider.js') }}"></script>
 @endsection

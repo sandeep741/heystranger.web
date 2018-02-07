@@ -61,17 +61,22 @@ class AccomVenuPromo extends Model
     }
     
     /**
-     * productImages
+     * accommoImages
      * @return
      * @since 0.1
-     * @author Sandeep Kumart
+     * @author Sandeep Kumar
      */
     public function accommoImages()
     {
         return $this->hasMany(AccomVenuPromosImage::class, 'accom_venu_promos_id');
     }
     
-    
+    /**
+     * getAccommodationById
+     * @return
+     * @since 0.1
+     * @author Sandeep Kumar
+     */
     public static function getAccommodationById($id){
         
         $arrCond = array('id' => $id);

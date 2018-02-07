@@ -56,14 +56,14 @@
                     array(
                     'name' => 'frm_package',
                     'id' => 'frm_package',
-                    'url' => route('listing_detail'),
+                    'url' => 'register-step1',
                     'autocomplete' => 'off',
                     'class' => 'form-horizontal',
-                    'files' => false,
-                    'method' => 'get'
+                    'files' => false
                     )
                     )
                     !!}
+                    
                         <div class="pricing-card">
                             <div class="pricing-header">
                                 <h5>{{ (isset($package) && !empty($package) && count($package) > 0 ? $package->name : '') }}</h5>

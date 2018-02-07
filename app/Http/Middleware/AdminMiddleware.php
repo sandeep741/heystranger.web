@@ -19,7 +19,7 @@ class AdminMiddleware {
             if ($role->name == 'admin') {
                 return $next($request);
             } else if ($role->name == 'partner') {
-                return redirect('partner');
+                return redirect('partner-dashboard');
             }
         }
 

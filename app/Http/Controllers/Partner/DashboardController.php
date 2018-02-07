@@ -17,13 +17,14 @@ class DashboardController extends Controller {
         try {
             $this->middleware('auth:admin');
             $this->middleware('partner');
+            $this->middleware('proofupload');
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
     }
 
     public function index() {
-        try {
+        try { dd('dfd');
             $user = Auth::guard('admin')->user();
             return view('partner.welcome')->with(compact('user'));
         } catch (Exception $ex) {

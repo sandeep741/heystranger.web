@@ -14,7 +14,7 @@
 
         </li>
         <li id="menu-item-1349" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1349">
-            <a href="#">Register</a>
+            <a href="{{ route('register') }}">Register</a>
 
         </li>
 

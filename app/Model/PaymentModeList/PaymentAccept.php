@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentAccept extends Model
 {
     /**
-     * deleteActivity
+     * deletePaymentAccept
      * @return
      * @since 0.1
      * @author Sandeep Kumar

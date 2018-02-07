@@ -11,18 +11,18 @@ Breadcrumbs::register('dashboard', function($breadcrumbs) {
 Breadcrumbs::register('accommlist.index', function($breadcrumbs) {
 
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push('Accommodation List', route('accommlist.index'));
+    $breadcrumbs->push('Listings Panel', route('accommlist.index'));
 });
 
 Breadcrumbs::register('accommlist.create', function($breadcrumbs) {
     $breadcrumbs->parent('accommlist.index');
-    $breadcrumbs->push('Add Accommodation', route('accommlist.create'));
+    $breadcrumbs->push('Add New Listing', route('accommlist.create'));
 });
 
 Breadcrumbs::register('accommlist.edit', function($breadcrumbs, $accommolist) {
 
     $breadcrumbs->parent('accommlist.index');
-    $breadcrumbs->push('Update Accommodation', route('accommlist.edit', $accommolist));
+    $breadcrumbs->push('Update New Listing', route('accommlist.edit', $accommolist));
 });
 
 ////////////////////////Amenity list//////////////////
@@ -142,51 +142,30 @@ Breadcrumbs::register('partner', function($breadcrumbs) {
     $breadcrumbs->push('Partner Dashboard', route('partner'));
 });
 
+Breadcrumbs::register('welcome_page', function($breadcrumbs) {
+
+    $breadcrumbs->push('Welcome Page', route('welcome_page'));
+});
+
 Breadcrumbs::register('accomodation.index', function($breadcrumbs) {
 
     $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Accommodation List', route('accomodation.index'));
+    $breadcrumbs->push('Listings Panel', route('accomodation.index'));
 });
 
 Breadcrumbs::register('accomodation.create', function($breadcrumbs) {
     $breadcrumbs->parent('accomodation.index');
-    $breadcrumbs->push('Add Accommodation', route('accomodation.create'));
+    $breadcrumbs->push('Add New Listing', route('accomodation.create'));
 });
 
 Breadcrumbs::register('accomodation.edit', function($breadcrumbs, $accommodation) {
     $breadcrumbs->parent('accomodation.index');
-    $breadcrumbs->push('Update Accommodation', route('accomodation.edit', $accommodation));
+    $breadcrumbs->push('Update New Listing', route('accomodation.edit', $accommodation));
 });
 
-Breadcrumbs::register('venue_confer_list', function($breadcrumbs) {
+Breadcrumbs::register('proof_payment', function($breadcrumbs) {
     $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Venue & Conference Listing', route('venue_confer_list'));
-});
-
-Breadcrumbs::register('add_venue_confer', function($breadcrumbs) {
-    $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Add Venue & Conference', route('add_venue_confer'));
-});
-
-Breadcrumbs::register('edit_venue_conference', function($breadcrumbs) {
-    $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Edit Venue & Conference', route('edit_venue_conference'));
-});
-
-/////////////////promotion//////////////////
-Breadcrumbs::register('promotion_list', function($breadcrumbs) {
-    $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Promotion Listing', route('promotion_list'));
-});
-
-Breadcrumbs::register('add_promotion', function($breadcrumbs) {
-    $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Add Promotion', route('add_promotion'));
-});
-
-Breadcrumbs::register('edit_promotion', function($breadcrumbs) {
-    $breadcrumbs->parent('partner');
-    $breadcrumbs->push('Edit Promotion', route('edit_promotion'));
+    $breadcrumbs->push('Upload Proof of Payment', route('proof_payment'));
 });
 // Home > About
 /*Breadcrumbs::register('about', function($breadcrumbs)

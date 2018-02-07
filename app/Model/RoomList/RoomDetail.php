@@ -17,6 +17,12 @@ class RoomDetail extends Model {
         return $this->belongsTo(RoomList::class, 'room_type_id');
     }
 
+    /**
+     * getRoomById
+     * @return
+     * @since 0.1
+     * @author Sandeep Kumar
+     */
     public static function getRoomById($id) {
 
         $arrCond = array('accom_venu_promos_id' => $id, 'status' => '1');
@@ -25,6 +31,12 @@ class RoomDetail extends Model {
         return ($datas ? $datas : []);
     }
     
+    /**
+     * deleteRoom
+     * @return
+     * @since 0.1
+     * @author Sandeep Kumar
+     */
     public static function deleteRoom($id) {
 
         $arrCond = array('accom_venu_promos_id' => $id, 'status' => '1');

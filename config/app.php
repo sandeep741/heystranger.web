@@ -180,6 +180,7 @@ return [
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\FormMacroServiceProvider::class,
+        Snowfire\Beautymail\BeautymailServiceProvider::class,
 
     ],
 

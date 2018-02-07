@@ -1,6 +1,8 @@
 jQuery(document).ready(function () {
 
-    $('#frm_accommodation').validate({// initialize the plugin
+    //////////////////////////////parter from validation start////////////////////////
+
+    $('#frm_accommodation').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
@@ -9,8 +11,8 @@ jQuery(document).ready(function () {
             state: {required: true},
             country: {required: true},
             city: {required: true},
-            contact_no: {minlength: 10, maxlength: 12, number: true},
-            alternate_no: {minlength: 10, maxlength: 12, number: true},
+            contact_no: {pattern: "(\\(.*\\))(\\s+)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\d)"},
+            alternate_no: {pattern: "(\\(.*\\))(\\s+)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\d)"},
             maxfile: true,
         },
         submitHandler: function (form) {
@@ -19,77 +21,141 @@ jQuery(document).ready(function () {
         }
     });
 
-    $('#frm_room').validate({// initialize the plugin
+    $('#frm_room').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
+            accommo_desc: {required: true},
+            "room_desc[]": "required",
+            "room_name[]": "required",
             "room_type[]": "required",
             "guest[]": "required",
-            "room_avail[]": "required",
-            "room_price[]": "number",
-            "venue_price[]": "number",
-            "confer_price[]": "number",
-            "room_short_desc[]": "required"
+            "room_qty[]": {required: true, number: true},
+            "room_price[]": {required: true, number: true},
+
+            venue_desc: {required: true},
+            "venue_short_descr[]": "required",
+            "venue_name[]": "required",
+            "venue_qty[]": {required: true, number: true},
+            "venue_price[]": {required: true, number: true},
+            "venue_price_per_seat[]": {required: true, number: true},
+
+            confer_desc: {required: true},
+            "confer_short_descr[]": "required",
+            "confer_name[]": "required",
+            "confer_qty[]": {required: true, number: true},
+            "confer_price[]": {required: true, number: true},
+            "confer_price_per_seat[]": {required: true, number: true},
+
+            "health_desc": "required",
+            "health_short_desc[]": "required",
+            "health_name[]": "required",
+            "treatment[]": "required",
+            "service_price[]": {required: true, number: true},
+
+            "is_room_promo[]": {required: true},
+            "room_promo_price[]": {required: true, number: true},
+            "room_from_date[]": {required: true},
+            "room_to_date[]": {required: true},
+            "room_promo_desc[]": {required: true},
+
+            "is_venue_promo[]": {required: true},
+            "venue_promo_price[]": {required: true, number: true},
+            "venue_from_date[]": {required: true},
+            "venue_to_date[]": {required: true},
+            "venue_promo_desc[]": {required: true},
+
+            "is_confer_promo[]": {required: true},
+            "confer_promo_price[]": {required: true, number: true},
+            "confer_from_date[]": {required: true},
+            "confer_to_date[]": {required: true},
+            "confer_promo_desc[]": {required: true},
+
+            "is_health_promo[]": {required: true},
+            "health_promo_price[]": {required: true, number: true},
+            "health_from_date[]": {required: true},
+            "health_to_date[]": {required: true},
+            "health_promo_desc[]": {required: true},
+
         },
         submitHandler: function (form) {
             form.submit();
         }
     });
 
-    $('#frm_activity').validate({// initialize the plugin
+    $('#frm_activity').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
-            
+            amenity_desc: {required: true},
+            "amenity_property[]": "required",
+            activity_desc: {required: true},
+            "activity_property[]": "required",
         },
         submitHandler: function (form) {
             form.submit();
         }
     });
 
-    $('#frm_policy').validate({// initialize the plugin
+    $('#frm_policy').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
-            
+            deposite: {required: true},
+            cancel: {required: true},
+            timein: {required: true},
+            timeout: {required: true},
+            "payment_type[]": "required",
+            acco_duration: {required: true},
+            corpo_deals: {required: true},
+            contract_deal: {required: true},
+            policy_terms: {required: true}
         },
         submitHandler: function (form) {
             form.submit();
         }
     });
 
-    $('#frm_meta').validate({// initialize the plugin
+    $('#frm_meta').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
+            title: {required: true},
+            keyword: {required: true},
+            meta_desc: {required: true}
         },
         submitHandler: function (form) {
             form.submit();
         }
     });
 
-    $('#frm_video').validate({// initialize the plugin
+    $('#frm_video').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
+            video_cond: {required: true},
+            video_link: {required: true, url: true},
+            lat: {required: true, latCoord: true},
+            long: {required: true, longCoord: true},
         },
         submitHandler: function (form) {
             form.submit();
         }
     });
-    
-    $('#frm_package').validate({// initialize the plugin
+    //////////////////////////////end here parter from////////////////////////
+
+    $('#frm_package').validate({
         debug: true,
         errorClass: 'text-danger',
         errorElement: 'span',
         rules: {
-            commision: {required: true, number: true, min:1, max:100},
-            vat: {number: true, min:1, max:100},
+            commision: {required: true, number: true, min: 1, max: 100},
+            vat: {number: true, min: 1, max: 100},
             price: {required: true, number: true}
         },
         submitHandler: function (form) {
@@ -292,6 +358,10 @@ $.validator.addMethod('longCoord', function (value, element) {
     return this.optional(element) ||
             value.length >= 4 && /^(?=.)-?((0?[8-9][0-9])|180|([0-1]?[0-7]?[0-9]))?(?:\.[0-9]{1,20})?$/.test(value);
 }, 'Your Longitude format has error.')
+
+$.validator.methods.phoneSA = function (value, element) {
+    return this.optional(element) || /^(\\(.*\\))(\\s+)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\d)$/.test(value);
+}
 
 
 

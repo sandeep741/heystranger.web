@@ -34,24 +34,24 @@ class RoomDetailRequest extends Request {
         case 'POST':
         {
             return [
-                'room_desc' => 'required',
+                /*'room_desc' => 'required',
                 'room_type.0' => 'required',
                 'guest.0' => 'required',
                 'room_avail.0' => 'required',
                 'room_price.0' => 'required|regex:/^\d*(\.\d{2})?$/',
-                'room_short_desc.0' => 'required',
+                'room_short_desc.0' => 'required',*/
             ];
         }
         case 'PUT':
         case 'PATCH':
         {
             return [
-                'room_desc' => 'required',
+                /*'room_desc' => 'required',
                 'room_type.0' => 'required',
                 'guest.0' => 'required',
                 'room_avail.0' => 'required',
                 'room_price.0' => 'required|regex:/^\d*(\.\d{2})?$/',
-                'room_short_desc.0' => 'required',
+                'room_short_desc.0' => 'required',*/
             ];
         }
         default:break;

@@ -8,24 +8,24 @@ use DB;
 class AccomVenuPromosImage extends Model
 {
     /**
-     * updateData
+     * updateDataByAccomId
      * @param
-     * @return array arrEmployer
+     * @return array
      * @since 0.1
-     * @author Meghendra S Yadav
+     * @author Sandeep Kumar
      */
-    public static function updateDataByProduct($input, $acco_id)
+    public static function updateDataByAccomId($input, $acco_id)
     {
         $data = self::where(['accom_venu_promos_id' => (int) $acco_id])->update($input);
         return $data;
     }
 
     /**
-     * updateData
+     * updateDataByImage
      * @param
-     * @return array arrEmployer
+     * @return array
      * @since 0.1
-     * @author Meghendra S Yadav
+     * @author Sandeep Kumar
      */
     public static function updateDataByImage($input, $image_id)
     {
@@ -34,11 +34,11 @@ class AccomVenuPromosImage extends Model
     }
     
     /**
-     * updateData
+     * getImagesById
      * @param
-     * @return array arrEmployer
+     * @return array
      * @since 0.1
-     * @author Meghendra S Yadav
+     * @author Sandeep Kumar
      */
     public static function getImagesById($id) {
 

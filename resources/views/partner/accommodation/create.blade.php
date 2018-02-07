@@ -5,41 +5,15 @@
     <!-- Horizontal form options -->
     <div class="row">
         <div class="tabbable tab-content-bordered content-group-lg">
-            <ul class="nav nav-tabs nav-lg nav-tabs-highlight">
 
-                <li class="{{ (empty(session()->get('tab_type'))) ? 'active' : '' }}">
-                    <a href="#accommodation" data-toggle="{{ (session()->get('tab_type') < 1) ? 'tab' : '' }}">
-                        Accommodation Detail <span class="status-mark position-right border-danger"></span>
-                    </a>
-                </li>
-                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '2') ? 'in active' : '' }}">
-                    <a href="#rooms" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '2') ? 'tab' : '' }}">
-                        Room<span class="status-mark position-right border-success"></span>
-                    </a>
-                </li>
-                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'active' : '' }}">
-                    <a href="#activity" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'tab' : '' }}">
-                        Activities <span class="status-mark position-right border-success"></span>
-                    </a>
-                </li>
-                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'active' : '' }}">
-                    <a href="#policy" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '4') ? 'tab' : '' }}">
-                        Policies <span class="status-mark position-right border-success"></span>
-                    </a>
-                </li>
-                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'active' : '' }}">
-                    <a href="#keywords" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '5') ? 'tab' : '' }}">
-                        Keywords & Meta Tags <span class="status-mark position-right border-success"></span>
-                    </a>
-                </li>
-                <li class="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'active' : '' }}">
-                    <a href="#videomap" data-toggle="{{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '6') ? 'tab' : '' }}">
-                        Video & Map <span class="status-mark position-right border-warning"></span>
-                    </a>
-                </li>
+            @include('admin.layouts.partner-tab')
+            
 
-            </ul>
             <div class="tab-content">
+
+                <?php
+                $drop_down_yes = App\Helpers\Helper::dropDownYesNo('choose here');
+                ?>
 
                 <!---Accommodation form--->
                 <div class="tab-pane fade {{ (empty(session()->get('tab_type'))) ? 'in active' : '' }} has-padding" id="accommodation">
@@ -58,7 +32,7 @@
                     !!}
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h5 class="panel-title">Accommodation Detail</h5>
+                            <h5 class="panel-title">Listing details</h5>
                         </div>
                         <div class="panel-body">
 
@@ -169,7 +143,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('contact_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Contact Number']) !!}
+                                    {!! Form::text('contact_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Contact Number Ex: (+27) 00 000 0000']) !!}
                                     @if ($errors->has('contact_no'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('contact_no') }}</strong>
@@ -183,7 +157,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('alternate_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Alternate no']) !!}
+                                    {!! Form::text('alternate_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Alternate no Ex: (+27) 00 000 0000']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('alternate_no') }}</strong>
@@ -193,7 +167,7 @@
                                 </div>
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {{ Form::file('accomm_images[]', ['id' => 'acco_image', 'class' => 'file-styled maxfile', 'multiple' => true]) }}
+                                    {{ Form::file('accomm_images[]', ['id' => 'acco_image', 'title' => 'press ctrl to select more than one image', 'class' => 'file-styled maxfile', 'multiple' => true]) }}
                                     @if ($errors->has('accomm_images'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('accomm_images') }}</strong>
@@ -207,7 +181,7 @@
                                 <label class="col-lg-3 control-label">Establishment Detail:</label>
 
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    {!! Form::textarea('establish_details', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a description about your establishment']) !!}
+                                    {!! Form::textarea('establish_details', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a short description about your establishment']) !!}
                                     @if ($errors->has('establish_details'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('establish_details') }}</strong>
@@ -219,7 +193,7 @@
                             </div>
 
                             <div class="text-right">
-                                <button type="submit" name="acco" value="" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="acco" value="" class="btn btn-primary">Next Section</button>
                             </div>
                         </div>
                     </div>
@@ -244,157 +218,246 @@
 
                     <div class="panel panel-flat">
                         <div class="panel-heading">
-                            <h5 class="panel-title">Rooms</h5>
+                            <h5 class="panel-title">Do you have Accommodation facilities</h5>
                         </div>
+
+                        <?php
+                        $room_type = [];
+                        $room_type[] = array(
+                            'value' => '',
+                            'display' => 'Type of Rooms *',
+                            'data-icon' => 'stumbleupon'
+                        );
+
+                        if (isset($arr_room) && !empty($arr_room)) {
+                            foreach ($arr_room as $value) {
+                                $room_type[] = array(
+                                    'value' => $value->id,
+                                    'display' => $value->name,
+                                    'data-icon' => 'stumbleupon'
+                                );
+                            }
+                        }
+
+                        $room_cap = [];
+
+                        $room_cap[] = array(
+                            'value' => '',
+                            'display' => 'Max Guest *',
+                            'data-icon' => 'stumbleupon'
+                        );
+
+                        for ($i = 1; $i <= 50; $i++) {
+
+                            $room_cap[] = array(
+                                'value' => $i,
+                                'display' => $i,
+                                'data-icon' => 'stumbleupon'
+                            );
+                        }
+                        ?>
+
+
                         <div class="panel-body">
 
-
-                            <div class="form-group">
-                                <label class="col-lg-1 control-label">Description:</label>
-                                <div class="col-lg-9">
-                                    {!! Form::textarea('room_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Accommodation *']) !!}
-                                    @if ($errors->has('room_desc'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_desc') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group parentss">
-
-                                <div class="col-md-2">
-
-                                    {{-- Form::select('room_type[]',[''=>'Select type of Room']+@$arr_room->pluck('name','id')->toArray(), null,['class'=>'select-icons']) --}}
-
-                                    <?php
-                                    $room_type = [];
-                                    $room_type[] = array(
-                                        'value' => '',
-                                        'display' => 'Type of Room *',
-                                        'data-icon' => 'stumbleupon'
-                                    );
-
-                                    if (isset($arr_room) && !empty($arr_room)) {
-                                        foreach ($arr_room as $value) {
-                                            $room_type[] = array(
-                                                'value' => $value->id,
-                                                'display' => $value->name,
-                                                'data-icon' => 'stumbleupon'
-                                            );
-                                        }
-                                    }
-
-                                    $room_cap = [];
-
-                                    $room_cap[] = array(
-                                        'value' => '',
-                                        'display' => 'Max Guest *',
-                                        'data-icon' => 'stumbleupon'
-                                    );
-
-                                    for ($i = 1; $i <= 50; $i++) {
-
-                                        $room_cap[] = array(
-                                            'value' => $i,
-                                            'display' => $i,
-                                            'data-icon' => 'stumbleupon'
-                                        );
-                                    }
-                                    ?>
-                                    {!! Form::fancyselect('room_type[]', $room_type, null, ['class'=>'select-icons required']) !!}
-
-                                    @if ($errors->has('room_type.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_type.0') }}</strong>
-                                    </span>
-                                    @endif
-
-                                </div>
-
-                                <div class="col-md-2">
-
-                                    {!! Form::fancyselect('guest[]', $room_cap, null, ['class'=>'select-icons required']) !!}
-
-                                    @if ($errors->has('guest.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('guest.0') }}</strong>
-                                    </span>
-                                    @endif
-
-                                </div>
-
-                                <div class="col-md-2">
-
-                                    {!! Form::text('room_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}
-                                    @if ($errors->has('room_avail.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_avail.0') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-
-
-
-                                <div class="col-md-2">
-                                    {!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Room Price *']) !!}
-                                    @if ($errors->has('room_price.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_price.0') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-
-                                <div class="col-md-2">
-                                    {!! Form::text('room_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
-                                    @if ($errors->has('room_short_desc.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_short_desc.0') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-
-                                <div class="col-md-2">
-                                    {{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'file-styled', 'multiple' => false]) }}
-                                    @if ($errors->has('room_img'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('room_img') }}</strong>
-                                    </span>
-                                    @endif
-                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
-
-                                </div>
-                            </div>
-
-                            <a href="javascript:void(0)" class='btn btn-success btn-add-more' >Add More</a>
-
-
-                            <h5>Do you have Venue & Conference facilities at this property</h5>			
-
                             <div class="form-group">
 
                                 <div class="col-md-2">
-                                    <select  id='condit' name="ven_con_cond" data-placeholder="Choose Here" class="select-icons" >
-                                        <option value="">Choose Here</option>	
-
-                                        <option data-icon="stumbleupon" value="Y">Yes</option>
-                                        <option data-icon="stumbleupon" value="N">No</option>
-
-                                    </select>
+                                    {!! Form::fancyselect('is_accommo', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['id' => 'select_accommo', 'class'=>'select-icons']) !!}
                                 </div>
 
                             </div>
-                            <div id='cv'>
 
-                                <h6>Venue</h6>
+                            <div id="accom_faclity">
+                                <div class="form-group">
+                                    <label class="col-lg-1 control-label">Description:</label>
+                                    <div class="col-lg-9">
+                                        {!! Form::textarea('accommo_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a short description about your Accommodation *']) !!}
+                                        @if ($errors->has('accommo_desc'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('accommo_desc') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="col-lg-1 control-label">Room Description:</label>
+                                        <div class="col-lg-9">
+                                            {!! Form::textarea('room_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a short description about this Room *']) !!}
+                                            @if ($errors->has('room_desc.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_desc.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+
+                                            {!! Form::text('room_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Rooms Name *']) !!}
+                                            @if ($errors->has('room_name.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_name.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            {!! Form::fancyselect('room_type[]', $room_type, null, ['class'=>'select-icons required']) !!}
+
+                                            @if ($errors->has('room_type.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_type.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            {!! Form::fancyselect('guest[]', $room_cap, null, ['class'=>'select-icons required']) !!}
+
+                                            @if ($errors->has('guest.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('guest.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            {!! Form::number('room_qty[]', null, ['min' => '0', 'class' => 'form-control required', 'placeholder' => 'Rooms Quantity *']) !!}
+                                            @if ($errors->has('room_avail.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_avail.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Price per Person *']) !!}
+                                            @if ($errors->has('room_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_price.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                            @if ($errors->has('room_img'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_img') }}</strong>
+                                            </span>
+                                            @endif
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+
+                                        <div class="col-sm-2">
+                                            <div class="edit-prod-image-cls">
+                                                <span class="prod-img-span" style="position: relative;">
+                                                    @if(!empty($room_detail->room_image) && file_exists(public_path('room_images' . '/'. $room_detail->id.'_'.$room_detail->room_image)))
+                                                    <img src="{{ url('/')}}/room_images/{{ $room_detail->id }}_{{ $room_detail->room_image }}" height="140" width="140"/>
+                                                    @else
+                                                    <img src="{{ url('/')}}/assets/images/no-image.png" height="140" width="140"/>
+                                                    @endif
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="col-md-2">    
+                                                <label class="control-label">Promotion:</label>
+                                            </div>
+
+                                            <div class="col-md-3">    
+                                                {!! Form::fancyselect('is_room_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), (isset($room_detail) && !empty($room_detail) && count($room_detail) > 0 ? $room_detail->is_promo : ''), ['class'=>'select-icons room_promo']) !!}
+
+                                                {{ Form::input('hidden', 'promoval[]', (isset($room_detail) && !empty($room_detail) && count($room_detail) > 0 ? $room_detail->is_promo : ''), ['readonly' => 'readonly']) }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group room_promo_div" style="display:none;">
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('room_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}
+                                            @if ($errors->has('room_promo_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_promo_price.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <label class="col-lg-1 control-label">From Date:</label>
+                                        <div class="col-md-2">
+
+                                            {!! Form::date('room_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}
+                                            @if ($errors->has('room_from_date.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_from_date.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <label class="col-lg-1 control-label">Till Date:</label>
+                                        <div class="col-md-2">
+                                            {!! Form::date('room_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}
+                                            @if ($errors->has('room_from_date.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_from_date.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            {!! Form::textarea('room_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a short description about your term for this offer *']) !!}
+                                            @if ($errors->has('room_promo_desc.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('room_promo_desc.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+
+                                    <a href="javascript:void(0)" class='btn btn-success btn-add-more' >Add More</a>
+                                </div>
+                            </div>
+
+
+                            <h5>Do you have Venue facilities</h5>			
+
+                            <div class="form-group">
+
+                                <div class="col-md-2">
+                                    {!! Form::fancyselect('is_venu', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['id' => 'select_venu', 'class'=>'select-icons']) !!}
+                                </div>
+
+                            </div>
+                            <div id='venu_faclity'>
 
                                 <div class="form-group">
                                     <label class="col-lg-1 control-label">Description:</label>
                                     <div class="col-lg-9">
 
 
-                                        {!! Form::textarea('venue_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Venue facility *']) !!}
+                                        {!! Form::textarea('venue_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Venue facility *']) !!}
                                         @if ($errors->has('venue_desc'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('venue_desc') }}</strong>
@@ -404,71 +467,161 @@
                                     </div>
                                 </div>	
 
-                                <div class="form-group venu-parents">
+                                <div class="form-group">
 
-                                    <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="col-lg-1 control-label">Venu Description:</label>
+                                        <div class="col-lg-9">
 
-                                        {!! Form::text('venue_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Name *']) !!}
-                                        @if ($errors->has('venue_name'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_name') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-
-                                    <div class="col-md-2">
-
-                                        {!! Form::text('venue_capacity[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
-                                        @if ($errors->has('capacity.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('capacity.0') }}</strong>
-                                        </span>
-                                        @endif
-
-
+                                            {!! Form::textarea('venue_short_descr[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about this Venue *']) !!}
+                                            @if ($errors->has('venue_short_descr.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_short_descr.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
 
                                     </div>
 
+                                    <div class="form-group">
+                                        <div class="col-md-2">
 
-                                    <div class="col-md-2">
-                                        {!! Form::text('venue_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Venue Price *']) !!}
-                                        @if ($errors->has('venue_price.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_price.0') }}</strong>
-                                        </span>
-                                        @endif
+                                            {!! Form::text('venue_name[]', null, ['class' => 'form-control', 'placeholder' => 'Venue Name']) !!}
+                                            @if ($errors->has('venue_name'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_name') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            {!! Form::number('venue_qty[]', null, ['min' => '0', 'class' => 'form-control', 'placeholder' => 'Max Capacity']) !!}
+                                            @if ($errors->has('venue_capacity.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_capacity.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('venue_price[]', null, ['class' => 'form-control', 'placeholder' => 'Venue rental price']) !!}
+                                            @if ($errors->has('venue_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_price.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('venue_price_per_seat[]', null, ['class' => 'form-control', 'placeholder' => 'price per seat']) !!}
+                                            @if ($errors->has('venue_price_per_seat.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_price_per_seat.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {{ Form::file('venue_img[]', ['id' => 'venue_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                            @if ($errors->has('venue_img.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_img.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <div class="col-md-8">
+                                            <div class="col-md-2">    
+                                                <label class="control-label">Promotion:</label>
+                                            </div>
+
+                                            <div class="col-md-3">    
+                                                {!! Form::fancyselect('is_venue_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['class'=>'select-icons venue_promo']) !!}
+                                                @if ($errors->has('is_venue_promo.0'))
+                                                <span class="help-block" style = "display:block;color:red;">
+                                                    <strong>{{ $errors->first('is_venue_promo.0') }}</strong>
+                                                </span>
+                                                @endif
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group venue_promo_div" style="display:none;">
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('venue_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}
+                                            @if ($errors->has('venue_promo_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_promo_price.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <label class="col-lg-1 control-label">From Date:</label>
+                                        <div class="col-md-2">
+
+                                            {!! Form::date('venue_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}
+                                            @if ($errors->has('venue_from_date.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_from_date.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <label class="col-lg-1 control-label">Till Date:</label>
+                                        <div class="col-md-2">
+                                            {!! Form::date('venue_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}
+                                            @if ($errors->has('venue_from_date.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_from_date.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            {!! Form::textarea('venue_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a short description about your term for this offer *']) !!}
+                                            @if ($errors->has('venue_promo_desc.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('venue_promo_desc.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
 
                                     </div>
 
 
-                                    <div class="col-md-2">
-                                        {!! Form::text('venue_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
-                                        @if ($errors->has('venue_short_descr.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_short_descr.0') }}</strong>
-                                        </span>
-                                        @endif
 
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        {{ Form::file('venue_img[]', ['id' => 'venue_img', 'class' => 'file-styled', 'multiple' => false]) }}
-                                        @if ($errors->has('venue_img.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('venue_img.0') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                                    <a href="javascript:void(0)" class="venu-add-more btn btn-success" >Add More</a>
                                 </div>
-                                <a href="javascript:void(0)" class="venu-add-more btn btn-success" >Add More</a>
-                                <br>
-                                <br>
-                                <h6>Conference</h6>
+                            </div>
 
+
+                            <h5>Do you have Conference facilities</h5>
+
+                            <div class="form-group">
+
+                                <div class="col-md-2">
+                                    {!! Form::fancyselect('is_confer', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['id' => 'select_confer', 'class'=>'select-icons']) !!}
+                                </div>
+
+                            </div>
+
+                            <div id='confer_faclity'>
                                 <div class="form-group">
                                     <label class="col-lg-1 control-label">Description:</label>
                                     <div class="col-lg-9">
-                                        {!! Form::textarea('confer_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a description about your Conference facility *']) !!}
+                                        {!! Form::textarea('confer_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Conference Facility']) !!}
                                         @if ($errors->has('confer_desc'))
                                         <span class="help-block" style = "display:block;color:red;">
                                             <strong>{{ $errors->first('confer_desc') }}</strong>
@@ -477,74 +630,341 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group confer-parents">
+                                <div class="form-group">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-1 control-label">Conference Description:</label>
+                                        <div class="col-lg-9">
+                                            {!! Form::textarea('confer_short_descr[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about this Conference *']) !!}
+                                            @if ($errors->has('confer_short_descr.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_short_descr.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+
+                                            {!! Form::text('confer_name[]', null, ['class' => 'form-control', 'placeholder' => 'Conference Name']) !!}
+                                            @if ($errors->has('confer_name.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_name.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            {!! Form::number('confer_qty[]', null, ['min' => '0', 'class' => 'form-control', 'placeholder' => 'Max Capacity']) !!}
+                                            @if ($errors->has('confer_avail.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_avail.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('confer_price[]', null, ['class' => 'form-control', 'placeholder' => 'Conference rental price']) !!}
+                                            @if ($errors->has('confer_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_price.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('confer_price_per_seat[]', null, ['class' => 'form-control', 'placeholder' => 'Price per seat']) !!}
+                                            @if ($errors->has('confer_price_per_seat.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_price_per_seat.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {{ Form::file('confer_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
+                                            @if ($errors->has('confer_img.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_img.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">  
+
+                                    <div class="col-md-8">
+                                        <div class="col-md-2">    
+                                            <label class="control-label">Promotion:</label>
+                                        </div>
+
+                                        <div class="col-md-3">    
+                                            {!! Form::fancyselect('is_confer_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), (isset($confer_data) && !empty($confer_data) && count($confer_data) > 0 ? $confer_data->is_promo : ''), ['class'=>'select-icons confer_promo']) !!}
+                                            @if ($errors->has('is_confer_promo.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('is_confer_promo.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group confer_promo_div" style="display:none;">
 
                                     <div class="col-md-2">
-
-                                        {!! Form::text('confer_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Name *']) !!}
-                                        @if ($errors->has('confer_name.0'))
+                                        {!! Form::text('confer_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}
+                                        @if ($errors->has('confer_promo_price.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_name.0') }}</strong>
+                                            <strong>{{ $errors->first('confer_promo_price.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
 
+                                    <label class="col-lg-1 control-label">From Date:</label>
                                     <div class="col-md-2">
 
-                                        {!! Form::text('confer_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}
-                                        @if ($errors->has('confer_avail.0'))
+                                        {!! Form::date('confer_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}
+                                        @if ($errors->has('confer_from_date.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_avail.0') }}</strong>
+                                            <strong>{{ $errors->first('confer_from_date.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
 
-
+                                    <label class="col-lg-1 control-label">Till Date:</label>
                                     <div class="col-md-2">
-                                        {!! Form::text('confer_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Conference Price *']) !!}
-                                        @if ($errors->has('confer_price.0'))
+                                        {!! Form::date('confer_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}
+                                        @if ($errors->has('confer_from_date.0'))
                                         <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_price.0') }}</strong>
-                                        </span>
-                                        @endif
-
-                                    </div>
-
-
-                                    <div class="col-md-2">
-                                        {!! Form::text('confer_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}
-                                        @if ($errors->has('confer_short_descr.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_short_descr.0') }}</strong>
-                                        </span>
-                                        @endif
-
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        {{ Form::file('confer_img[]', ['id' => 'acco_image', 'class' => 'file-styled', 'multiple' => false]) }}
-                                        @if ($errors->has('confer_img.0'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('confer_img.0') }}</strong>
+                                            <strong>{{ $errors->first('confer_from_date.0') }}</strong>
                                         </span>
                                         @endif
                                     </div>
+
+                                    <div class="col-lg-4">
+                                        {!! Form::textarea('confer_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a short description about your term for this offer *']) !!}
+                                        @if ($errors->has('confer_promo_desc.0'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('confer_promo_desc.0') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+
                                 </div>
 
                                 <a href="javascript:void(0)" class="confer-add-more btn btn-success">Add More</a>
                             </div>
 
-                            <div class="text-right">
-                                <button type="submit" name="room" value="" class="btn btn-primary">Submit</button>
+
+                            <h5>Do you have Health / Spa facilities</h5>
+
+                            <div class="form-group">
+
+                                <div class="col-md-2">
+                                    {!! Form::fancyselect('is_health', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['id' => 'select_health', 'class'=>'select-icons']) !!}
+                                </div>
+
                             </div>
 
+                            <div id='health_faclity'>
 
+
+                                <div class="form-group">
+                                    <label class="col-lg-1 control-label">Description:</label>
+                                    <div class="col-lg-9">
+                                        {!! Form::textarea('health_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Health / Spa']) !!}
+                                        @if ($errors->has('health_desc'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('health_desc') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-1 control-label">Service Description:</label>
+                                        <div class="col-lg-9">
+                                            {!! Form::textarea('health_short_desc[]', (isset($arr_confer_detail) && !empty($arr_confer_detail) && count($arr_confer_detail) > 0 ? $arr_confer_detail[0]->short_desc : ''), ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about this Service *']) !!}
+                                            @if ($errors->has('health_short_desc.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('health_short_desc.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+
+                                            {!! Form::text('health_name[]', null, ['class' => 'form-control', 'placeholder' => 'Name Service']) !!}
+                                            @if ($errors->has('health_name.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('health_name.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-2">
+
+                                            {!! Form::text('treatment[]', null, ['class' => 'form-control', 'placeholder' => 'Name treatment']) !!}
+                                            @if ($errors->has('treatment.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('treatment.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('service_price[]', null, ['class' => 'form-control', 'placeholder' => 'Price per treatment']) !!}
+                                            @if ($errors->has('service_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('service_price.0') }}</strong>
+                                            </span>
+                                            @endif
+
+                                        </div>
+
+
+
+                                        <div class="col-md-2">
+                                            {{ Form::file('health_img[]', ['id' => 'health_img', 'class' => 'file-styled', 'multiple' => false]) }}
+                                            @if ($errors->has('health_img.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('health_img.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-sm-2">
+                                            <div class="edit-prod-image-cls">
+                                                <span class="prod-img-span" style="position: relative;">
+
+                                                    @if(!empty($health_data->health_image) && file_exists(public_path('health_images' . '/'. $health_data->id.'_'.$health_data->health_image)))
+
+                                                    <img src="{{ url('/')}}/health_images/{{ $health_data->id }}_{{ $health_data->health_image }}" height="140" width="140"/>
+                                                    @else
+                                                    <img src="{{ url('/')}}/assets/images/no-image.png" height="140" width="140"/>
+                                                    @endif
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="col-md-2">    
+                                                <label class="control-label">Promotion:</label>
+                                            </div>
+
+                                            <div class="col-md-3">    
+                                                {!! Form::fancyselect('is_health_promo', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['class'=>'select-icons confer_promo']) !!}
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group health_promo_div" style="display: none;">
+
+                                        <div class="col-md-2">
+                                            {!! Form::text('health_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}
+                                            @if ($errors->has('health_promo_price.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('health_promo_price.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <label class="col-lg-1 control-label">From Date:</label>
+                                        <div class="col-md-2">
+
+                                            {!! Form::date('health_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}
+                                            @if ($errors->has('health_from_date.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('health_from_date.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <label class="col-lg-1 control-label">Till Date:</label>
+                                        <div class="col-md-2">
+                                            {!! Form::date('health_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}
+                                            @if ($errors->has('health_from_date.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('health_from_date.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            {!! Form::textarea('health_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => 'Give a short description about your term for this offer *']) !!}
+                                            @if ($errors->has('health_promo_desc.0'))
+                                            <span class="help-block" style = "display:block;color:red;">
+                                                <strong>{{ $errors->first('confer_promo_desc.0') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+
+                                    <a href="javascript:void(0)" class="health-add-more btn btn-success">Add More</a>
+                                </div>
+                            </div>
+
+                            <h5>Do you have Transport facilities</h5>			
+
+                            <div class="form-group">
+
+                                <div class="col-md-2">
+                                    {!! Form::fancyselect('is_trans', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['id' => 'select_trans', 'class'=>'select-icons']) !!}
+                                </div>
+
+                            </div>
+
+                            <div id ="trans_faclity">
+
+                                <h6>Transport</h6>
+
+                                <div class="form-group">
+                                    <label class="col-lg-1 control-label">Description:</label>
+                                    <div class="col-lg-9">
+                                        {!! Form::textarea('trans_desc', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Transport facility']) !!}
+                                        @if ($errors->has('trans_desc'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('trans_desc') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                            <div class="text-right">
+                                <button type="submit" name="room" value="" class="btn btn-primary">Next Section</button>
+                            </div>
                         </div>
+
+
+
+
                     </div>
 
                     {!! Form::close() !!}
-
                 </div>
+
 
                 <!---Activity form--->
                 <div class="tab-pane {{ (!empty(session()->get('tab_type')) && session()->get('tab_type') == '3') ? 'in active' : '' }} fade has-padding" id="activity">
@@ -606,25 +1026,6 @@
                             );
                         }
                     }
-
-
-                    $shuttle_option = [];
-                    $shuttle_option = array(array(
-                            'value' => '',
-                            'display' => 'Shuttle Service *',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'Y',
-                            'display' => 'Yes',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'N',
-                            'display' => 'No',
-                            'data-icon' => 'stumbleupon'
-                        )
-                    );
                     ?>
 
                     <div class="panel panel-flat">
@@ -637,7 +1038,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('amenity_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Amenity description *']) !!}
+                                    {!! Form::textarea('amenity_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Amenities on property *']) !!}
                                     @if ($errors->has('amenity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('amenity_desc') }}</strong>
@@ -649,7 +1050,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Amenity on property:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('amenity_property[]', $amenity_option, null, ['class'=>'select-icons required', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('amenity_property[]', $amenity_option, null, ['class'=>'select-icons', 'placeholder' => 'Select Amenity on Property *', 'data-placeholder' => "Select Amenity on property *", 'multiple' => 'multiple']) !!}
 
                                     @if ($errors->has('amenity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
@@ -662,7 +1063,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity:</label>
                                 <div class="col-lg-10">
-                                    {!! Form::textarea('activity_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Activity description *']) !!}
+                                    {!! Form::textarea('activity_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Activities on property *']) !!}
                                     @if ($errors->has('activity_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_desc') }}</strong>
@@ -674,7 +1075,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Activity on Property :</label>
                                 <div class="col-lg-10">
-                                    {!! Form::multiselect('activity_property[]', $activity_option, null, ['class'=>'select-icons required', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('activity_property[]', $activity_option, null, ['class'=>'select-icons', 'placeholder' => 'Select Activity on Property *', 'data-placeholder' => "Select Activity on property *", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('activity_property'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('activity_property') }}</strong>
@@ -684,7 +1085,7 @@
                             </div>
 
                             <div class="form-group attract-parents">
-                                <h5>Popular Attraction and surroundings: Please provide as many details as possible</h5>
+                                <h5>Popular Attraction and Surroundings: Please provide as many details as possible</h5>
 
                                 <div class="col-md-4">
 
@@ -712,7 +1113,7 @@
 
                                 <div class="col-md-4">
 
-                                    {!! Form::text('approx_dist[]', null, ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}
+                                    {!! Form::text('approx_dist[]', null, ['class' => 'form-control required', 'placeholder' => 'Approximate Distance Example 5km']) !!}
                                     @if ($errors->has('approx_dist.0'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('approx_dist.0') }}</strong>
@@ -724,25 +1125,11 @@
                             </div>
                             <a href="javascript:void(0)" class="attract-add-more btn btn-success">Add More</a>
 
-                            <div class="panel-heading">
-                                <h6 class="panel-title">Transport</h6>
-                            </div> 			
+                            {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
 
-                            <div class="form-group">
-                                <label class="col-lg-8 control-label">Transport / Shuttle Service</label>
-                                <div class="col-lg-12">
-                                    {!! Form::fancyselect('shuttle', $shuttle_option, null, ['class'=>'select-icons required']) !!}
-                                    @if ($errors->has('shuttle'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('shuttle') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
-                            </div>
 
                             <div class="text-right">
-                                <button type="submit" name="activity" value="" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="activity" value="" class="btn btn-primary">Next Section</button>
                             </div>
 
                         </div>
@@ -767,9 +1154,8 @@
                     )
                     )
                     !!}
-                    
+
                     <?php
-                    
                     $payment_option = [];
 
                     if (!empty($arr_payment) && count($arr_payment) > 0) {
@@ -781,11 +1167,11 @@
                             );
                         }
                     }
-                    
+
                     $acco_option = [];
                     $acco_option = array(array(
                             'value' => '',
-                            'display' => 'Select Duration of Accommodation *',
+                            'display' => 'Duration Of Accommodation *',
                             'data-icon' => 'stumbleupon'
                         ),
                         array(
@@ -804,62 +1190,9 @@
                             'data-icon' => 'stumbleupon'
                         )
                     );
-
-
-                    $corporate_option = [];
-                    $corporate_option = array(array(
-                            'value' => '',
-                            'display' => 'Select Corporate Deals *',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'Y',
-                            'display' => 'Yes',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'N',
-                            'display' => 'No',
-                            'data-icon' => 'stumbleupon'
-                        )
-                    );
                     
-                    $contractor_option = [];
-                    $contractor_option = array(array(
-                            'value' => '',
-                            'display' => 'Select Contractors Deals *',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'Y',
-                            'display' => 'Yes',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'N',
-                            'display' => 'No',
-                            'data-icon' => 'stumbleupon'
-                        )
-                    );
-                    
-                    $extra_option = [];
-                    $extra_option = array(array(
-                            'value' => '',
-                            'display' => 'Select Extra Condition *',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'Y',
-                            'display' => 'Yes',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'N',
-                            'display' => 'No',
-                            'data-icon' => 'stumbleupon'
-                        )
-                    );
-                    
+                    $corporate_deal_yes = App\Helpers\Helper::dropDownYesNo('Corporate Deals');
+                    $contractor_deal_yes = App\Helpers\Helper::dropDownYesNo('Contractors Deals');
                     ?>
 
                     <div class="panel panel-flat">
@@ -872,30 +1205,30 @@
                             <div class="form-group extra-parents">
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('deposite', config('constants.policy')['policy_share'].'% Deposit', ['class' => 'form-control required', 'readonly' => 'true']) !!}
+                                    {!! Form::text('deposite', config('constants.policy')['policy_share'].'% Deposit', ['class' => 'form-control', 'readonly' => 'true']) !!}
                                 </div>
 
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('cancel', null, ['class' => 'form-control required', 'placeholder' => 'Enter Cancellation Policy *']) !!}
+                                    {!! Form::text('cancel', null, ['class' => 'form-control', 'placeholder' => 'Enter Cancellation Policy *']) !!}
                                     @if ($errors->has('cancel'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('cancel') }}</strong>
                                     </span>
                                     @endif
-                                    
+
                                 </div>
                             </div>
 
                             <h6> 
                                 {{ config('constants.policy')['desc'] }}
-                                
+
                             </h6>
 
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::text('timein', null, ['class' => 'form-control required', 'placeholder' => 'Enter Time In *']) !!}
+                                    {!! Form::text('timein', null, ['class' => 'form-control', 'placeholder' => 'Enter Time In *']) !!}
                                     @if ($errors->has('timein'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('timein') }}</strong>
@@ -928,7 +1261,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6">
-                                    {!! Form::multiselect('payment_type[]', $payment_option, null, ['class'=>'select-icons required', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
+                                    {!! Form::multiselect('payment_type[]', $payment_option, null, ['class'=>'select-icons', 'placeholder' => 'Payment accepted at this facility *', 'data-placeholder' => "Payment accepted at this facility *", 'multiple' => 'multiple']) !!}
                                     @if ($errors->has('payment_type'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('payment_type') }}</strong>
@@ -939,14 +1272,14 @@
 
                                 <div class="col-lg-6">
                                     {!! Form::text('lang_spoken', null, ['class' => 'form-control', 'placeholder' => 'Language Spoken At Facility']) !!}
-                                    
+
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                
+
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('acco_duration', $acco_option, null, ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('acco_duration', $acco_option, null, ['class'=>'select-icons']) !!}
                                     @if ($errors->has('acco_duration'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('acco_duration') }}</strong>
@@ -955,17 +1288,17 @@
                                 </div>
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('corpo_deals', $corporate_option, null, ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('corpo_deals', $corporate_deal_yes, null, ['class'=>'select-icons']) !!}
                                     @if ($errors->has('corpo_deals'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('corpo_deals') }}</strong>
                                     </span>
                                     @endif
-                                    
+
                                 </div>
 
                                 <div class="col-lg-4">
-                                    {!! Form::fancyselect('contract_deal', $contractor_option, null, ['class'=>'select-icons required']) !!}
+                                    {!! Form::fancyselect('contract_deal', $contractor_deal_yes, null, ['class'=>'select-icons']) !!}
                                     @if ($errors->has('contract_deal'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('contract_deal') }}</strong>
@@ -978,7 +1311,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Your  Terms</label>
                                 <div class="col-lg-9">
-                                    {!! Form::textarea('policy_terms', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Terms *']) !!}
+                                    {!! Form::textarea('policy_terms', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Give a short description about your Terms *']) !!}
                                     @if ($errors->has('policy_terms'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('policy_terms') }}</strong>
@@ -989,53 +1322,12 @@
                             </div>
 
 
-                            <h5>Do you offer extra's ( Example:Flower )</h5>			   
-
-                            <div class="form-group extra-parents">
-
-                                <div class="col-md-3">
-                                    {!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item Name *']) !!}
-                                    @if ($errors->has('item.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('item.0') }}</strong>
-                                    </span>
-                                    @endif
-
-                                </div>
-
-                                <div class="col-md-3">
-                                    {!! Form::text('extra_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Enter Price *']) !!}
-                                    @if ($errors->has('extra_price.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('extra_price.0') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                
-                                <div class="col-md-3">
-                                    {!! Form::fancyselect('extra_cond[]', $extra_option, null, ['class'=>'select-icons required']) !!}
-                                    @if ($errors->has('extra_cond.0'))
-                                    <span class="help-block" style = "display:block;color:red;">
-                                        <strong>{{ $errors->first('extra_cond.0') }}</strong>
-                                    </span>
-                                    @endif
-                                   
-                                </div>
-
-                                <div class="col-md-3">
-                                    {{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'file-styled', 'multiple' => false]) }}
-                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
-                                </div>
+                            <div class="text-right">
+                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                                <button type="submit" name="policy" value="" class="btn btn-primary">Next Section</button>
                             </div>
-
-                            <a href="javascript:void(0)" class='btn btn-success extra-add-more'>Add</a>
-                        
-                        
-                        <div class="text-right">
-                            <button type="submit" name="policy" value="" class="btn btn-primary">Submit</button>
                         </div>
-                            </div>
-                </div>
+                    </div>
                     {!! Form::close() !!}
                 </div>
 
@@ -1053,55 +1345,55 @@
                     )
                     )
                     !!}
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <h5 class="panel-title">Keywords & Metatags</h5>
-                            </div>
-                            
-                            <div class="panel-body">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Keywords & Metatags</h5>
+                        </div>
 
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Title:</label>
-                                    <div class="col-lg-9">
-                                        {!! Form::text('title', null, ['class' => 'form-control required', 'placeholder' => 'Enter Your Title *']) !!}
-                                        @if ($errors->has('title'))
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Title:</label>
+                                <div class="col-lg-9">
+                                    {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Enter Your Title *']) !!}
+                                    @if ($errors->has('title'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                     @endif
-                                    </div>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Keywords:</label>
-                                    <div class="col-lg-9">
-                                        {!! Form::textarea('keyword', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Keywords here *']) !!}
-                                        @if ($errors->has('keyword'))
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Keywords:</label>
+                                <div class="col-lg-9">
+                                    {!! Form::textarea('keyword', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Enter your Keywords here *']) !!}
+                                    @if ($errors->has('keyword'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('keyword') }}</strong>
                                     </span>
                                     @endif
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Meta Tags:</label>
-                                    <div class="col-lg-9">
-                                        {!! Form::textarea('meta_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control required', 'placeholder' => 'Enter your Meta Tags here *']) !!}
-                                        @if ($errors->has('meta_desc'))
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Meta Tags:</label>
+                                <div class="col-lg-9">
+                                    {!! Form::textarea('meta_desc', null, ['rows' => 5, 'cols' => 5, 'class' => 'form-control', 'placeholder' => 'Enter your Meta Tags here *']) !!}
+                                    @if ($errors->has('meta_desc'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('meta_desc') }}</strong>
                                     </span>
                                     @endif
-                                    </div>
-                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
                                 </div>
+                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                            </div>
 
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Submit </button>
-                                </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Next Section </button>
                             </div>
                         </div>
+                    </div>
                     {!! Form::close() !!}
                 </div>
 
@@ -1119,102 +1411,77 @@
                     )
                     )
                     !!}
-                    
-                    
-                    <?php 
-                    $video_option = [];
-                    $video_option = array(array(
-                            'value' => '',
-                            'display' => 'Choose Here',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'Y',
-                            'display' => 'Yes',
-                            'data-icon' => 'stumbleupon'
-                        ),
-                        array(
-                            'value' => 'N',
-                            'display' => 'No',
-                            'data-icon' => 'stumbleupon'
-                        )
-                    );
-                    
-                    
-                    ?>
-                        <div class="panel panel-flat">
-                            <div class="panel-heading">
-                                <h5 class="panel-title">Video and Map</h5>
+
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Video and Map</h5>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-lg-6 control-label">Do you have any video link :</label>
+                                <div class="col-lg-12">
+                                    {!! Form::fancyselect('video_cond', $drop_down_yes, null, ['id'=>'vid_con', 'class'=>'select-icons']) !!}
+                                </div>
                             </div>
-                            <div class="panel-body">
-                                
-                                <div class="form-group">
-                                    <label class="col-lg-6 control-label">Do you have any video link :</label>
-                                    <div class="col-lg-12">
-                                        {!! Form::fancyselect('video_cond', $video_option, null, ['id'=>'vid_con', 'class'=>'select-icons required']) !!}
-                                    </div>
-                                </div>
 
 
-                                <div class="form-group" id="viddiv" style='display:none;'>
-                                    <label class="col-lg-3 control-label">Accommodation Video </label>
-                                    <div class="col-lg-9">
-                                        {!! Form::text('video_link', null, ['class' => 'form-control required url', 'placeholder' => 'Paste Your Accommodation Link here Eg-: http://example.com *']) !!}
-                                        @if ($errors->has('video_link'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('video_link') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                            <div class="form-group" id="viddiv" style='display:none;'>
+                                <label class="col-lg-3 control-label">Accommodation Video </label>
+                                <div class="col-lg-9">
+                                    {!! Form::text('video_link', null, ['class' => 'form-control', 'placeholder' => 'Paste Your Accommodation Link here Eg-: http://example.com *']) !!}
+                                    @if ($errors->has('video_link'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('video_link') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                <h4> Location</h4>							
+                            </div>
+                            <h4> Location</h4>							
 
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Latitude:</label>
-                                    <div class="col-lg-9">
-                                        {!! Form::text('lat', null, ['class' => 'form-control required latCoord', 'placeholder' => 'Enter Latitude *']) !!}
-                                        @if ($errors->has('lat'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('lat') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Latitude:</label>
+                                <div class="col-lg-9">
+                                    {!! Form::text('lat', null, ['class' => 'form-control', 'placeholder' => 'Enter Latitude Eg-: 00.000 *']) !!}
+                                    @if ($errors->has('lat'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('lat') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Longitude:</label>
-                                    <div class="col-lg-9">
-                                        {!! Form::text('long', null, ['class' => 'form-control required longCoord', 'placeholder' => 'Enter Longitude *']) !!}
-                                        @if ($errors->has('long'))
-                                        <span class="help-block" style = "display:block;color:red;">
-                                            <strong>{{ $errors->first('long') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Longitude:</label>
+                                <div class="col-lg-9">
+                                    {!! Form::text('long', null, ['class' => 'form-control', 'placeholder' => 'Enter Longitude Eg-: 00.000 *']) !!}
+                                    @if ($errors->has('long'))
+                                    <span class="help-block" style = "display:block;color:red;">
+                                        <strong>{{ $errors->first('long') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
+                                {{ Form::input('hidden', 'type', 'A', ['readonly' => 'readonly']) }}
+                            </div>
 
 
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Submit </button>
-                                </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
+                    </div>
                     {!! Form::close() !!}
                 </div>
 
-                </div>
-
-                
-                
             </div>
         </div>
     </div>
 </div>
 
+
 @endsection
 
 @section('pageTitle')
-Add Accommodation
+Add New Listing
 @endsection
 
 @section('addtional_css')
@@ -1231,41 +1498,95 @@ Add Accommodation
 <script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
 
 <script type="text/javascript">
-            //////////////////////////room add more////////////////////////
+
+//////////////////////////room add more////////////////////////
             var room_temp = '<div class="form-group parentss">'+
+                    
+            '<div class="form-group">'+
+            '<label class="col-lg-1 control-label">Room Description:</label>'+
+            '<div class="col-lg-9">'+
+            '{!! Form::textarea('room_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => "Give a short description about this Room *"]) !!}'+
+            '</div>'+
+            '</div>'+
+                                
+                                
+            '<div class="form-group">'+
             
             '<div class="col-md-2">'+
-           '{!! Form::fancyselect('room_type[]', $room_type, null, ['class'=>'form-control required select-icons']) !!}</div>'+
+            '{!! Form::text('room_name[]', null, ['class' => 'form-control', 'placeholder' => 'Rooms Name *']) !!}'+
+            '</div>'+
+            
+            '<div class="col-md-2">'+
+           '{!! Form::fancyselect('room_type[]', (isset($room_type) && !empty($room_type) ? $room_type : ''), null, ['class'=>'form-control select-icons']) !!}'+
+           '</div>'+
            
             '<div class="col-md-2">'+
-            '{!! Form::fancyselect('guest[]', $room_cap, null, ['class'=>'form-control required select-icons']) !!}'+
+            '{!! Form::fancyselect('guest[]', (isset($room_cap) && !empty($room_cap) ? $room_cap : ''), null, ['class'=>'form-control select-icons']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
-            '{!! Form::text('room_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Room Available *']) !!}'+
+            '{!! Form::number('room_qty[]', null, ['min' => '0', 'class' => 'form-control', 'placeholder' => 'Rooms Quantity *']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Room Price *']) !!}'+
+            '{!! Form::text('room_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Price per Person *']) !!}'+
             '</div>'+
     
-            '<div class="col-md-2">'+
-            '{!! Form::text('room_short_desc[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}'+
-            '</div>'+
-            
             '<div class="col-md-2">'+
             '{{ Form::file('room_img[]', ['id' => 'room_img', 'class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
+            '</div>'+
+            
+            '<div class="form-group">'+
+            '<div class="col-md-8">'+
+            '<div class="col-md-2">'+
+            '<label class="control-label">Promotion:</label>'+
+            '</div>'+
+            
+            '<div class="col-md-3">'+
+            '{!! Form::fancyselect('is_room_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['class'=>'form-control select-icons append_room_promo']) !!}'+
+            '</div>'+
+            '</div>'+
+            
+            '</div>'+
+            
+            '<div class="form-group room_promo_div" style="display:none">'+
+            '<div class="col-md-2">'+
+            '{!! Form::text('room_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">From Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('room_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">Till Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('room_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}'+
+            '</div>'+
+            
+            '<div class="col-lg-4">'+
+            '{!! Form::textarea('room_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => "Give a short description about your term for this offer *"]) !!}'+
+            '</div>'+
+            
+            '</div>'+
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="btn-remove label label-danger">Remove</a>'+
+            '{{ Form::input('hidden', 'room_id[]',null, ['readonly' => 'readonly']) }}'+
             '</div>';
     
         $(".btn-add-more").on('click', function(e){
             e.preventDefault();
-            $(this).before(room_temp)
+            $(this).before(room_temp);
+            //console.log($(this).parents().find('.room_promo_div').attr('class'));
+            //$(this).parents().find('.room_promo_div').hide();
         });
         
+        
+        
         $(document).on('click','.btn-remove',function(e){    
+                
                 e.preventDefault();
+                //console.log($(this).parents(".parentss").attr('class'));
                 $(this).parents(".parentss").remove();
         });
         
@@ -1273,25 +1594,72 @@ Add Accommodation
         //////////////////////////venu add more////////////////////////
         var venu_temp = '<div class="form-group venu-parents">'+
                 
+            '<div class="form-group">'+
+            '<label class="col-lg-1 control-label">Venu Description:</label>'+
+            '<div class="col-lg-9">'+
+            '{!! Form::textarea('venue_short_descr[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => "Give a short description about this Venue *"]) !!}'+
+            '</div>'+
+            '</div>'+
+            
+            '<div class="form-group">'+
+                
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Venue Name *']) !!}'+
+            '{!! Form::text('venue_name[]', null, ['class' => 'form-control', 'placeholder' => 'Venue Name']) !!}'+
             '</div>'+    
             
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_capacity[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}'+
+            '{!! Form::number('venue_qty[]', null, ['min' => '0', 'class' => 'form-control', 'placeholder' => 'Max Capacity']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('venue_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Venue Price *']) !!}'+
-            '</div>'+
-    
-            '<div class="col-md-2">'+
-            '{!! Form::text('venue_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}'+
+            '{!! Form::text('venue_price[]', null, ['class' => 'form-control', 'placeholder' => 'Venue rental price']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
-            '{{ Form::file('venue_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '{!! Form::text('venue_price_per_seat[]', null, ['class' => 'form-control', 'placeholder' => 'Price per seat']) !!}'+
             '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{{ Form::file('venu_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '</div>'+
+            '</div>'+
+            
+            
+            '<div class="form-group">'+
+            '<div class="col-md-8">'+
+            '<div class="col-md-2">'+
+            '<label class="control-label">Promotion:</label>'+
+            '</div>'+
+            
+            '<div class="col-md-3">'+
+            '{!! Form::fancyselect('is_venue_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['class'=>'form-control select-icons append_venue_promo']) !!}'+
+            '</div>'+
+            '</div>'+
+            
+            '</div>'+
+            
+            '<div class="form-group venue_promo_div" style="display:none">'+
+            '<div class="col-md-2">'+
+            '{!! Form::text('venue_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">From Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('venue_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">Till Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('venue_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}'+
+            '</div>'+
+            
+            '<div class="col-lg-4">'+
+            '{!! Form::textarea('venue_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => "Give a short description about your term for this offer *"]) !!}'+
+            '</div>'+
+            
+            '</div>'+
+            
+            
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="venu-remove label label-danger">Remove</a>'+
             '</div>';
     
@@ -1308,25 +1676,69 @@ Add Accommodation
         //////////////////////////conference add more////////////////////////
         var confer_temp = '<div class="form-group confer-parents">'+
                 
+            '<div class="form-group">'+
+            '<label class="col-lg-1 control-label">Conference Description:</label>'+
+            '<div class="col-lg-9">'+
+            '{!! Form::textarea('confer_short_descr[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => "Give a short description about this Conference *"]) !!}'+
+            '</div>'+
+            '</div>'+
+                
+            '<div class="form-group">'+    
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_name[]', null, ['class' => 'form-control required', 'placeholder' => 'Conference Name *']) !!}'+
+            '{!! Form::text('confer_name[]', null, ['class' => 'form-control', 'placeholder' => 'Conference Name']) !!}'+
             '</div>'+    
             
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_avail[]', null, ['class' => 'form-control required', 'placeholder' => 'Capacity *']) !!}'+
+            '{!! Form::number('confer_qty[]', null, ['min' => '0', 'class' => 'form-control', 'placeholder' => 'Max Capacity']) !!}'+
             '</div>'+
     
             '<div class="col-md-2">'+
-            '{!! Form::text('confer_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Conference Price *']) !!}'+
-            '</div>'+
-    
-            '<div class="col-md-2">'+
-            '{!! Form::text('confer_short_descr[]', null, ['class' => 'form-control required', 'placeholder' => 'Short Description *']) !!}'+
+            '{!! Form::text('confer_price[]', null, ['class' => 'form-control', 'placeholder' => 'Conference rental price']) !!}'+
             '</div>'+
             
             '<div class="col-md-2">'+
+            '{!! Form::text('confer_price_per_seat[]', null, ['class' => 'form-control', 'placeholder' => 'price per seat']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
             '{{ Form::file('confer_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
             '</div>'+
+            '</div>'+
+            
+            '<div class="form-group">'+
+            '<div class="col-md-8">'+
+            '<div class="col-md-2">'+
+            '<label class="control-label">Promotion:</label>'+
+            '</div>'+
+            
+            '<div class="col-md-3">'+
+            '{!! Form::fancyselect('is_confer_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['class'=>'form-control select-icons append_confer_promo']) !!}'+
+            '</div>'+
+            '</div>'+
+            
+            '</div>'+
+            
+            '<div class="form-group confer_promo_div" style="display:none">'+
+            '<div class="col-md-2">'+
+            '{!! Form::text('confer_promo_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Promotion Price *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">From Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('confer_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">Till Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('confer_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}'+
+            '</div>'+
+            
+            '<div class="col-lg-4">'+
+            '{!! Form::textarea('confer_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => "Give a short description about your term for this offer *"]) !!}'+
+            '</div>'+
+            
+            '</div>'+
+            
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="confer-remove label label-danger">Remove</a>'+
             '</div>';
     
@@ -1339,6 +1751,81 @@ Add Accommodation
                 e.preventDefault();
                 $(this).parents(".confer-parents").remove();
         });
+        
+        //////////////////////////Health add more////////////////////////
+        var health_temp = '<div class="form-group health-parents">'+
+                
+            '<div class="form-group">'+
+            '<label class="col-lg-1 control-label">Service Description:</label>'+
+            '<div class="col-lg-9">'+
+            '{!! Form::textarea('health_short_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control required', 'placeholder' => "Give a short description about this Service *"]) !!}'+
+            '</div>'+
+            '</div>'+
+            
+            '<div class="form-group">'+
+            '<div class="col-md-2">'+
+            '{!! Form::text('health_name[]', null, ['class' => 'form-control', 'placeholder' => 'Name Service']) !!}'+
+            '</div>'+    
+            
+            '<div class="col-md-2">'+
+            '{!! Form::text('treatment[]', null, ['class' => 'form-control', 'placeholder' => 'Name treatment']) !!}'+
+            '</div>'+
+    
+            '<div class="col-md-2">'+
+            '{!! Form::text('service_price[]', null, ['class' => 'form-control', 'placeholder' => 'Price per treatment']) !!}'+
+            '</div>'+
+            
+            '<div class="col-md-2">'+
+            '{{ Form::file('health_img[]', ['class' => 'form-control file-styled', 'multiple' => false]) }}'+
+            '</div>'+
+            '</div>'+
+            
+            '<div class="form-group">'+
+            '<div class="col-md-8">'+
+            '<div class="col-md-2">'+
+            '<label class="control-label">Promotion:</label>'+
+            '</div>'+
+            
+            '<div class="col-md-3">'+
+            '{!! Form::fancyselect('is_health_promo[]', (isset($drop_down_yes) && !empty($drop_down_yes) && count($drop_down_yes) > 0 ? $drop_down_yes : ''), null, ['class'=>'form-control select-icons append_health_promo']) !!}'+
+            '</div>'+
+            '</div>'+
+            
+            '</div>'+
+            
+            '<div class="form-group health_promo_div" style="display:none">'+
+            '<div class="col-md-2">'+
+            '{!! Form::text('health_promo_price[]', null, ['class' => 'form-control', 'placeholder' => 'Promotion Price *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">From Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('health_from_date[]', null, ['class' => 'form-control', 'placeholder' => 'From Date *']) !!}'+
+            '</div>'+
+            
+            '<label class="col-lg-1 control-label">Till Date:</label>'+
+            '<div class="col-md-2">'+
+            '{!! Form::date('health_to_date[]', null, ['class' => 'form-control', 'placeholder' => 'Till Date *']) !!}'+
+            '</div>'+
+            
+            '<div class="col-lg-4">'+
+            '{!! Form::textarea('health_promo_desc[]', null, ['rows' => 3, 'cols' => 3, 'class' => 'form-control', 'placeholder' => "Give a short description about your term for this offer *"]) !!}'+
+            '</div>'+
+            
+            '</div>'+
+            
+            '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="health-remove label label-danger">Remove</a>'+
+            '</div>';
+    
+        $(".health-add-more").on('click', function(e){
+            e.preventDefault();
+            $(this).before(health_temp)
+        });
+        
+        $(document).on('click','.health-remove',function(e){    
+                e.preventDefault();
+                $(this).parents(".health-parents").remove();
+        });
 
 
         //////////////////////////attraction add more////////////////////////
@@ -1349,13 +1836,14 @@ Add Accommodation
             '</div>'+    
             
             '<div class="col-md-4">'+
-            '{!! Form::fancyselect('surrounding[]', $surr, null, ['class'=>'form-control select-icons required']) !!}'+
+            '{!! Form::fancyselect('surrounding[]', (isset($surr) && !empty($surr) ? $surr : ''), null, ['class'=>'form-control select-icons required']) !!}'+
             '</div>'+
     
             '<div class="col-md-4">'+
             '{!! Form::text('approx_dist[]', null, ['class' => 'form-control required', 'placeholder' => 'Approximate Distance *']) !!}'+
             '</div>'+
             '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="attract-remove label label-danger">Remove</a>'+
+            '{{ Form::input('hidden', 'suur_id[]', null, ['readonly' => 'readonly']) }}' +
             '</div>';
     
         $(".attract-add-more").on('click', function(e){
@@ -1368,88 +1856,108 @@ Add Accommodation
                 $(this).parents(".attract-parents").remove();
         });
         
-        //////////////////////////extra offer add more////////////////////////
-        var extra_temp = '<div class="form-group extra-parents">'+
+        
+$(document).ready(function () {
+    
+    hideAndShow('#accom_faclity', '#select_accommo');
+    hideAndShow('#venu_faclity', '#select_venu');
+    hideAndShow('#confer_faclity', '#select_confer');
+    hideAndShow('#health_faclity', '#select_health');
+    hideAndShow('#trans_faclity', '#select_trans');
+    hideAndShow('#viddiv', '#vid_con');
+    
+    promoHideShow('.room_promo_div', '.room_promo');
+    promoHideShow('.venue_promo_div', '.venue_promo');
+    promoHideShow('.confer_promo_div', '.confer_promo');
+    promoHideShow('.health_promo_div', '.health_promo');
+    
+    
+});
+
+
+    appendPromoHideShow('.room_promo_div', '.append_room_promo');
+    appendPromoHideShow('.venue_promo_div', '.append_venue_promo');
+    appendPromoHideShow('.confer_promo_div', '.append_confer_promo');
+    appendPromoHideShow('.health_promo_div', '.append_health_promo');
+
+
+///////////////div hide and show for append promotion off yes/no////////////////
+
+function appendPromoHideShow(div, val){
+    
+    $(document).on('change', val, function () {
+    
+    if($(this).val()  == 'Y'){
+        $(this).parents().children(div).show();
+    } else {
+        $(this).parents().children(div).hide();
+    }
+    
+});
+    
+}
+
+///////////////div hide and show for edit time promotion off yes/no////////////////
+function promoHideShow(div, dropval){
+    
+    var values = $(dropval).val()
+    
+    if(values != ''){
+      
+      if(values == 'object'){
+          var count = values.length;
+      }
+    
+    
+    for(i=1; i<=count; i++){
+        if(values[i-1] == 'Y'){
+            $(div+i).show();
+            
+            }else{
+                $(div+i).hide();
+        }
+    }
+    }
+$(dropval).change(function () {
+  
+    var checkVal = $(this).val();
+    if (checkVal == 'Y') {
+        $(this).parent().parent().parent().next().show();
+
+    } else {
+        $(this).parent().parent().parent().next().hide();
+    }
+
+});
+    
+}
+
+///////////////faciclitie hide and show////////////////
+function hideAndShow(divId, dropDownId){
+    
+    $(divId).css("display", "none");
+    
+    var dropVal = $(dropDownId).val();
+    
+            if (dropVal == 'Y') {
+                $(divId).css("display", "block");
+            }
+
+            $(dropDownId).change(function () {
+                var checkVal = $(this).val();
                 
-            '<div class="col-md-3">'+
-            '{!! Form::text('item[]', null, ['class' => 'form-control required', 'placeholder' => 'Item *']) !!}'+
-            '</div>'+    
-            
-            '<div class="col-md-3">'+
-            '{!! Form::text('extra_price[]', null, ['class' => 'form-control required number', 'placeholder' => 'Enter Price *']) !!}'+
-            '</div>'+
-    
-            '<div class="col-md-3">'+
-            '{!! Form::fancyselect('extra_cond[]', $extra_option, null, ['class'=>'form-control select-icons required']) !!}'+
-            '</div>'+
-            
-            '<div class="col-md-3">'+
-            '{{ Form::file('extra_img[]', ['id' => 'extra_img', 'class' => 'form-control file-styled', 'multiple' => false]) }}'+
-            '</div>'+
-            
-            '<a href="javascript:void(0)" style="margin: 9px 0px 0px 10px;" class="extra-remove label label-danger">Remove</a>'+
-            '</div>';
-    
-        $(".extra-add-more").on('click', function(e){
-            e.preventDefault();
-            $(this).before(extra_temp)
-        });
-        
-        $(document).on('click','.extra-remove',function(e){    
-                e.preventDefault();
-                $(this).parents(".extra-parents").remove();
-        });
-        
-    
-        $(document).ready(function () {
-
-            $('#cv').css("display", "none");
-
-            var befco = $('#condit').val();
-
-            if (befco == 'Y') {
-
-                $('#cv').css("display", "block");
-                $('.both').css("display", "block");
-            } else {
-
-                $('#cv').css("display", "none");
-                $('.both').css("display", "none");
-            }
-
-
-            $('#condit').change(function () {
-
-                var co = $('#condit').val();
-
-                if (co == 'Y') {
-                    $('#cv').css("display", "block");
-                    $('.both').css("display", "block");
-                } else {
-                    $('#cv').css("display", "none");
-                    $('.both').css("display", "none");
-
-                }
-            });
-
-            var bm = $('#vid_con').val();
-            if (bm == 'Y') {
-                $('#viddiv').css("display", "block");
-            }
-
-            $('#vid_con').change(function () {
-                var conn2 = $('#vid_con').val();
-
-                if (conn2 == 'Y') {
-                    $('#viddiv').show();
+                if (checkVal == 'Y') {
+                    $(divId).show();
+                    
 
                 } else {
-                    $('#viddiv').hide();
+                    $(divId).hide();
+                    
                 }
 
 
             });
-        });
-    </script>
-    
+}
+</script>
+
 @endsection

@@ -34,10 +34,10 @@ class ListDetailRequest extends Request {
         case 'POST':
         {
             return [
-                'accommo_list' => 'required',
-                'shuttle' => 'required',
-                'transport' => 'required',
-                'additional' => 'required',
+                'accommo_no' => 'required',
+                'is_acco_venu_conf' => 'required',
+                'is_transport' => 'required',
+                'is_additional' => 'required',
                 'terms_conditions' => 'required'
             ];
         }

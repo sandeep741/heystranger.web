@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
     $(".delete-room").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('id');
-        var div = $(this).parents(".parentss");
+        var div = $(this).parents(".roomparent");
         var flag = 'room';
         $.confirm({
             title: 'Deleting Confirmation',
@@ -31,7 +31,7 @@ jQuery(document).ready(function () {
     $(".delete-venu").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('v_id');
-        var div = $(this).parents(".venu-parents");
+        var div = $(this).parents(".venuparents");
         var flag = 'venu';
         $.confirm({
             title: 'Deleting Confirmation',
@@ -59,8 +59,36 @@ jQuery(document).ready(function () {
     $(".delete-confer").click(function (e) {
         e.preventDefault()
         var id = $(this).attr('c_id');
-        var div = $(this).parents(".confer-parents");
+        var div = $(this).parents(".conferparents");
         var flag = 'confer';
+        $.confirm({
+            title: 'Deleting Confirmation',
+            content: 'Are you sure you want to Delete?',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            opacity: 0.5,
+            buttons: {
+                confirm: {
+                    text: 'Yes, sure!',
+                    btnClass: 'btn-orange',
+                    action: function () {
+                        e.preventDefault();
+                        $.removeAjax(id, div, flag);
+
+                    }
+                },
+                cancel: function () {
+                    //$.alert('you clicked on <strong>cancel</strong>');
+                },
+            }
+        });
+    });
+    
+    $(".delete-health").click(function (e) {
+        e.preventDefault()
+        var id = $(this).attr('h_id');
+        var div = $(this).parents(".healthparents");
+        var flag = 'health';
         $.confirm({
             title: 'Deleting Confirmation',
             content: 'Are you sure you want to Delete?',

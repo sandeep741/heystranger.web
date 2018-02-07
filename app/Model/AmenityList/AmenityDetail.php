@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AmenityDetail extends Model
 {
     /**
-     * getConferById
+     * getAmenityById
      * @return
      * @since 0.1
      * @author Sandeep Kumar
@@ -21,7 +21,7 @@ class AmenityDetail extends Model
     }
     
     /**
-     * getConferById
+     * deleteAmenity
      * @return
      * @since 0.1
      * @author Sandeep Kumar

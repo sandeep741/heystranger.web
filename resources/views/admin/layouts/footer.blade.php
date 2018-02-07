@@ -1,7 +1,7 @@
 <!-- Footer -->
 @if((collect(request()->segments())->last() != 'admin'))
 <div class="footer text-muted">
-    &copy; 2017 Hey Stranger All right reserved
+    &copy; 2018 Hey Stranger All right reserved
 </div>
 @else
 <div class="footer text-white">

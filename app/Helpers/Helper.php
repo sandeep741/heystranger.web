@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Image;
 use Request;
+use App\Model\Country\Country;
 
 class Helper {
 
@@ -135,6 +136,22 @@ class Helper {
         }
     }
 
+    /* getAllCountry
+     * @paran
+     * @return array
+     * @author Sandeep Kumar
+     */
+
+    public static function getAllCountry() {
+        try {
+            $country = new Country;
+            $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
+            return ( (isset($arr_country) && !empty($arr_country)) ? $arr_country : '');
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
+
     /* UploadImage
      * @paran
      * @return array
@@ -183,8 +200,9 @@ class Helper {
 
                         $destinationPath = $arr_img['folder'];
                         $files[$i]->move($destinationPath, $filename);
+                        return true;
                     }
-                    return true;
+                    
                 } else {
 
                     foreach ($files as $file) {
@@ -220,9 +238,11 @@ class Helper {
 
                             $destinationPath = $arr_img['folder'];
                             $file->move($destinationPath, $filename);
+                            
                         }
                     }
                     return true;
+                    
                 }
             }
         } catch (Exception $ex) {
@@ -258,6 +278,38 @@ class Helper {
         }
         if (file_exists($img_pathR)) {
             unlink($img_pathR);
+        }
+    }
+
+    /* dropDownYesNo
+     * @paran
+     * @return array
+     * @author Sandeep Kumar
+     */
+
+    public static function dropDownYesNo($label) {
+        try {
+
+            $drop_down_yes = array(array(
+                    'value' => '',
+                    'display' => $label,
+                    'data-icon' => 'stumbleupon'
+                ),
+                array(
+                    'value' => 'Y',
+                    'display' => 'Yes',
+                    'data-icon' => 'stumbleupon'
+                ),
+                array(
+                    'value' => 'N',
+                    'display' => 'No',
+                    'data-icon' => 'stumbleupon'
+                )
+            );
+
+            return $drop_down_yes;
+        } catch (Exception $ex) {
+            
         }
     }
 

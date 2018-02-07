@@ -11,7 +11,7 @@ class State extends Model {
      * param integer varStateID
      * @return array arrState
      * @since 0.1
-     * @author Meghendra S Yadav
+     * @author Sandeep Kumar
      */
     public static function getStateByCountryID($id) {
         $where_condition = array('states.country_id' => $id, 'states.status' => '1');

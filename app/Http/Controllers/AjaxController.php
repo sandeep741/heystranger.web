@@ -10,6 +10,7 @@ use App\Model\State\State;
 use App\Model\Accommodation\AccomVenuPromosImage;
 use App\Model\RoomList\RoomDetail;
 use App\Model\Conference\ConferenceDetail;
+use App\Model\Health\HealthDetail;
 use App\Model\Venu\VenuDetail;
 use App\Model\Offer\OfferDetail;
 use App\Model\SurroundingList\SurroundingDetail;
@@ -188,6 +189,26 @@ class AjaxController extends Controller {
                 if ($data->confer_image) {
 
                     Helper::unLinkImage($conferImgArr);
+                }
+                $result = $data->delete();
+                return ($result ? Response::json($result) : $result);
+                break;
+
+            case 'health':
+
+                $data = HealthDetail::find($varID);
+
+                $healthImgArr = [];
+                $healthImgArr['path'] = 'health_images/';
+                $healthImgArr['pathT'] = 'health_images/thumbnail/';
+                $healthImgArr['pathR'] = 'health_images/resize/';
+                $healthImgArr['id'] = $data->id;
+                $healthImgArr['image_name'] = $data->health_image;
+
+
+                if ($data->health_image) {
+
+                    Helper::unLinkImage($healthImgArr);
                 }
                 $result = $data->delete();
                 return ($result ? Response::json($result) : $result);

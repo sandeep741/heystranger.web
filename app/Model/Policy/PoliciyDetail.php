@@ -11,14 +11,14 @@ class PoliciyDetail extends Model
      * paymentAccept
      * @return
      * @since 0.1
-     * @author Sandeep Kumart
+     * @author Sandeep Kumar
      */
     public function paymentAccept() {
         return $this->hasMany('App\Model\PaymentModeList\PaymentAccept', 'policy_id');
     }
     
     /**
-     * getConferById
+     * getPolicyById
      * @return
      * @since 0.1
      * @author Sandeep Kumar

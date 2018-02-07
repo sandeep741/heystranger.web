@@ -18,3 +18,4 @@
 <link rel="icon"  type="image/png"  href="{{ asset('/assets/images/favicon.png') }}">
 <!-- Custom_css.php-->
 <link href="{{ asset('/assets/css/style.css') }}" rel="stylesheet" type="text/css" media="all"/>
+<link href="{{ asset('/assets/css/heystranger-css/flipclock.css') }}" rel="stylesheet" type="text/css" media="all"/>

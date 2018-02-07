@@ -28,31 +28,30 @@
                 <ul class="navigation navigation-main navigation-accordion">
                     <!-- Main -->
                     <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                    <li class="{{ Request::is( 'dashboard', 'partner') ? 'active' : '' }}"><a href="{{ route('admin.login') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                    
+                    
+                    @if(isset($user) && $user->role[0]->name == 'partner')
+                    <li class="{{ Request::is( 'welcome-page') ? 'active' : '' }}"><a href="{{ route('welcome_page') }}"><i class="icon-home4"></i> <span>Welcome Page</span></a></li>
+                    @endif
+                    
+                    <li class="{{ Request::is( 'dashboard', 'partner-dashboard') ? 'active' : '' }}"><a href="{{ route('admin.login') }}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 
                     @if(isset($user) && $user->role[0]->name == 'partner')
-
+                    
+                    @if(Auth::user()->status == '2')
+                    <li class="{{ Request::is( 'proof-payment') ? 'active' : '' }}">
+                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>Proof of Payment</span></a>
+                        <ul>
+                            <li><a href="{{ route("proof_payment") }}" style="{{ (Request::is( 'proof-payment') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Upload Proof</a></li>
+                        </ul>
+                    </li>
+                    @endif
+                    
                     <li class="{{ Request::is( 'accomodation', 'accomodation/*') ? 'active' : '' }}">
-                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Accommodation</span></a>
+                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>My listings</span></a>
                         <ul>
-                            <li><a href="{{ route("accomodation.index") }}" style="{{ (Request::is( 'accomodation', 'accomodation/*/edit') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Accommodation Listing</a></li>
-                            <li><a href="{{ route('accomodation.create') }}" style="{{ (Request::is( 'accomodation/create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Accommodation</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="{{ Request::is( 'venue-conference-list', 'add-venue-conference', 'edit-venue-conference') ? 'active' : '' }}">
-                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Venue & Conference</span></a>
-                        <ul>
-                            <li><a href="{{ route("venue_confer_list") }}" style="{{ (Request::is( 'venue-conference-list', 'edit-venue-conference') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Venue & Conference Listing</a></li>
-                            <li><a href="{{ route('add_venue_confer') }}" style="{{ (Request::is( 'add-venue-conference') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Venue & Conference</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="{{ Request::is( 'promotion-list', 'add-promotion', 'edit-promotion') ? 'active' : '' }}">
-                        <a href="javascript:void;"><i class="icon-stack2"></i> <span>My Promotion</span></a>
-                        <ul>
-                            <li><a href="{{ route("promotion_list") }}" style="{{ (Request::is( 'promotion-list', 'edit-promotion') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Promotion Listing</a></li>
-                            <li><a href="{{ route('add_promotion') }}" style="{{ (Request::is( 'add-promotion') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add Promotion</a></li>
+                            <li><a href="{{ route("accomodation.index") }}" style="{{ (Request::is( 'accomodation', 'accomodation/*/edit') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Listings Panel</a></li>
+                            <li><a href="{{ route('accomodation.create') }}" style="{{ (Request::is( 'accomodation/create') ? 'background-color:rgba(0,0,0,.1); color:#fff' : '') }}">Add New Listing</a></li>
                         </ul>
                     </li>
 

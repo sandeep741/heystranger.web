@@ -42,9 +42,9 @@ class PolicyDetailRequest extends Request {
                 'corpo_deals' => 'required',
                 'contract_deal' => 'required',
                 'policy_terms' => 'required',
-                'item.0' => 'required',
-                'extra_price.0' => 'required',
-                'extra_cond.0' => 'required',
+                //'item.0' => 'required',
+                //'extra_price.0' => 'required',
+                //'extra_cond.0' => 'required',
                 
             ];
         }
@@ -53,9 +53,9 @@ class PolicyDetailRequest extends Request {
         {
             if(Input::get('id')){
             return [
-                'item.0.required' => 'Item name required',
-                'extra_price.0.required' => 'Price required',
-                'extra_cond.0.required' => 'condition required',
+                //'item.0.required' => 'Item name required',
+                //'extra_price.0.required' => 'Price required',
+                //'extra_cond.0.required' => 'condition required',
             ];
             }
             return [];

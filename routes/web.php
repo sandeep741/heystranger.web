@@ -25,8 +25,39 @@ Route::get('/accommodation', function () {
 
 
 Route::get('/my-package', 'Package\PackageController@index')->name('my_package');
-Route::get('/listing-detail', 'Package\PackageController@listDetail')->name('listing_detail');
-Route::post('/final-register', 'Package\PackageController@partnerRegister')->name('final_register');
+
+Route::post('/register-step1', 'Package\PackageController@registerStep1');
+
+
+Route::get('/register-step1', function () {
+    return view('package.register-step1');
+})->name('register-step1');
+
+Route::post('/register-step2', 'Package\PackageController@registerStep2');
+
+Route::get('/register-step2', function () {
+    return view('package.register-step2');
+})->name('register-step2');
+
+Route::post('/register-step3', 'Package\PackageController@registerStep3');
+
+Route::get('/register-step3', function () {
+    return view('package.register-step3');
+})->name('register-step3');
+
+
+Route::post('/register-step4', 'Package\PackageController@registerStep4');
+
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+Route::get('/register1', function () {
+    return view('register1');
+})->name('register1');
+
+
 
 /* Route::get('admin', [
   'as' => 'admin',
@@ -75,8 +106,10 @@ Route::resource('packagelist', 'Admin\PackageListController');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 /////////////routes for Partner////////////
-Route::get('partner', 'PartnerController@index')->name('partner');
-Route::get('accommodations', 'PartnerController@index');
+
+Route::get('welcome-page', 'PartnerController@index')->name('welcome_page');
+Route::get('partner-dashboard', 'PartnerController@dashBoard')->name('partner');
+
 
 Route::resource('accomodation', 'Partner\AccommodationController');
 Route::post('room-detail', 'Partner\AccommodationController@roomDetail')->name('room_detail');
@@ -85,13 +118,9 @@ Route::post('policy-detail', 'Partner\AccommodationController@policyDetail')->na
 Route::post('meta-detail', 'Partner\AccommodationController@metaDescription')->name('metatag_detail');
 Route::post('video-map-detail', 'Partner\AccommodationController@videoMapDetail')->name('video_map_detail');
 
-Route::get('add-venue-conference', 'Partner\AccommodationController@create')->name('add_venue_confer');
-Route::get('venue-conference-list', 'Partner\AccommodationController@index')->name('venue_confer_list');
-Route::get('edit-venue-conference', 'Partner\AccommodationController@editDetail')->name('edit_venue_conference');
 
-Route::get('add-promotion', 'Partner\AccommodationController@create')->name('add_promotion');
-Route::get('promotion-list', 'Partner\AccommodationController@index')->name('promotion_list');
-Route::get('edit-promotion', 'Partner\AccommodationController@editDetail')->name('edit_promotion');
+Route::get('proof-payment', 'Partner\ProofPaymentController@index')->name('proof_payment');
+Route::post('proof-payment', 'Partner\ProofPaymentController@uploadProof');
 
 Route::get('remove-accommodation-image', 'Partner\AccommodationController@removeProductImage')->name('remove_accommodation_image');
 

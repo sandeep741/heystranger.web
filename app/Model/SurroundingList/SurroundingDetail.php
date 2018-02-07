@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SurroundingDetail extends Model
 {
     /**
-     * getConferById
+     * getSurrById
      * @return
      * @since 0.1
      * @author Sandeep Kumar
