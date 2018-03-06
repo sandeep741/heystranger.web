@@ -39,15 +39,48 @@
 
                         <div class="col-md-9">
 
+                            {!!
+                            Form::open(
+                            array(
+                            'name' => 'partner_register1',
+                            'id' => 'partner_register1',
+                            'url' => 'register1',
+                            'autocomplete' => 'off',
+                            'class' => 'form-horizontal',
+                            'files' => false
+                            )
+                            )
+                            !!}
+                            <?php
+                            $property = [];
+                            for ($i = 1; $i <= 50; $i++) {
+                                $property[$i] = $i;
+                            }
+                            ?>
+
+                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                            @if(Session::has($msg))
+
+                            <div class="alert bg-{{ $msg }} alert-styled-right" >
+                                <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+                                <span class="text-semibold">{{ Session::get($msg) }}</span>
+                            </div>
+                            @endif
+                            @endforeach
+
                             <h4 class="mt60">Accommodation / Venue / Conference </h4>
                             <p>Number of properties (at different locations)</p>
 
                             <div class="row mt20 data_field">
                                 <div class="col-md-12">
                                     <div class="form-group  form-group-icon-left">
+                                        {{Form::select('prop_no',[''=>'Enter no. of properties *']+$property, null,['id'=> 'prop_no', 'class'=>'form-control'])}}
 
-                                        <i class="fa fa-user input-icon input-icon-show"></i>
-                                        <input id="field-user_name" name="user_name" class="form-control" placeholder="1" type="text" value="" />
+                                        @if ($errors->has('prop_no'))
+                                        <span class="help-block" style = "display:block;color:red;">
+                                            <strong>{{ $errors->first('prop_no') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -59,31 +92,28 @@
                                 <p>Per Year - R 1200.00 Exl VAT per Listing (Deal directly with clients) Normal Price</p>
                                 <p>15% Commission - (R350.00 Once off Registration Fee Exl.VAT) “On First Registration Only” (T&C Apply)</p>
 
-                                <h4>Congratulations.. You're doing great</h4>
-
-                                <h6>Please Take Note:</h6>
-
-                                <p>After Submitting Please Conrm your registration in your email to start managing your listings.</p>
-
                             </div>
 
 
                             <div class="checkbox st_check_term_conditions mt20">
                                 <label>
-                                    <input class="i-check term_condition" name="term_condition" type="checkbox" />
+                                    {{ Form::checkbox('term_condition', 1, null, ['class' => 'i-check term_condition']) }}
                                     <span>Note: There are a short time period on Pending listings. Spaces are limited. Activate within 10 working days. (T & C Apply)</span>
 
                                     I have read and accept the<a target="_blank" href="#"> terms and conditions of Hey Stranger PTY Ltd</a>        </label>
+                                @if ($errors->has('term_condition'))
+                                <span class="help-block" style = "display:block;color:red;">
+                                    <strong>{{ $errors->first('term_condition') }}</strong>
+                                </span>
+                                @endif
                             </div>
 
 
 
                             <div class="mt20">
-                                <input name="btn_reg" class="btn btn-primary btn-lg" type="hidden" value="register">
-                                <button class="btn btn-primary btn-lg" type="submit" >Login</button>
+                                <button class="btn btn-primary btn-lg" type="submit" >Submit</button>
                             </div>
-
-                            <a href="register2.html">Next Page</a>
+                            {!! Form::close() !!}
 
                         </div>
                     </div>
@@ -106,4 +136,8 @@ Welcome to Hey Stranger
 @endsection
 
 @section('jscript')
+<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/city.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/jquery.validate.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/additional-methods.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/js/heystranger-js/client-validation.js')}}"></script>
 @endsection

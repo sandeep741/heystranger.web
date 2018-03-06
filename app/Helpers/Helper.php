@@ -142,10 +142,15 @@ class Helper {
      * @author Sandeep Kumar
      */
 
-    public static function getAllCountry() {
+    public static function getAllCountry($id = false) {
         try {
             $country = new Country;
-            $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
+            if (isset($id) && !empty($id)) {
+
+                $arr_country = $country->select('id', 'name')->where('id', $id)->orderBy('id', 'ASC')->first();
+            } else {
+                $arr_country = $country->select('id', 'name')->orderBy('id', 'ASC')->get();
+            }
             return ( (isset($arr_country) && !empty($arr_country)) ? $arr_country : '');
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
@@ -202,7 +207,6 @@ class Helper {
                         $files[$i]->move($destinationPath, $filename);
                         return true;
                     }
-                    
                 } else {
 
                     foreach ($files as $file) {
@@ -238,11 +242,9 @@ class Helper {
 
                             $destinationPath = $arr_img['folder'];
                             $file->move($destinationPath, $filename);
-                            
                         }
                     }
                     return true;
-                    
                 }
             }
         } catch (Exception $ex) {

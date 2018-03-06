@@ -147,6 +147,40 @@ jQuery(document).ready(function () {
             form.submit();
         }
     });
+    
+    $('#partner_register').validate({
+        debug: true,
+        errorClass: 'text-danger',
+        errorElement: 'span',
+        rules: {
+            name: {required: true},
+            email_id: {required: true, email: true},
+            country_id: {required: true},
+            state_id: {required: true},
+            city_id: {required: true},
+            contact_no: {pattern: "(\\(.*\\))(\\s+)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\d)"},
+            user_name: {required: true},
+            password: {required: true, minlength: 6},
+            password_confirmation: {required: true, minlength: 6, equalTo: "#passwords"},
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+    
+    $('#partner_register1').validate({
+        debug: true,
+        errorClass: 'text-danger',
+        errorElement: 'span',
+        rules: {
+            prop_no: {required: true},
+            term_condition: {required: true},
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+    
     //////////////////////////////end here parter from////////////////////////
 
     $('#frm_package').validate({
@@ -362,7 +396,3 @@ $.validator.addMethod('longCoord', function (value, element) {
 $.validator.methods.phoneSA = function (value, element) {
     return this.optional(element) || /^(\\(.*\\))(\\s+)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\s+)(\\d)(\\d)(\\d)(\\d)$/.test(value);
 }
-
-
-
-

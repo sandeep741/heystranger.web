@@ -8,6 +8,12 @@ Breadcrumbs::register('dashboard', function($breadcrumbs) {
     $breadcrumbs->push('Admin Dashboard', route('dashboard'));
 });
 
+Breadcrumbs::register('partnerlist.index', function($breadcrumbs) {
+
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Partner List', route('partnerlist.index'));
+});
+
 Breadcrumbs::register('accommlist.index', function($breadcrumbs) {
 
     $breadcrumbs->parent('dashboard');
@@ -166,6 +172,16 @@ Breadcrumbs::register('accomodation.edit', function($breadcrumbs, $accommodation
 Breadcrumbs::register('proof_payment', function($breadcrumbs) {
     $breadcrumbs->parent('partner');
     $breadcrumbs->push('Upload Proof of Payment', route('proof_payment'));
+});
+
+Breadcrumbs::register('activate-registration', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Activate Registration', route('activate-registration'));
+});
+
+Breadcrumbs::register('invoice', function($breadcrumbs) {
+    $breadcrumbs->parent('partner');
+    $breadcrumbs->push('Invoice', route('invoice'));
 });
 // Home > About
 /*Breadcrumbs::register('about', function($breadcrumbs)

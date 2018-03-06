@@ -61,8 +61,8 @@
                     <li>
                         <a href="javascript:void;"><i class="icon-copy"></i> <span>Partner List</span></a>
                         <ul>
-                            <li><a href="javascript:void;" id="layout1">All Partner List</a></li>
-                            <li><a href="javascript:void;" id="layout1">View Pending Partner</a></li>
+                            <li><a href="{{ route("partnerlist.index") }}" id="layout1">All Partner List</a></li>
+                            <!--<li><a href="javascript:void;" id="layout1">View Pending Partner</a></li>-->
                         </ul>
                     </li>
 

@@ -26,7 +26,7 @@ return [
         'logo'        => [
             //'path'   => '%PUBLIC%/vendor/beautymail/assets/images/sunny/logo.png',
             //'path'   => asset('/assets/images/logo-white.png'),
-            'path'   => '/assets/images/logo-white.png',
+            'path'   => 'http://hey-stranger.globalsoftwebtechnologies.com/assets/images/logo-white.png',
             'width'  => '',
             'height' => '',
         ],

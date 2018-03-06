@@ -24,7 +24,7 @@ class DashboardController extends Controller {
     }
 
     public function index() {
-        try { dd('dfd');
+        try {
             $user = Auth::guard('admin')->user();
             return view('partner.welcome')->with(compact('user'));
         } catch (Exception $ex) {

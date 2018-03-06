@@ -87,5 +87,23 @@ class ProofPaymentController extends Controller {
             return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
         }
     }
+    
+    public function activateRegistration(){
+        try {
+            $user = Auth::guard('admin')->user();
+            return view('partner.activate-registration')->with(compact('user'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
+    
+    public function invoice(){
+        try {
+            $user = Auth::guard('admin')->user();
+            return view('partner.invoice')->with(compact('user'));
+        } catch (Exception $ex) {
+            return redirect()->back()->withErrors($ex->getMessage() . " In " . $ex->getFile() . " At Line " . $ex->getLine())->withInput();
+        }
+    }
 
 }

@@ -157,7 +157,7 @@
                             <div class="form-group">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    {!! Form::text('alternate_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Alternate no Ex: (+27) 00 000 0000']) !!}
+                                    {!! Form::text('alternate_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Alternative no Ex: (+27) 00 000 0000']) !!}
                                     @if ($errors->has('area'))
                                     <span class="help-block" style = "display:block;color:red;">
                                         <strong>{{ $errors->first('alternate_no') }}</strong>

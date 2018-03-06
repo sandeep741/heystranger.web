@@ -53,9 +53,17 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
+Route::post('/register', 'JoinUsController@registerStep');
+
 Route::get('/register1', function () {
     return view('register1');
 })->name('register1');
+
+Route::post('/register1', 'JoinUsController@registerStep1');
+
+Route::get('/register2', function () {
+    return view('register2');
+})->name('register2');
 
 
 
@@ -94,6 +102,7 @@ Route::get('admin-password/reset', 'Admin\ForgotPasswordController@showLinkReque
 Route::post('admin-password/reset', 'Admin\ResetPasswordController@reset');
 Route::get('admin-password/reset{token}', 'Admin\ResetPasswordController@showRequestForm')->name('admin.password.reset');
 Route::post('logouts', 'Admin\LoginController@logout')->name('admin.logout');
+Route::resource('partnerlist', 'Admin\PartnerListController');
 Route::resource('accommlist', 'Admin\AccommListController');
 Route::resource('amenitylist', 'Admin\AmenityListController');
 Route::resource('activitylist', 'Admin\ActivityListController');
@@ -123,6 +132,11 @@ Route::get('proof-payment', 'Partner\ProofPaymentController@index')->name('proof
 Route::post('proof-payment', 'Partner\ProofPaymentController@uploadProof');
 
 Route::get('remove-accommodation-image', 'Partner\AccommodationController@removeProductImage')->name('remove_accommodation_image');
+
+
+Route::get('activate-registration', 'Partner\ProofPaymentController@activateRegistration')->name('activate-registration');\
+
+Route::post('invoice', 'Partner\ProofPaymentController@invoice')->name('invoice');
 
 
 /////////////Routes for Ajax////////////
